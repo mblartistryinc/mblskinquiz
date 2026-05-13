@@ -1,0 +1,1106 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+#mbl-quiz-root-wrapper *{box-sizing:border-box;margin:0;padding:0}
+#mbl-quiz-root-wrapper{
+  --gold:#B8965A;--gold-light:#D4AF70;--gold-pale:#F5ECD7;--gold-deep:#9A7A3A;
+  --noir:#0E0C0A;--noir-soft:#1C1916;--noir-mid:#161310;
+  --cream:#FAF7F2;--cream-dim:#E8E0D0;
+  --text-muted:#8A7A65;--text-light:#C8B99A;
+  --green:#84C584;--red:#DC6666;--blue:#6AAFE0;
+  --card-bg:rgba(22,19,16,.9);--border:rgba(184,150,90,.18)
+}
+.mbl-wrap{
+  width:100%;max-width:1200px;margin:20px auto;
+  padding:clamp(32px,5vw,64px) clamp(16px,3vw,44px);
+  background:linear-gradient(160deg,#0E0C0A 0%,#1C1610 45%,#141009 100%);
+  border-radius:8px;position:relative;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.7);border:1px solid rgba(184,150,90,.14)
+}
+.mbl-wrap::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 25% 15%,rgba(184,150,90,.06) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 85%,rgba(184,150,90,.04) 0%,transparent 55%);
+  pointer-events:none;z-index:0
+}
+.mbl-wrap::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(184,150,90,.4),transparent);
+  z-index:1
+}
+.mbl-inner{position:relative;z-index:1;display:flex;flex-direction:column;width:100%}
+
+/* ── BRAND HEADER ── */
+.brand-hd{text-align:center;padding-bottom:clamp(24px,4vw,44px)}
+.brand-rule{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:14px}
+.brand-rule-line{width:clamp(30px,8vw,90px);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.brand-rule-line.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.brand-eyebrow{font-size:clamp(9px,1.2vw,10.5px);font-weight:500;letter-spacing:5px;color:var(--gold);text-transform:uppercase}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:clamp(12px,2vw,15px);font-weight:300;letter-spacing:6px;color:var(--gold-light);text-transform:uppercase;margin-bottom:10px}
+.brand-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5.5vw,58px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.15;text-align:center}
+
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:1fr;gap:20px}
+.g3{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:640px){.g2{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.g3{grid-template-columns:1fr 1fr 1fr}}
+
+/* ── CARDS ── */
+.card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:4px;
+  padding:clamp(24px,4vw,44px) clamp(18px,3vw,36px);margin-bottom:20px;
+  box-shadow:0 12px 32px rgba(0,0,0,.35)
+}
+.card.center-card{max-width:740px;margin-left:auto;margin-right:auto}
+.card.flush{padding:0;overflow:hidden}
+.card-icon{font-size:26px;margin-bottom:14px;display:block;color:var(--gold);text-align:center}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,30px);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:14px;text-align:center}
+.card-text{font-size:clamp(12px,1.5vw,13.5px);font-weight:300;line-height:1.8;color:var(--text-light);margin-bottom:28px;letter-spacing:.3px;text-align:center}
+.card.no-mb{margin-bottom:0}
+
+/* ── BUTTONS ── */
+.btn-gold{
+  display:block;width:100%;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-deep) 100%);
+  color:var(--noir);border:none;
+  padding:clamp(15px,2vw,18px) 24px;
+  font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.2vw,11px);
+  font-weight:600;letter-spacing:3.5px;text-transform:uppercase;
+  cursor:pointer;transition:all .25s;text-align:center;text-decoration:none
+}
+.btn-gold:hover{box-shadow:0 8px 24px rgba(184,150,90,.35);transform:translateY(-1px);opacity:.95}
+.btn-outline{
+  display:block;width:100%;background:transparent;color:var(--gold);
+  border:1px solid rgba(184,150,90,.38);
+  padding:clamp(14px,2vw,17px) 24px;
+  font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.2vw,11px);
+  font-weight:500;letter-spacing:3.5px;text-transform:uppercase;
+  cursor:pointer;transition:all .25s;text-align:center;text-decoration:none
+}
+.btn-outline:hover{border-color:var(--gold-light);background:rgba(184,150,90,.07)}
+.btn-ghost{
+  background:none;border:none;color:var(--text-muted);
+  font-family:'Montserrat',sans-serif;font-size:10.5px;letter-spacing:2px;
+  cursor:pointer;text-transform:uppercase;padding:12px 0;transition:color .2s
+}
+.btn-ghost:hover{color:var(--gold)}
+.btn-shop{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+  color:var(--noir);border:none;
+  padding:11px 22px;
+  font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:600;
+  letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;
+  text-decoration:none;transition:all .2s
+}
+.btn-shop:hover{box-shadow:0 6px 18px rgba(184,150,90,.3);transform:translateY(-1px)}
+.btn-shop-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--gold);
+  border:1px solid rgba(184,150,90,.4);
+  padding:10px 20px;
+  font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:500;
+  letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;
+  text-decoration:none;transition:all .2s
+}
+.btn-shop-outline:hover{border-color:var(--gold);background:rgba(184,150,90,.07)}
+
+/* ── QUIZ ── */
+.progress-bar{display:flex;gap:6px;justify-content:center;margin-bottom:32px;max-width:380px;margin-left:auto;margin-right:auto}
+.prog-dot{height:2px;background:rgba(184,150,90,.14);transition:all .4s;flex:1}
+.prog-dot.active{background:var(--gold)}
+.prog-dot.done{background:rgba(184,150,90,.45)}
+.q-label{font-size:9.5px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;text-align:center}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,36px);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:28px;line-height:1.3;text-align:center}
+.opt-btn{
+  display:block;width:100%;
+  background:rgba(14,12,10,.45);border:1px solid rgba(184,150,90,.14);
+  color:var(--text-light);
+  padding:clamp(14px,2vw,19px) clamp(18px,2.5vw,28px);
+  font-family:'Montserrat',sans-serif;font-size:clamp(11.5px,1.5vw,13px);
+  font-weight:300;letter-spacing:1.5px;text-align:left;cursor:pointer;
+  margin-bottom:10px;transition:all .2s
+}
+.opt-btn:hover{border-color:var(--gold);color:var(--cream);background:rgba(184,150,90,.07);padding-left:clamp(26px,4vw,38px)}
+
+/* ── PRODUCTS ── */
+.prod-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px}
+@media(min-width:560px){.prod-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.prod-grid{grid-template-columns:1fr 1fr 1fr}}
+.prod-card{
+  background:rgba(14,12,10,.5);border:1px solid rgba(184,150,90,.14);
+  padding:24px 20px;display:flex;flex-direction:column;gap:10px;
+  transition:all .22s;position:relative;overflow:hidden
+}
+.prod-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(184,150,90,.3),transparent);
+  opacity:0;transition:opacity .25s
+}
+.prod-card:hover{border-color:rgba(184,150,90,.38);background:rgba(184,150,90,.05);transform:translateY(-2px)}
+.prod-card:hover::before{opacity:1}
+.prod-badge{font-size:8.5px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,150,90,.25);padding:3px 10px;display:inline-block;margin-bottom:4px;width:fit-content}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,21px);font-style:italic;color:var(--cream);line-height:1.25}
+.prod-tagline{font-size:11px;letter-spacing:.5px;color:var(--text-muted);line-height:1.6}
+.prod-ing-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.prod-ing-tag{font-size:8.5px;letter-spacing:1.2px;color:var(--text-muted);border:1px solid rgba(184,150,90,.12);padding:2px 8px;text-transform:uppercase}
+.prod-actions{display:flex;gap:8px;margin-top:auto;padding-top:14px}
+.prod-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,4vw,42px);font-weight:300;
+  color:rgba(184,150,90,.12);position:absolute;top:12px;right:16px;line-height:1
+}
+.match-score{display:flex;align-items:center;gap:6px;margin-top:4px}
+.match-dots{display:flex;gap:3px}
+.match-dot{width:6px;height:6px;border-radius:50%;background:rgba(184,150,90,.15)}
+.match-dot.filled{background:var(--gold)}
+.match-label{font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase}
+
+/* ── INGREDIENT LIBRARY ── */
+.search-inp{
+  width:100%;max-width:500px;margin:0 auto 22px;
+  background:transparent;border:none;border-bottom:1px solid rgba(184,150,90,.28);
+  color:var(--cream);padding:11px 0;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(19px,2.8vw,24px);
+  font-style:italic;outline:none;display:block;text-align:center;border-radius:0
+}
+.search-inp:focus{border-bottom-color:var(--gold)}
+.email-inp{
+  width:100%;max-width:420px;margin:0 auto 22px;
+  background:transparent;border:none;border-bottom:1px solid rgba(184,150,90,.28);
+  color:var(--cream);padding:11px 0;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);
+  font-style:italic;outline:none;display:block;text-align:center;border-radius:0
+}
+.email-inp:focus{border-bottom-color:var(--gold)}
+.filter-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.fp{
+  background:transparent;border:1px solid rgba(184,150,90,.18);color:var(--text-muted);
+  padding:6px 14px;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;transition:all .2s
+}
+.fp:hover{border-color:var(--gold);color:var(--gold-light)}
+.fp.active{background:rgba(184,150,90,.1);border-color:var(--gold);color:var(--gold-light)}
+.ing-row{
+  display:flex;align-items:center;gap:18px;padding:16px 26px;
+  border-bottom:1px solid rgba(184,150,90,.08);cursor:pointer;transition:all .2s
+}
+.ing-row:hover{padding-left:34px;background:rgba(184,150,90,.02)}
+.ing-emoji{font-size:22px;width:30px;text-align:center}
+.ing-name{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.2vw,20px);font-weight:300;font-style:italic;color:var(--cream);flex:1}
+.ing-ben{font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:3px}
+
+/* ── TAGS ── */
+.tag{display:inline-block;border:1px solid rgba(184,150,90,.28);color:var(--gold-light);padding:4px 12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 5px 7px 0}
+.tag-red{display:inline-block;border:1px solid rgba(200,80,80,.32);color:#DC6666;padding:4px 12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 5px 7px 0}
+.tag-green{display:inline-block;border:1px solid rgba(100,170,100,.32);color:#84C584;padding:4px 12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 5px 7px 0}
+.tag-blue{display:inline-block;border:1px solid rgba(106,175,224,.32);color:#6AAFE0;padding:4px 12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 5px 7px 0}
+
+/* ── MISC UI ── */
+.sec-label{font-size:9px;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;margin:28px 0 12px;font-weight:500}
+.divider{display:flex;align-items:center;gap:14px;margin:32px 0}
+.divider-line{flex:1;height:1px;background:rgba(184,150,90,.1)}
+.divider-diamond{color:var(--gold);font-size:10px}
+.footer-note{text-align:center;font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:52px;opacity:.55}
+.shimmer{display:inline-block;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2.8s infinite}
+@keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+
+/* ── TABS ── */
+.tab-bar{display:flex;border-bottom:1px solid rgba(184,150,90,.14);margin-bottom:26px;overflow-x:auto;gap:0}
+.tab{padding:12px 22px;font-family:'Montserrat',sans-serif;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;background:none;border-left:none;border-right:none;border-top:none}
+.tab.active{color:var(--gold);border-bottom:2px solid var(--gold)}
+.tab:hover{color:var(--gold-light)}
+
+/* ── COMPARE ── */
+.compare-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:560px){.compare-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}}
+.cmp-cell{background:var(--card-bg);border:1px solid var(--border);padding:22px 18px;cursor:pointer;transition:border-color .2s}
+.cmp-cell:hover{border-color:rgba(184,150,90,.4)}
+.cmp-title{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,21px);font-style:italic;color:var(--cream);margin-bottom:5px}
+.cmp-ben{font-size:8.5px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.cmp-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(184,150,90,.06);font-size:11px;letter-spacing:.4px;color:var(--text-light)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-row strong{color:var(--cream);font-weight:400}
+.compare-tray{position:sticky;bottom:0;background:rgba(12,10,8,.97);border-top:1px solid rgba(184,150,90,.22);padding:13px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;z-index:100}
+.cmp-chip{display:flex;align-items:center;gap:7px;border:1px solid rgba(184,150,90,.28);padding:5px 11px;font-size:10.5px;color:var(--gold-light);letter-spacing:1px}
+.cmp-chip button{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:13px;line-height:1;padding:0 0 0 3px}
+.cmp-chip button:hover{color:#DC6666}
+
+/* ── ROUTINE ── */
+.rt-step{display:flex;align-items:flex-start;gap:18px;padding:17px 0;border-bottom:1px solid rgba(184,150,90,.07)}
+.rt-num{width:30px;height:30px;border:1px solid rgba(184,150,90,.28);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--gold);flex-shrink:0;margin-top:2px}
+.rt-name{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2.2vw,19px);font-style:italic;color:var(--cream)}
+.rt-note{font-size:11px;letter-spacing:.4px;color:var(--text-muted);margin-top:4px;line-height:1.6}
+.rt-badge{font-size:8.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,150,90,.18);padding:2px 9px;margin-left:10px}
+
+/* ── GLOSSARY ── */
+.gloss-row{display:flex;align-items:flex-start;gap:18px;padding:15px 0;border-bottom:1px solid rgba(184,150,90,.07)}
+.gloss-term{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2vw,17px);font-style:italic;color:var(--cream);min-width:130px}
+.gloss-def{font-size:11.5px;letter-spacing:.3px;color:var(--text-light);line-height:1.7}
+
+/* ── SHOP SECTION ── */
+.shop-banner{
+  background:linear-gradient(135deg,rgba(184,150,90,.12),rgba(154,122,58,.06));
+  border:1px solid rgba(184,150,90,.25);padding:24px 28px;margin:28px 0;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap
+}
+.shop-banner-text{flex:1;min-width:200px}
+.shop-banner-label{font-size:9px;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.shop-banner-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-style:italic;color:var(--cream)}
+
+/* ── RESULT REC CARD ── */
+.rec-card{
+  display:flex;align-items:center;gap:18px;
+  padding:clamp(16px,2.5vw,22px);
+  border:1px solid rgba(184,150,90,.1);margin-bottom:12px;
+  cursor:pointer;transition:all .2s;background:rgba(14,12,10,.22)
+}
+.rec-card:hover{border-color:rgba(184,150,90,.38);background:rgba(184,150,90,.04);transform:translateX(3px)}
+.rec-num{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,27px);font-weight:300;color:rgba(184,150,90,.28);width:30px}
+.rec-name{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.4vw,21px);font-style:italic;color:var(--cream)}
+.rec-ben{font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:3px}
+
+/* ── SKIN PROFILE BADGE ── */
+.skin-profile{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
+.sp-badge{border:1px solid rgba(184,150,90,.28);padding:6px 16px;font-size:9.5px;letter-spacing:2px;color:var(--gold-light);text-transform:uppercase}
+
+/* ── HEADING UTILS ── */
+.h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,40px);font-style:italic;color:var(--cream)}
+.h3{font-family:'Cormorant Garamond',serif;font-size:clamp(25px,4vw,36px);font-style:italic;color:var(--cream)}
+.sub{font-size:10px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;margin-top:7px}
+.empty{text-align:center;color:var(--text-muted);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:19px}
+
+/* ── FEATURE RIBBON ── */
+.feat-ribbon{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0 32px}
+.feat-pill{font-size:8.5px;letter-spacing:2px;color:var(--text-muted);border:1px solid rgba(184,150,90,.12);padding:4px 12px;text-transform:uppercase}
+
+/* ── FADE-IN ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .45s ease both}
+
+/* ── PRODUCT HIGHLIGHT ── */
+.prod-highlight{
+  background:linear-gradient(135deg,rgba(184,150,90,.08) 0%,rgba(14,12,10,.6) 100%);
+  border:1px solid rgba(184,150,90,.22);padding:28px 26px;margin-bottom:14px;
+  position:relative;overflow:hidden
+}
+.prod-highlight::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(184,150,90,.25),transparent)}
+
+/* ── QUIZ SKIN ICONS ── */
+.skin-icon-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;justify-content:center}
+.skin-icon{
+  flex:1;min-width:100px;max-width:140px;
+  background:rgba(14,12,10,.45);border:1px solid rgba(184,150,90,.13);
+  padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s
+}
+.skin-icon:hover,.skin-icon.selected{border-color:var(--gold);background:rgba(184,150,90,.08)}
+.skin-icon-emoji{font-size:22px;margin-bottom:8px}
+.skin-icon-label{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light)}
+</style>
+
+<div id="mbl-quiz-root-wrapper"></div>
+
+<script src="https://unpkg.com/vue@3.4.21/dist/vue.global.prod.js"></script>
+<script>
+(function(){
+if(window.__mblSkincareAppV2) return;
+window.__mblSkincareAppV2=true;
+
+/* ── PRODUCTS ── */
+const PRODUCTS={
+  "Biome Milk Toner":{
+    url:"https://www.mblartistry.com/products/biome-milk-toner",
+    tagline:"Microbiome-balancing hydrating toner that preps and perfects",
+    badge:"Bestseller",
+    keyIngredients:["Hyaluronic Acid","Lactobacillus Ferment","Niacinamide","Panthenol"],
+    bestFor:["Dry","Sensitive","Normal","Combination"],
+    concerns:["Dehydration","Redness & sensitivity","Large pores"],
+    step:"Step 2 — Toner",
+    emoji:"🌿",
+    benefits:"Restores skin's microbiome balance, delivers deep hydration, and refines pores while calming inflammation.",
+    matchScore:0
+  },
+  "Biome Milk Cleanser":{
+    url:"https://www.mblartistry.com/products/biome-milk-cleanser",
+    tagline:"Gentle pH-balanced milk cleanser that nourishes as it purifies",
+    badge:"Foundation Essential",
+    keyIngredients:["Ceramides","Glycerin","Lactobacillus Ferment","Aloe Vera"],
+    bestFor:["Dry","Sensitive","Normal","Combination","Oily"],
+    concerns:["Redness & sensitivity","Dehydration","Acne & breakouts"],
+    step:"Step 1 — Cleanser",
+    emoji:"🫧",
+    benefits:"Dissolves impurities without stripping, fortifies the skin barrier, and maintains optimal pH balance.",
+    matchScore:0
+  },
+  "LumiExo Cream":{
+    url:"https://www.mblartistry.com/products/lumiexo-cream",
+    tagline:"Luminosity-boosting moisturizer with exfoliating actives",
+    badge:"Cult Favourite",
+    keyIngredients:["AHA – Lactic Acid","Vitamin C","Peptides","Ceramides","Squalane"],
+    bestFor:["Dry","Normal","Combination"],
+    concerns:["Dark spots & dullness","Fine lines & aging","Uneven texture"],
+    step:"Step 5 — Moisturizer",
+    emoji:"✨",
+    benefits:"Resurfaces and brightens while delivering deep moisture and collagen-stimulating peptides.",
+    matchScore:0
+  },
+  "LumiExo Gel Boost":{
+    url:"https://www.mblartistry.com/products/lumiexo-gel-boost",
+    tagline:"Lightweight oil-free brightening gel for a lit-from-within glow",
+    badge:"New",
+    keyIngredients:["Niacinamide","Vitamin C","BHA – Salicylic Acid","Hyaluronic Acid"],
+    bestFor:["Oily","Combination"],
+    concerns:["Large pores","Acne & breakouts","Dark spots & dullness","Excess oiliness"],
+    step:"Step 4 — Serum / Gel",
+    emoji:"💫",
+    benefits:"Controls sebum, minimizes pores, and delivers brightening actives in a weightless gel texture.",
+    matchScore:0
+  },
+  "Lumi Exonic Mask":{
+    url:"https://www.mblartistry.com/products/lumi-exonic-mask",
+    tagline:"Intensive resurfacing treatment mask for visible results overnight",
+    badge:"Weekly Treatment",
+    keyIngredients:["AHA – Glycolic Acid","Alpha-Arbutin","Centella Asiatica(Cica)","Panthenol(Vitamin B5)"],
+    bestFor:["Normal","Combination","Oily","Dry"],
+    concerns:["Dark spots & dullness","Uneven texture","Fine lines & aging"],
+    step:"Treatment — 2–3× per week",
+    emoji:"🌙",
+    benefits:"Deep exfoliation with brightening and soothing actives for visibly smoother, more even skin tone.",
+    matchScore:0
+  },
+  "LumiExo Ampoule":{
+    url:"https://www.mblartistry.com/products/lumiexo-ampoule",
+    tagline:"High-potency concentrated serum for accelerated transformation",
+    badge:"Advanced",
+    keyIngredients:["Vitamin C(L-Ascorbic Acid)","Alpha-Arbutin","Ferulic Acid","Peptides","Niacinamide"],
+    bestFor:["Normal","Combination","Dry"],
+    concerns:["Dark spots & dullness","Fine lines & aging","Uneven texture"],
+    step:"Step 3 — Ampoule / Serum",
+    emoji:"⚗️",
+    benefits:"Maximum-potency brightening and anti-aging complex that targets pigmentation at its source.",
+    matchScore:0
+  }
+};
+
+/* ── INGREDIENTS ── */
+const INGREDIENTS={
+"Hyaluronic Acid":{cat:"Humectant",ben:"Deep Hydration & Plumping",aw:[],rating:5,dsc:"A moisture magnet that holds up to 1000× its weight in water. Draws hydration from the environment and deeper skin layers to the surface. Works across all skin types and all climates. Multiple molecular weights target different skin depths—high molecular weight for surface plumping, low molecular weight for deeper hydration. Non-comedogenic and safe for the most reactive skins.",emoji:"💧",rt:"AM/PM",pairings:["Ceramides","Glycerin","Peptides","Niacinamide"]},
+"Sodium Hyaluronate":{cat:"Humectant",ben:"Lightweight Deep Hydration",aw:[],rating:5,dsc:"A smaller salt form of hyaluronic acid that penetrates deeper into the epidermis due to its reduced molecular size. More stable than HA in formulation. Exceptionally well-tolerated. Delivers hydration to layers that standard HA cannot reach, making it particularly effective for fine lines caused by dehydration.",emoji:"💦",rt:"AM/PM",pairings:["Hyaluronic Acid","Niacinamide","Ceramides"]},
+"Glycerin":{cat:"Humectant",ben:"Barrier Hydration & Softening",aw:[],rating:5,dsc:"One of skincare's most proven and versatile humectants. Draws water to the skin surface and helps maintain the skin's natural moisture factor. Reinforces the lipid barrier between skin cells and dramatically improves skin texture with consistent use. Effective at very low concentrations and compatible with virtually every other ingredient.",emoji:"🌊",rt:"AM/PM",pairings:["Hyaluronic Acid","Ceramides","Niacinamide"]},
+"Panthenol(Vitamin B5)":{cat:"Humectant",ben:"Healing Hydration",aw:[],rating:5,dsc:"Pro-vitamin B5 that converts to pantothenic acid in the skin, deeply nourishing and repairing. Accelerates wound healing, reduces redness, and improves moisture retention. Particularly effective post-exfoliation or post-treatment. Compatible with all actives including retinoids and acids. A foundational recovery ingredient.",emoji:"🌼",rt:"AM/PM",pairings:["Ceramides","Centella Asiatica(Cica)","Aloe Vera"]},
+"AHA – Glycolic Acid":{cat:"Exfoliant",ben:"Resurfacing & Luminosity",aw:["Retinol(same routine)","Vitamin C","BHA(same routine)"],rating:5,dsc:"The smallest AHA molecule for maximum penetration. Dissolves the bonds between dead skin cells to reveal brighter, smoother skin underneath. Stimulates collagen synthesis with regular use. Highly effective for hyperpigmentation, fine lines, and rough texture. Begin at lower concentrations (5–8%) and pH of 3.5–4.0 for optimal efficacy.",emoji:"🧪",rt:"PM",pairings:["Hyaluronic Acid","Ceramides","Panthenol(Vitamin B5)"]},
+"AHA – Lactic Acid":{cat:"Exfoliant",ben:"Gentle Brightening & Hydration",aw:["Retinol(same routine)","Vitamin C(high conc.)"],rating:5,dsc:"A gentler AHA derived from milk. Exfoliates the surface while also acting as a humectant—uniquely hydrating as it resurfaces. Ideal for sensitive skin, darker skin tones, and beginners to chemical exfoliation. Improves texture, tone, and moisture retention simultaneously. Works beautifully in cream formulas.",emoji:"🍼",rt:"PM",pairings:["Hyaluronic Acid","Niacinamide","Ceramides"]},
+"AHA – Mandelic Acid":{cat:"Exfoliant",ben:"Gentle Resurfacing & Anti-Acne",aw:["Retinol(same routine)"],rating:4,dsc:"The largest AHA molecule, penetrating most slowly. Safe for darker skin tones as it does not trigger PIH. Has antibacterial properties making it dual-purpose for acne-prone skin. An excellent entry-point exfoliant, or a gentle choice for those with sensitized skin who still need regular exfoliation.",emoji:"🫐",rt:"PM",pairings:["Niacinamide","Hyaluronic Acid"]},
+"BHA – Salicylic Acid":{cat:"Exfoliant",ben:"Pore Purification & Anti-Acne",aw:["AHA(same routine)","Retinol(same routine)"],rating:5,dsc:"The only oil-soluble exfoliant, allowing it to penetrate deep inside the pore to dissolve sebum plugs and dead cells. Antibacterial and anti-inflammatory. Uniquely effective for blackheads, whiteheads, and cystic acne. Begin at 0.5–1% and increase to 2% as tolerance builds. Avoid during pregnancy.",emoji:"🌿",rt:"PM",pairings:["Niacinamide","Zinc PCA","Centella Asiatica(Cica)"]},
+"PHA – Gluconolactone":{cat:"Exfoliant",ben:"Ultra-Gentle Resurfacing",aw:[],rating:4,dsc:"A polyhydroxy acid with a larger molecular structure that cannot penetrate as deeply, making it extraordinarily gentle. Suitable for rosacea, eczema, and the most sensitive skin types. Provides mild exfoliation, antioxidant protection, and improved hydration simultaneously. Safe to use daily at low concentrations.",emoji:"🌸",rt:"AM/PM",pairings:["Ceramides","Niacinamide","Hyaluronic Acid"]},
+"PHA – Lactobionic Acid":{cat:"Exfoliant",ben:"Antioxidant Gentle Exfoliation",aw:[],rating:4,dsc:"A next-generation PHA that exfoliates while simultaneously providing antioxidant and chelating properties. Holds moisture on the skin surface while gently renewing it. An exceptional choice for post-procedure skin, mature skin, or anyone who reacts to traditional AHAs. Safe morning and evening at appropriate concentrations.",emoji:"💮",rt:"AM/PM",pairings:["Hyaluronic Acid","Ceramides"]},
+"Niacinamide":{cat:"Vitamin",ben:"Pore Refinement & Radiance",aw:["Vitamin C(use separately at different times)"],rating:5,dsc:"A multitasking vitamin B3 that minimizes pore appearance, regulates oil production, inhibits melanin transfer to skin cells, strengthens the barrier, and reduces redness. One of the most comprehensively studied and safe cosmetic ingredients. Effective at 2–10%. The 10% concentration offers diminishing returns beyond barrier-strengthening.",emoji:"✨",rt:"AM/PM",pairings:["Hyaluronic Acid","Ceramides","Zinc PCA","Peptides"]},
+"Vitamin C(L-Ascorbic Acid)":{cat:"Vitamin",ben:"Brightening & Antioxidant Shield",aw:["Retinol(same routine)","Niacinamide(use separately)","AHA/BHA(same routine)"],rating:5,dsc:"The gold-standard brightening antioxidant. Inhibits melanin synthesis, stimulates collagen production, and neutralizes free radical damage from UV and pollution. Most effective at pH below 3.5 and concentrations of 10–20%. Unstable—store in opaque, airtight packaging. Combine with Vitamin E and Ferulic Acid to double photoprotective efficacy.",emoji:"🍊",rt:"AM",pairings:["Vitamin E(Tocopherol)","Ferulic Acid","Hyaluronic Acid"]},
+"Vitamin E(Tocopherol)":{cat:"Vitamin",ben:"Antioxidant & Barrier Support",aw:[],rating:4,dsc:"A lipid-soluble antioxidant that neutralizes free radicals, regenerates Vitamin C, and supports the skin's lipid barrier. Works synergistically with Vitamin C and Ferulic Acid to provide superior photoprotection. Also an effective emollient that softens and conditions the skin. Particularly valuable in evening formulations.",emoji:"🌻",rt:"AM/PM",pairings:["Vitamin C(L-Ascorbic Acid)","Ferulic Acid","Squalane"]},
+"Vitamin A – Retinol":{cat:"Retinoid",ben:"Age-Defying Cell Renewal",aw:["AHAs/BHAs(same routine)","Vitamin C(same routine)","Benzoyl Peroxide"],rating:5,dsc:"The gold standard of evidence-based skincare. Accelerates cellular turnover to reveal fresher, brighter skin. Stimulates collagen and elastin synthesis, reduces hyperpigmentation, and refines pore appearance. Causes initial purging and sensitivity—introduce 1–2 nights per week at 0.1–0.25% and build slowly. Always follow with barrier support.",emoji:"🌙",rt:"PM",pairings:["Ceramides","Hyaluronic Acid","Peptides"]},
+"Retinal(Retinaldehyde)":{cat:"Retinoid",ben:"Potent Renewal – Less Irritating",aw:["Vitamin C(same routine)","AHAs(same routine)"],rating:5,dsc:"One step closer to retinoic acid in the conversion chain. Significantly more potent than retinol with a faster conversion rate, yet markedly less irritating than prescription tretinoin. A premium retinoid for those who have developed retinol tolerance or need faster results. Still requires gradual introduction and barrier support.",emoji:"🌛",rt:"PM",pairings:["Ceramides","Peptides","Squalane"]},
+"Bakuchiol":{cat:"Retinoid Alternative",ben:"Plant-Based Retinol Alternative",aw:[],rating:4,dsc:"A clinically proven plant-derived retinol alternative from Psoralea corylifolia seeds. Activates similar genetic pathways to retinol without the associated irritation or photosensitivity. Safe during pregnancy and breastfeeding (consult your physician). Suitable for sensitive skin that cannot tolerate retinoids. Can be used morning and evening.",emoji:"🌱",rt:"AM/PM",pairings:["Hyaluronic Acid","Ceramides","Vitamin C(L-Ascorbic Acid)"]},
+"Alpha-Arbutin":{cat:"Brightener",ben:"Gentle Dark Spot Correction",aw:[],rating:5,dsc:"A stable, gentle tyrosinase inhibitor derived from bearberry. One of the most effective brightening ingredients available OTC. Targets existing pigmentation and prevents new dark spots from forming. Safe for all skin tones including the darkest complexions. Combine with Vitamin C for amplified brightening effect. Effective at 1–2% concentration.",emoji:"🫐",rt:"AM/PM",pairings:["Vitamin C(L-Ascorbic Acid)","Niacinamide","Ferulic Acid"]},
+"Azelaic Acid":{cat:"Brightener",ben:"Redness, Acne & Pigmentation Correction",aw:[],rating:4,dsc:"A dicarboxylic acid with a unique triple action: it inhibits pigmentation, kills acne-causing bacteria, and reduces inflammatory redness. Particularly effective for rosacea, post-acne marks, and melasma. Safe during pregnancy at over-the-counter concentrations. Excellent for sensitive and reactive skin that cannot tolerate stronger actives.",emoji:"🌸",rt:"AM/PM",pairings:["Niacinamide","Centella Asiatica(Cica)","Ceramides"]},
+"Benzoyl Peroxide":{cat:"Anti-Acne",ben:"Bacterial Elimination",aw:["Retinol","Vitamin C","AHAs/BHAs(same routine)"],rating:5,dsc:"One of the most clinically validated acne treatments. Kills Cutibacterium acnes bacteria through oxidation, making it highly effective for inflammatory acne. Does not cause antibiotic resistance unlike topical antibiotics. Start at 2.5% to minimize bleaching risk. Always follow with intensive moisturization. Can bleach fabrics and hair.",emoji:"⚗️",rt:"PM",pairings:["Niacinamide","Ceramides"]},
+"Zinc PCA":{cat:"Anti-Acne",ben:"Oil Control & Anti-Bacterial",aw:[],rating:4,dsc:"A bioavailable zinc salt with sebum-regulating and antibacterial properties. Works synergistically with niacinamide for enhanced oil control. Gentler than benzoyl peroxide, suitable for daily use. Also has mild anti-inflammatory properties. An excellent option for oily, blemish-prone skin that needs regulation without harsh treatment.",emoji:"⚡",rt:"AM/PM",pairings:["Niacinamide","BHA – Salicylic Acid"]},
+"Ceramides":{cat:"Barrier",ben:"Barrier Restoration & Protection",aw:[],rating:5,dsc:"Lipid molecules that make up roughly 50% of the skin's barrier. Topical ceramides (particularly ceramides 1, 3, and 6-II) restore compromised barriers, reduce TEWL, and protect against environmental stressors. Essential after exfoliation, retinoid use, or any treatment that compromises the barrier. Non-comedogenic and suitable for all skin types.",emoji:"🛡️",rt:"AM/PM",pairings:["Hyaluronic Acid","Peptides","Glycerin","Niacinamide"]},
+"Squalane":{cat:"Barrier",ben:"Lightweight Barrier Emollient",aw:[],rating:5,dsc:"A stable, plant-derived (sugarcane or olive) hydrocarbon that closely mimics skin's own sebum. Provides exceptional emolliency without feeling greasy or clogging pores. Suitable for oily and acne-prone skin types. Locks in all the active ingredients applied beneath it. One of the safest and most universally tolerated skin oils.",emoji:"✦",rt:"AM/PM",pairings:["Ceramides","Vitamin E(Tocopherol)","Retinal(Retinaldehyde)"]},
+"Shea Butter":{cat:"Barrier",ben:"Rich Occlusive Nourishment",aw:[],rating:4,dsc:"A natural fat rich in oleic, stearic, and linoleic acids. Provides deep occlusive moisturization and rich emolliency. Contains cinnamic acid with mild UV-protective properties. Best in PM formulations for very dry or compromised skin. May feel heavy for oily skin types, but is generally non-comedogenic in refined forms.",emoji:"🧈",rt:"PM",pairings:["Ceramides","Vitamin E(Tocopherol)","Panthenol(Vitamin B5)"]},
+"Peptides":{cat:"Peptide",ben:"Firming & Collagen Stimulation",aw:[],rating:5,dsc:"Short amino acid chains that act as cell-communicating messengers, signaling the skin to produce collagen, elastin, and hyaluronic acid. Different types target different concerns: signal peptides (Matrixyl) for collagen synthesis, carrier peptides for mineral delivery, neurotransmitter-inhibiting peptides (Argireline) for expression line relaxation. Highly effective with consistent use.",emoji:"🧬",rt:"AM/PM",pairings:["Hyaluronic Acid","Niacinamide","Ceramides","Vitamin C(L-Ascorbic Acid)"]},
+"Collagen(Hydrolyzed)":{cat:"Peptide",ben:"Surface Hydration & Plumping",aw:[],rating:3,dsc:"Topical hydrolyzed collagen cannot penetrate to the dermis but forms a film-forming network on the skin surface, providing immediate plumping and smoothing effects. Also acts as a humectant. While it does not directly build collagen, it improves the texture and feel of formulations significantly. Best paired with ingredients that actually stimulate collagen synthesis.",emoji:"🫀",rt:"AM/PM",pairings:["Hyaluronic Acid","Peptides","Ceramides"]},
+"Centella Asiatica(Cica)":{cat:"Botanical",ben:"Healing & Barrier Repair",aw:[],rating:5,dsc:"A revered K-beauty staple containing madecassoside, asiaticoside, and asiatic acid. Clinical studies confirm its ability to accelerate wound healing, reduce inflammation, stimulate collagen synthesis, and repair the skin barrier. An exceptional ingredient for sensitive, irritated, or compromised skin. Works synergistically with ceramides for barrier recovery.",emoji:"🌿",rt:"AM/PM",pairings:["Ceramides","Hyaluronic Acid","Niacinamide"]},
+"Green Tea(EGCG)":{cat:"Botanical",ben:"Antioxidant & Anti-Inflammatory",aw:[],rating:4,dsc:"Rich in epigallocatechin gallate (EGCG), green tea extract is a powerful antioxidant with demonstrated anti-inflammatory and anti-bacterial properties. Reduces redness, protects against UV-induced damage, and may inhibit excess sebum production. A gentle, universally compatible botanical suitable for sensitive and acne-prone skin alike.",emoji:"🍵",rt:"AM/PM",pairings:["Vitamin C(L-Ascorbic Acid)","Niacinamide","Centella Asiatica(Cica)"]},
+"Rosehip Seed Oil":{cat:"Botanical",ben:"Brightening Facial Oil",aw:[],rating:4,dsc:"Rich in trans-retinoic acid (natural vitamin A), linoleic acid, and vitamin C. Clinically shown to improve hyperpigmentation, fine lines, and skin tone. Best suited for dry to normal skin in PM routines. High linoleic acid content makes it non-comedogenic and beneficial for acne-prone skin. Store refrigerated to prevent rancidity.",emoji:"🌹",rt:"PM",pairings:["Vitamin E(Tocopherol)","Squalane","Ceramides"]},
+"Jojoba Oil":{cat:"Botanical",ben:"Balancing & Soothing Lipid",aw:[],rating:4,dsc:"Technically a liquid wax ester that closely mimics the skin's own sebum. Non-comedogenic and suitable for all skin types including oily and acne-prone. Has a long shelf life due to its stability. Excellent as a facial oil or carrier oil. The closest natural analog to skin's sebum makes it particularly well-tolerated.",emoji:"🤎",rt:"AM/PM",pairings:["Squalane","Ceramides","Vitamin E(Tocopherol)"]},
+"Ferulic Acid":{cat:"Botanical",ben:"Antioxidant Synergist",aw:[],rating:5,dsc:"A plant-based antioxidant that doubles the photoprotective activity of vitamins C and E when combined. Stabilizes otherwise-volatile vitamin C formulations, extending their efficacy and shelf life. Also has mild brightening properties. A key ingredient in the gold-standard antioxidant serum format (C+E+Ferulic). Most effective in AM routines.",emoji:"🌾",rt:"AM",pairings:["Vitamin C(L-Ascorbic Acid)","Vitamin E(Tocopherol)","Alpha-Arbutin"]},
+"Aloe Vera":{cat:"Botanical",ben:"Soothing & Healing",aw:[],rating:4,dsc:"A succulent-derived gel containing acemannan polysaccharides, enzymes, and vitamins. Provides instant cooling relief to irritated or sunburned skin. Has demonstrated wound-healing, anti-inflammatory, and mild antibacterial properties. An excellent soothing vehicle for delivering other actives. Particularly useful post-exfoliation, post-sun, or for reactive skin.",emoji:"🌵",rt:"AM/PM",pairings:["Centella Asiatica(Cica)","Niacinamide","Hyaluronic Acid"]},
+"Snail Mucin(Secretion Filtrate)":{cat:"Specialty",ben:"Multi-Action Regeneration",aw:[],rating:5,dsc:"A complex secretion containing glycoproteins, hyaluronic acid, glycolic acid, copper peptides, and enzymes. Multitasking: hydrating, exfoliating, brightening, and healing simultaneously. Clinically proven to improve hydration, reduce fine lines, and fade scars and dark spots. A foundational K-beauty ingredient suitable for all skin types.",emoji:"🐌",rt:"AM/PM",pairings:["Niacinamide","Ceramides","Hyaluronic Acid"]},
+"EGF(Epidermal Growth Factor)":{cat:"Specialty",ben:"Cellular Regeneration",aw:[],rating:4,dsc:"A protein fragment that signals skin cells to proliferate and repair. Most effective for aged, sun-damaged, or post-procedure skin. Accelerates the skin's natural renewal process. Clinical research shows improvements in firmness, texture, and skin density. Best used in concentrated ampoule or serum form in the PM routine.",emoji:"🧫",rt:"PM",pairings:["Peptides","Hyaluronic Acid","Ceramides"]},
+"Polyglutamic Acid":{cat:"Specialty",ben:"Next-Level Hydration Booster",aw:[],rating:4,dsc:"A fermentation-derived polypeptide capable of holding 4× more moisture than hyaluronic acid. Inhibits hyaluronidase, the enzyme that breaks down the skin's natural hyaluronic acid, thereby amplifying the skin's own moisturization. Creates a breathable film on the skin surface for enhanced moisture retention. An elite hydration ingredient.",emoji:"🌐",rt:"AM/PM",pairings:["Hyaluronic Acid","Ceramides","Niacinamide"]},
+"Zinc Oxide":{cat:"Sun Protection",ben:"Broad-Spectrum Mineral UVA+UVB Shield",aw:[],rating:5,dsc:"An inorganic mineral UV filter that physically reflects and scatters both UVA and UVB radiation. Provides the broadest spectrum mineral protection available. Non-irritating, non-comedogenic, and safe for sensitive skin and during pregnancy. Effective immediately upon application with no activation time required. The gold-standard mineral sunscreen.",emoji:"☀️",rt:"AM",pairings:["Vitamin C(L-Ascorbic Acid)","Ferulic Acid","Niacinamide"]},
+"Titanium Dioxide":{cat:"Sun Protection",ben:"Mineral UVB Shield",aw:[],rating:4,dsc:"An inorganic mineral filter offering strong UVB and limited UVA protection. Often combined with Zinc Oxide for complete broad-spectrum coverage. Lighter and less chalky on skin than Zinc Oxide alone, making it preferred for lighter-weight SPF formulations. Non-irritating and safe for all skin types.",emoji:"🌤️",rt:"AM",pairings:["Zinc Oxide","Niacinamide"]}
+};
+
+/* ── QUIZ QUESTIONS ── */
+const QUESTIONS=[
+{id:"skinType",question:"How does your skin feel by midday?",sub:"Helps us identify your skin type",
+options:[
+{val:"Dry",label:"Tight & flaky",desc:"Needs moisture constantly",emoji:"🌵"},
+{val:"Oily",label:"Shiny all over",desc:"T-zone and cheeks both glisten",emoji:"💦"},
+{val:"Combination",label:"Oily T-zone, dry cheeks",desc:"Mixed zones with different needs",emoji:"🌗"},
+{val:"Sensitive",label:"Reactive & easily flushed",desc:"Redness or stinging is common",emoji:"🌸"},
+{val:"Normal",label:"Balanced & comfortable",desc:"Minimal concerns, good baseline",emoji:"✨"}
+]},
+{id:"concern1",question:"What is your primary skin concern?",sub:"The #1 thing you want to improve",
+options:[
+{val:"Acne & breakouts",label:"Acne & breakouts",desc:"Blemishes, blackheads, congestion",emoji:"😤"},
+{val:"Fine lines & aging",label:"Fine lines & aging",desc:"Loss of firmness, wrinkles",emoji:"🕰️"},
+{val:"Dark spots & dullness",label:"Dark spots & dullness",desc:"Uneven tone, hyperpigmentation",emoji:"🌑"},
+{val:"Large pores",label:"Large pores",desc:"Visible, enlarged pore size",emoji:"🔍"},
+{val:"Redness & sensitivity",label:"Redness & sensitivity",desc:"Irritation, rosacea, reactive skin",emoji:"🌡️"}
+]},
+{id:"concern2",question:"And your secondary concern?",sub:"Every skin has layers of needs",
+options:[
+{val:"Dehydration",label:"Dehydration",desc:"Skin drinks up moisture fast",emoji:"🫙"},
+{val:"Uneven texture",label:"Uneven texture",desc:"Rough, bumpy, or dull surface",emoji:"🪨"},
+{val:"Excess oiliness",label:"Excess oiliness",desc:"Mid-day shine and congestion",emoji:"💧"},
+{val:"Dryness",label:"Dryness",desc:"Tight, parched, flaky patches",emoji:"🍂"},
+{val:"None",label:"Just glowing skin",desc:"Maintain and elevate",emoji:"🌟"}
+]},
+{id:"experience",question:"How seasoned is your skincare ritual?",sub:"Shapes the complexity of your recommendation",
+options:[
+{val:"Complete beginner",label:"Just starting out",desc:"Clean slate, open to guidance",emoji:"🌱"},
+{val:"Know the basics",label:"Cleanser & moisturiser",desc:"Consistent with the basics",emoji:"🌿"},
+{val:"Intermediate",label:"Serums & actives",desc:"Comfortable with layering",emoji:"🌲"},
+{val:"Advanced",label:"Full protocol",desc:"Know your retinoids from AHAs",emoji:"🌳"}
+]}
+];
+
+/* ── ROUTINE TEMPLATES ── */
+const ROUTINE={
+AM:[
+{step:1,name:"Cleanser",note:"Gentle, pH-balanced cleanser. Our Biome Milk Cleanser preps your microbiome while cleansing.",time:"AM",product:"Biome Milk Cleanser"},
+{step:2,name:"Toner / Essence",note:"Hydrating toner to prep skin for actives. Biome Milk Toner restores balance and primes for maximum absorption.",time:"AM",product:"Biome Milk Toner"},
+{step:3,name:"Ampoule / Serum",note:"High-actives treatment. LumiExo Ampoule delivers concentrated brightening and firming actives.",time:"AM",product:"LumiExo Ampoule"},
+{step:4,name:"Gel Boost / Treatment",note:"Lightweight targeted treatment. LumiExo Gel Boost is ideal for oily and combination skin.",time:"AM",product:"LumiExo Gel Boost"},
+{step:5,name:"Moisturizer",note:"Seal in all actives. LumiExo Cream brightens as it moisturizes.",time:"AM",product:"LumiExo Cream"},
+{step:6,name:"SPF 30–50+",note:"Non-negotiable. Reapply every 2 hours outdoors. The single most anti-aging step.",time:"AM",product:null}
+],
+PM:[
+{step:1,name:"Cleanser",note:"First cleanse: dissolves SPF, makeup, and sebum. Biome Milk Cleanser is gentle enough for double-cleansing.",time:"PM",product:"Biome Milk Cleanser"},
+{step:2,name:"Toner",note:"Second step: rebalance and hydrate post-cleanse with Biome Milk Toner.",time:"PM",product:"Biome Milk Toner"},
+{step:3,name:"Mask (2–3×/week)",note:"Lumi Exonic Mask resurfaces and brightens while you sleep. Use on alternate evenings.",time:"PM",product:"Lumi Exonic Mask"},
+{step:4,name:"Ampoule / Serum",note:"LumiExo Ampoule on non-mask nights for continuous brightening and anti-aging.",time:"PM",product:"LumiExo Ampoule"},
+{step:5,name:"Moisturizer",note:"LumiExo Cream provides barrier support and overnight luminosity enhancement.",time:"PM",product:"LumiExo Cream"},
+{step:6,name:"Sleeping Mask / Facial Oil",note:"Final occlusive step. Optional 2–3×/week to lock in everything beneath.",time:"PM",product:null}
+]
+};
+
+/* ── GLOSSARY ── */
+const GLOSSARY=[
+{term:"Humectant",def:"An ingredient that draws water molecules from the air and deeper skin layers into the epidermis. Examples: Hyaluronic Acid, Glycerin, Panthenol."},
+{term:"Emollient",def:"An ingredient that softens and smooths the skin by filling the spaces between skin cells. Examples: Squalane, Jojoba Oil, Ceramides."},
+{term:"Occlusive",def:"An ingredient that forms a physical barrier on the skin surface to seal in moisture and prevent transepidermal water loss. Examples: Shea Butter, Petrolatum."},
+{term:"TEWL",def:"Transepidermal Water Loss — the passive evaporation of water through the skin's barrier. Increased TEWL indicates a compromised barrier."},
+{term:"Tyrosinase",def:"The enzyme responsible for catalyzing melanin production. Many brightening ingredients work by inhibiting tyrosinase."},
+{term:"NMF",def:"Natural Moisturising Factor — hygroscopic molecules (amino acids, urea, lactic acid) naturally found in the skin that retain moisture."},
+{term:"AHA",def:"Alpha Hydroxy Acid — water-soluble acids (Glycolic, Lactic, Mandelic) that exfoliate the skin's surface by dissolving the bonds between dead skin cells."},
+{term:"BHA",def:"Beta Hydroxy Acid — oil-soluble acid (Salicylic Acid) that penetrates inside pores to dissolve sebum and dead cells."},
+{term:"PHA",def:"Polyhydroxy Acid — next-generation exfoliants (Gluconolactone, Lactobionic Acid) with larger molecules that exfoliate extremely gently."},
+{term:"Retinoid",def:"A family of Vitamin A derivatives including Retinyl Palmitate, Retinol, Retinal, and prescription Tretinoin — all accelerate cell turnover."},
+{term:"PIH",def:"Post-Inflammatory Hyperpigmentation — dark spots that appear after skin trauma such as acne, eczema, or irritation."},
+{term:"Ceramides",def:"Lipid molecules comprising approximately 50% of the skin's stratum corneum. Essential for barrier integrity and preventing moisture loss."},
+{term:"Peptides",def:"Short chains of amino acids that signal the skin to produce collagen, elastin, and other structural proteins."},
+{term:"pH",def:"A measure of acidity or alkalinity. Healthy skin has a pH of approximately 4.5–5.5. Many actives require low pH to function effectively."},
+{term:"Sebum",def:"The natural oil produced by sebaceous glands. Overproduction leads to oily skin and acne; underproduction leads to dry, tight skin."},
+{term:"Free Radicals",def:"Unstable molecules from UV, pollution, and metabolism that damage skin cells. Antioxidants neutralize them."},
+{term:"Comedogenic",def:"Referring to an ingredient's potential to clog pores and contribute to blackheads and acne. Comedogenic ratings range from 0 (safe) to 5."},
+{term:"Melanin",def:"The pigment responsible for skin, hair, and eye color. Localized overproduction causes hyperpigmentation and dark spots."},
+{term:"Microbiome",def:"The diverse community of microorganisms living on the skin's surface. A balanced microbiome is essential for skin health and immunity."},
+{term:"Collagen",def:"The most abundant structural protein in the dermis, providing skin its firmness and elasticity. Declines with age and UV exposure."},
+{term:"Biome",def:"Short for microbiome — the skin's ecosystem of beneficial bacteria. Probiotic skincare ingredients support and protect this ecosystem."}
+];
+
+const LAYERING_RULES=[
+{icon:"1",title:"Thinnest to Thickest",desc:"Apply from lightest to heaviest: water → toner → essence → serum → gel → moisturizer → oil → SPF. This ensures optimal penetration at each step."},
+{icon:"2",title:"Lowest pH First",desc:"Acid-based actives (AHAs, BHAs, Vitamin C) require low pH. Apply before higher-pH products and wait 15–20 minutes before the next step."},
+{icon:"3",title:"Never Combine Certain Actives",desc:"Avoid: Vitamin C + AHAs (irritation), Retinol + AHAs/BHAs together (over-exfoliation), Benzoyl Peroxide + Retinol (deactivate each other)."},
+{icon:"4",title:"Always Follow Retinoids with Barrier Support",desc:"After retinol or retinoids, follow with ceramide-rich moisturizer. Avoid additional actives in the same routine to minimize irritation."},
+{icon:"5",title:"SPF Is Non-Negotiable",desc:"AHAs, BHAs, Retinoids, and Vitamin C dramatically increase photosensitivity. SPF 30+ every morning regardless of weather."},
+{icon:"6",title:"Introduce One New Active at a Time",desc:"When adding a new active, introduce it alone 1–2 nights/week and observe for 2–4 weeks before adding another."},
+{icon:"7",title:"Patience is the Active Ingredient",desc:"Most topical actives require 8–12 weeks for visible results. Consistency outperforms potency."}
+];
+
+const ALL_CATEGORIES=["All",...new Set(Object.values(INGREDIENTS).map(i=>i.cat))];
+const PRODUCT_NAMES=Object.keys(PRODUCTS);
+
+/* ── VUE APP TEMPLATE ── */
+const htmlTemplate=`
+<div class="mbl-wrap">
+<div class="mbl-inner">
+
+<!-- BRAND HEADER -->
+<div class="brand-hd">
+  <div class="brand-name">MBL Artistry Studio & Spa</div>
+  <div class="brand-rule"><div class="brand-rule-line"></div><div class="brand-eyebrow">Belinic Skin Intelligence</div><div class="brand-rule-line r"></div></div>
+</div>
+
+<!-- ─── HOME ─── -->
+<div v-if="mode==='home'" class="fade-up">
+  <div class="brand-title" style="margin-bottom:12px">Your Skin,&nbsp;<span class="shimmer">Decoded.</span></div>
+  <p style="text-align:center;font-size:11px;letter-spacing:4px;color:var(--text-muted);text-transform:uppercase;margin-bottom:16px">Complimentary Belinic Skin Consultation</p>
+  <div class="feat-ribbon">
+    <span class="feat-pill">✦ Skin Analysis Quiz</span>
+    <span class="feat-pill">◈ Ingredient Library</span>
+    <span class="feat-pill">⚖ Comparator</span>
+    <span class="feat-pill">📋 Routine Builder</span>
+    <span class="feat-pill">🛒 Shop Recommendations</span>
+  </div>
+  <div class="g3" style="margin-bottom:20px">
+    <div class="card no-mb">
+      <span class="card-icon">✦</span>
+      <div class="card-title">Skin Analysis Quiz</div>
+      <p class="card-text">Four questions. A curated belinic ritual built exclusively for your skin's unique profile — with personalised product picks.</p>
+      <button class="btn-gold" @click="go('quiz')">Begin Analysis →</button>
+    </div>
+    <div class="card no-mb">
+      <span class="card-icon">◈</span>
+      <div class="card-title">Ingredient Library</div>
+      <p class="card-text">40+ key ingredients decoded: benefits, pairings, precautions, and expert guidance from our studio estheticians.</p>
+      <button class="btn-outline" @click="go('decoder')">Explore Library</button>
+    </div>
+    <div class="card no-mb">
+      <span class="card-icon">🛒</span>
+      <div class="card-title">Shop the Collection</div>
+      <p class="card-text">Explore the complete Belinic line by MBL Artistry — each formula scientifically crafted for real skin transformation.</p>
+      <button class="btn-outline" @click="go('shop')">View All Products</button>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card no-mb">
+      <span class="card-icon">⚖</span>
+      <div class="card-title">Ingredient Comparator</div>
+      <p class="card-text">Select up to 4 ingredients and compare them side-by-side across benefits, ratings, and usage guidance.</p>
+      <button class="btn-outline" @click="go('compare')">Compare Now</button>
+    </div>
+    <div class="card no-mb">
+      <span class="card-icon">📋</span>
+      <div class="card-title">Routine Builder</div>
+      <p class="card-text">AM & PM layering guides built around the Belinic collection — with step-by-step esthetician protocols.</p>
+      <button class="btn-outline" @click="go('routine')">Build My Routine</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── QUIZ ─── -->
+<div v-if="mode==='quiz'">
+  <div style="max-width:760px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="backQuiz">← Return</button>
+    <div class="progress-bar" style="margin-top:14px">
+      <div v-for="(q,idx) in questions" :key="idx" class="prog-dot" :class="{active:idx===quizStep,done:idx<quizStep}"></div>
+    </div>
+    <div class="card center-card fade-up">
+      <div class="q-label" v-text="'Question '+(quizStep+1)+' of '+questions.length"></div>
+      <div class="q-text" v-text="currentQuestion.question"></div>
+      <p style="text-align:center;font-size:10px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;margin-bottom:28px" v-text="currentQuestion.sub"></p>
+      <div class="skin-icon-row" v-if="quizStep===0">
+        <div class="skin-icon" v-for="opt in currentQuestion.options" :key="opt.val"
+          :class="{selected:answers[currentQuestion.id]===opt.val}"
+          @click="handleAnswer(currentQuestion.id,opt.val)">
+          <div class="skin-icon-emoji">{{opt.emoji}}</div>
+          <div class="skin-icon-label">{{opt.label}}</div>
+          <div style="font-size:9px;color:var(--text-muted);letter-spacing:.3px;margin-top:4px">{{opt.desc}}</div>
+        </div>
+      </div>
+      <div v-else>
+        <button v-for="opt in currentQuestion.options" :key="opt.val" class="opt-btn"
+          @click="handleAnswer(currentQuestion.id,opt.val)">
+          <span style="margin-right:10px">{{opt.emoji}}</span>
+          <strong style="font-weight:500">{{opt.label}}</strong>
+          <span style="margin-left:8px;color:var(--text-muted);font-size:11px">— {{opt.desc}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── EMAIL CAPTURE ─── -->
+<div v-if="mode==='email'">
+  <div class="card center-card fade-up" style="text-align:center">
+    <div v-if="!emailSubmitted">
+      <div style="font-size:36px;margin-bottom:16px">✦</div>
+      <div class="card-title" style="font-size:clamp(24px,3.5vw,32px)">Your Ritual Is Ready</div>
+      <p class="card-text" style="margin-bottom:24px">Enter your email for your personalised skin protocol, product picks, and exclusive esthetician tips.</p>
+      <input class="email-inp" type="email" placeholder="Your email address…" v-model="emailCapture" @keyup.enter="submitEmail"/>
+      <button class="btn-gold" style="max-width:360px;margin:0 auto" @click="submitEmail">Reveal My Ritual →</button>
+      <button class="btn-ghost" style="width:100%;text-align:center;margin-top:14px" @click="go('results')">Skip for now</button>
+    </div>
+    <div v-else style="padding:32px 0">
+      <div style="color:var(--gold);font-size:40px;margin-bottom:14px">✦</div>
+      <div class="card-title" style="font-size:22px">Thank you</div>
+      <p class="card-text">Formulating your unique consultation profile…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── RESULTS ─── -->
+<div v-if="mode==='results'">
+  <div style="max-width:860px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="resetApp">← Start Over</button>
+    <div style="text-align:center;margin:16px 0 28px">
+      <div class="h2">Your Belinic Ritual</div>
+      <div class="skin-profile" style="margin-top:14px">
+        <span class="sp-badge" v-text="answers.skinType+' Skin'"></span>
+        <span class="sp-badge" v-text="answers.concern1"></span>
+        <span class="sp-badge" v-if="answers.concern2 && answers.concern2!=='None'" v-text="answers.concern2"></span>
+      </div>
+    </div>
+
+    <!-- KEY INGREDIENTS -->
+    <div class="card">
+      <div class="sec-label" style="margin-top:0">Your Key Ingredients</div>
+      <p style="font-size:12px;letter-spacing:.3px;color:var(--text-light);margin-bottom:20px;line-height:1.7">Our analysis curated these specific ingredients for your skin profile. Select any to view full esthetician guidance.</p>
+      <div v-for="(ing,i) in results" :key="ing" class="rec-card" @click="viewDetail(ing,'results')">
+        <div class="rec-num" v-text="'0'+(i+1)"></div>
+        <div style="flex:1">
+          <div class="rec-name" v-text="ing"></div>
+          <div class="rec-ben" v-text="ingredientsData[ing]?.ben"></div>
+        </div>
+        <span style="font-size:22px;margin-right:10px" v-text="ingredientsData[ing]?.emoji"></span>
+        <span style="color:var(--gold);font-size:16px">→</span>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond">◆</div><div class="divider-line"></div></div>
+
+    <!-- PRODUCT RECOMMENDATIONS -->
+    <div style="text-align:center;margin-bottom:24px">
+      <div class="h3">Your Product Picks</div>
+      <p class="sub">Curated from the Belinic collection for your exact profile</p>
+    </div>
+    <div class="prod-grid">
+      <div v-for="(p,name) in recommendedProducts" :key="name" class="prod-card fade-up">
+        <div class="prod-num">{{getProductIndex(name)}}</div>
+        <span class="prod-badge" v-text="p.badge"></span>
+        <div class="prod-name" v-text="name"></div>
+        <div class="prod-tagline" v-text="p.tagline"></div>
+        <div class="match-score">
+          <div class="match-dots">
+            <div v-for="n in 5" :key="n" class="match-dot" :class="{filled:n<=p.matchScore}"></div>
+          </div>
+          <span class="match-label">Match for your skin</span>
+        </div>
+        <div class="prod-ing-list">
+          <span v-for="ing in p.keyIngredients.slice(0,3)" :key="ing" class="prod-ing-tag" v-text="ing.length>16?ing.slice(0,14)+'…':ing"></span>
+        </div>
+        <p style="font-size:11.5px;line-height:1.65;color:var(--text-muted);margin-top:4px" v-text="p.benefits"></p>
+        <div class="prod-actions">
+          <a :href="p.url" target="_blank" class="btn-shop" style="flex:1;justify-content:center">Shop Now →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-banner">
+      <div class="shop-banner-text">
+        <div class="shop-banner-label">Complete the Ritual</div>
+        <div class="shop-banner-title">Explore the full Belinic collection</div>
+        <p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;line-height:1.6">Every product in the MBL Belinic line is formulated to work synergistically — building a ritual that compounds results over time.</p>
+      </div>
+      <button class="btn-gold" style="width:auto;padding:14px 28px;white-space:nowrap" @click="go('shop')">View All Products →</button>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn-outline" style="flex:1;min-width:150px" @click="go('decoder')">Ingredient Library →</button>
+      <button class="btn-outline" style="flex:1;min-width:150px" @click="go('routine')">Build My Routine →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SHOP ALL ─── -->
+<div v-if="mode==='shop'">
+  <div style="max-width:960px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="text-align:center;margin:16px 0 32px">
+      <div class="h2">The Belinic Collection</div>
+      <p class="sub">By MBL Artistry Studio & Spa</p>
+    </div>
+    <div class="prod-grid">
+      <div v-for="(p,name) in allProducts" :key="name" class="prod-card fade-up">
+        <div class="prod-num">{{getProductIndex(name)}}</div>
+        <span class="prod-badge" v-text="p.badge"></span>
+        <div style="font-size:28px;margin-bottom:6px">{{p.emoji}}</div>
+        <div class="prod-name" v-text="name"></div>
+        <div class="prod-tagline" v-text="p.tagline"></div>
+        <div style="margin:10px 0">
+          <div style="font-size:8.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Key Actives</div>
+          <div class="prod-ing-list">
+            <span v-for="ing in p.keyIngredients" :key="ing" class="prod-ing-tag" v-text="ing.length>18?ing.slice(0,16)+'…':ing"></span>
+          </div>
+        </div>
+        <div style="margin:8px 0">
+          <div style="font-size:8.5px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-bottom:5px">Best For</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <span v-for="st in p.bestFor" :key="st" class="tag" style="margin:0 3px 4px 0;font-size:8px;padding:3px 8px" v-text="st"></span>
+          </div>
+        </div>
+        <p style="font-size:11.5px;line-height:1.65;color:var(--text-muted);margin:8px 0;flex:1" v-text="p.benefits"></p>
+        <div style="font-size:9px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin:10px 0;border-top:1px solid rgba(184,150,90,.1);padding-top:10px" v-text="p.step"></div>
+        <div class="prod-actions">
+          <a :href="p.url" target="_blank" class="btn-shop" style="flex:1;justify-content:center">Shop Now →</a>
+          <button class="btn-shop-outline" @click="go('quiz')" style="white-space:nowrap">Take Quiz</button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <p style="font-size:11px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-bottom:16px">Not sure where to start?</p>
+      <button class="btn-gold" style="max-width:360px;margin:0 auto" @click="go('quiz')">Take the Skin Analysis Quiz →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── INGREDIENT LIBRARY ─── -->
+<div v-if="mode==='decoder'">
+  <div style="max-width:940px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="margin:14px 0 26px;text-align:center">
+      <div class="h2">Ingredient Library</div>
+      <p class="sub">{{Object.keys(ingredientsData).length}} Key Skincare Ingredients Decoded</p>
+    </div>
+    <input class="search-inp" placeholder="Search an ingredient…" v-model="searchIngredient" style="max-width:100%"/>
+    <div class="filter-pills">
+      <button v-for="cat in allCategories" :key="cat" class="fp" :class="{active:activeCategory===cat}" @click="activeCategory=cat" v-text="cat"></button>
+    </div>
+    <div class="card flush">
+      <div v-if="filteredIngredients.length===0" style="padding:32px;text-align:center;color:var(--text-muted);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:19px">No ingredients found…</div>
+      <div v-for="ing in filteredIngredients" :key="ing" class="ing-row" @click="viewDetail(ing,'decoder')">
+        <span class="ing-emoji" v-text="ingredientsData[ing].emoji"></span>
+        <div style="flex:1">
+          <div class="ing-name" v-text="ing"></div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:3px;flex-wrap:wrap">
+            <div class="ing-ben" v-text="ingredientsData[ing].ben"></div>
+            <span class="tag" style="margin:0;padding:2px 7px;font-size:8px" v-text="ingredientsData[ing].cat"></span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div style="color:var(--gold);font-size:9.5px" v-text="'★'.repeat(ingredientsData[ing].rating)+'☆'.repeat(5-ingredientsData[ing].rating)"></div>
+          <button @click.stop="toggleCompare(ing)" :style="compareList.includes(ing)?'color:var(--gold)':'color:var(--text-muted)'" style="background:none;border:none;font-size:9.5px;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;font-family:Montserrat,sans-serif">
+            {{compareList.includes(ing) ? '✓ Added' : '+ Compare'}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:9.5px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:8px">Showing {{filteredIngredients.length}} of {{Object.keys(ingredientsData).length}}</p>
+  </div>
+</div>
+
+<!-- ─── INGREDIENT DETAIL ─── -->
+<div v-if="mode==='detail' && selectedIngredient">
+  <div style="max-width:760px;margin:0 auto;width:100%">
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px">
+      <button class="btn-ghost" @click="go(previousMode)" style="padding:12px 0">← Back to {{previousMode==='results'?'Ritual':previousMode==='compare'?'Compare':previousMode==='shop'?'Shop':'Library'}}</button>
+      <button @click="toggleCompare(selectedIngredient)" style="margin-left:auto;background:none;border:1px solid rgba(184,150,90,.28);color:var(--gold);padding:7px 14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Montserrat,sans-serif">
+        {{compareList.includes(selectedIngredient) ? '✓ In Comparator' : '+ Add to Compare'}}
+      </button>
+    </div>
+    <div style="text-align:center;margin:22px 0">
+      <div style="font-size:46px;margin-bottom:10px" v-text="ingredientsData[selectedIngredient].emoji"></div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4.5vw,42px);font-weight:300;font-style:italic;color:var(--cream)" v-text="selectedIngredient"></h1>
+      <div style="color:var(--gold);font-size:11px;letter-spacing:3px;margin-top:7px" v-text="'★'.repeat(ingredientsData[selectedIngredient].rating)+'☆'.repeat(5-ingredientsData[selectedIngredient].rating)"></div>
+      <span class="tag" style="margin-top:11px" v-text="ingredientsData[selectedIngredient].cat"></span>
+    </div>
+    <div class="card">
+      <div class="sec-label" style="margin-top:0;text-align:left">The Science</div>
+      <p style="font-size:clamp(12.5px,1.6vw,14px);line-height:1.8;color:rgba(250,247,242,.82);margin-bottom:22px;letter-spacing:.3px" v-text="ingredientsData[selectedIngredient].dsc"></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px">
+        <div style="background:rgba(14,12,10,.4);padding:14px 18px;border:1px solid rgba(184,150,90,.08)">
+          <div style="font-size:8.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:7px">Routine Time</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream)" v-text="ingredientsData[selectedIngredient].rt"></div>
+        </div>
+        <div style="background:rgba(14,12,10,.4);padding:14px 18px;border:1px solid rgba(184,150,90,.08)">
+          <div style="font-size:8.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:7px">Category</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream)" v-text="ingredientsData[selectedIngredient].cat"></div>
+        </div>
+      </div>
+      <div v-if="ingredientsData[selectedIngredient].pairings && ingredientsData[selectedIngredient].pairings.length">
+        <div class="sec-label">Pairs Beautifully With</div>
+        <div style="margin-bottom:14px"><span v-for="item in ingredientsData[selectedIngredient].pairings" :key="item" class="tag-green" v-text="item"></span></div>
+      </div>
+      <div v-if="ingredientsData[selectedIngredient].aw.length">
+        <div class="sec-label">Do Not Layer With</div>
+        <div style="margin-bottom:14px"><span v-for="item in ingredientsData[selectedIngredient].aw" :key="item" class="tag-red" v-text="item"></span></div>
+      </div>
+      <div style="border-top:1px solid rgba(184,150,90,.16);margin-top:28px;padding-top:22px">
+        <div style="font-size:9px;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;font-weight:500">Esthetician Studio Guidance</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,18px);font-weight:300;font-style:italic;color:rgba(250,247,242,.82);line-height:1.8" v-text="getInsight(selectedIngredient)"></p>
+      </div>
+    </div>
+
+    <!-- Products containing this ingredient -->
+    <div v-if="productsWithIngredient(selectedIngredient).length">
+      <div style="text-align:center;margin:28px 0 18px">
+        <div class="h3" style="font-size:clamp(20px,3vw,28px)">Found in the Belinic Collection</div>
+      </div>
+      <div v-for="name in productsWithIngredient(selectedIngredient)" :key="name" class="prod-highlight">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <div style="flex:1;min-width:180px">
+            <span class="prod-badge" v-text="allProducts[name].badge"></span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-style:italic;color:var(--cream);margin-top:4px" v-text="name"></div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px" v-text="allProducts[name].tagline"></div>
+          </div>
+          <a :href="allProducts[name].url" target="_blank" class="btn-shop">Shop Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── COMPARE ─── -->
+<div v-if="mode==='compare'">
+  <div style="max-width:1040px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="text-align:center;margin:14px 0 28px">
+      <div class="h3">Ingredient Comparator</div>
+      <p class="sub">Select up to 4 ingredients to compare</p>
+    </div>
+    <div class="card">
+      <input class="search-inp" placeholder="Search to add ingredient…" v-model="compareSearch" style="max-width:100%;margin-bottom:10px"/>
+      <div style="max-height:250px;overflow-y:auto;margin-bottom:22px">
+        <div v-for="ing in compareFiltered" :key="ing" style="display:flex;align-items:center;gap:11px;padding:9px 7px;border-bottom:1px solid rgba(184,150,90,.06);cursor:pointer" @click="toggleCompare(ing)">
+          <span v-text="ingredientsData[ing].emoji" style="width:26px;text-align:center"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);flex:1" v-text="ing"></span>
+          <span class="tag" style="margin:0;font-size:8px" v-text="ingredientsData[ing].cat"></span>
+          <span :style="compareList.includes(ing)?'color:var(--gold)':'color:var(--text-muted)'" style="font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;font-family:Montserrat,sans-serif;min-width:65px;text-align:right">{{compareList.includes(ing)?'✓ Added':'+ Add'}}</span>
+        </div>
+      </div>
+      <div v-if="compareList.length===0" style="text-align:center;color:var(--text-muted);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:19px;padding:22px 0">Search and add ingredients above to compare…</div>
+      <div v-else>
+        <div class="sec-label" style="margin-top:0">Selected ({{compareList.length}}/4)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px">
+          <div v-for="ing in compareList" :key="ing" class="cmp-chip">
+            <span v-text="ingredientsData[ing].emoji"></span>
+            <span v-text="ing" style="font-size:11.5px"></span>
+            <button @click="toggleCompare(ing)">×</button>
+          </div>
+        </div>
+        <div class="compare-grid">
+          <div v-for="ing in compareList" :key="ing" class="cmp-cell" @click="viewDetail(ing,'compare')">
+            <div style="font-size:26px;margin-bottom:7px" v-text="ingredientsData[ing].emoji"></div>
+            <div class="cmp-title" v-text="ing"></div>
+            <div class="cmp-ben" v-text="ingredientsData[ing].ben"></div>
+            <div class="cmp-row"><span>Category</span><strong v-text="ingredientsData[ing].cat"></strong></div>
+            <div class="cmp-row"><span>Rating</span><strong v-text="'★'.repeat(ingredientsData[ing].rating)"></strong></div>
+            <div class="cmp-row"><span>Best Time</span><strong v-text="ingredientsData[ing].rt"></strong></div>
+            <div class="cmp-row"><span>Avoid With</span><strong style="max-width:110px;text-align:right;font-size:10px;color:#DC6666" v-text="ingredientsData[ing].aw.length ? ingredientsData[ing].aw[0] : '—'"></strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ROUTINE BUILDER ─── -->
+<div v-if="mode==='routine'">
+  <div style="max-width:840px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="text-align:center;margin:14px 0 28px">
+      <div class="h3">Belinic Routine Builder</div>
+      <p class="sub">Evidence-Based Protocol with Product Guidance</p>
+    </div>
+    <div class="tab-bar">
+      <button class="tab" :class="{active:routineTab==='AM'}" @click="routineTab='AM'">☀ Morning Ritual</button>
+      <button class="tab" :class="{active:routineTab==='PM'}" @click="routineTab='PM'">🌙 Evening Ritual</button>
+      <button class="tab" :class="{active:routineTab==='rules'}" @click="routineTab='rules'">✦ Layering Rules</button>
+    </div>
+    <div class="card">
+      <div v-if="routineTab==='AM' || routineTab==='PM'">
+        <div class="rt-step" v-for="step in routineSteps" :key="step.step">
+          <div class="rt-num" v-text="step.step"></div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+              <div class="rt-name" v-text="step.name"></div>
+              <span class="rt-badge" v-text="step.time"></span>
+            </div>
+            <div class="rt-note" v-text="step.note"></div>
+            <div v-if="step.product" style="margin-top:8px">
+              <a :href="allProducts[step.product]?.url" target="_blank" class="btn-shop-outline" style="font-size:8.5px;padding:6px 14px">
+                {{step.product}} →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="routineTab==='rules'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,26px);font-style:italic;color:var(--cream);margin-bottom:22px">The Art of Layering</div>
+        <div class="rt-step" v-for="rule in layeringRules" :key="rule.title">
+          <div class="rt-num">{{rule.icon}}</div>
+          <div style="flex:1">
+            <div class="rt-name" v-text="rule.title"></div>
+            <div class="rt-note" v-text="rule.desc"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="btn-gold" style="max-width:360px;margin:0 auto" @click="go('shop')">Shop the Belinic Collection →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── GLOSSARY ─── -->
+<div v-if="mode==='glossary'">
+  <div style="max-width:840px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="text-align:center;margin:14px 0 28px">
+      <div class="h3">Skincare Glossary</div>
+      <p class="sub">Essential Terminology Defined</p>
+    </div>
+    <input class="search-inp" placeholder="Search a term…" v-model="glossSearch" style="max-width:100%"/>
+    <div class="card">
+      <div class="gloss-row" v-for="g in filteredGlossary" :key="g.term">
+        <div class="gloss-term" v-text="g.term"></div>
+        <div class="gloss-def" v-text="g.def"></div>
+      </div>
+      <div v-if="filteredGlossary.length===0" style="text-align:center;color:var(--text-muted);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:19px;padding:22px">No terms found…</div>
+    </div>
+  </div>
+</div>
+
+<p class="footer-note">MBL Artistry Studio & Spa · Belinic Skin Intelligence · <a :href="'https://www.mblartistry.com'" target="_blank" style="color:var(--gold);text-decoration:none">mblartistry.com</a></p>
+</div>
+
+<!-- Compare Tray -->
+<div class="compare-tray" v-if="compareList.length>0 && mode!=='compare'">
+  <span style="font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-family:Montserrat,sans-serif;white-space:nowrap">{{compareList.length}}/4 Selected</span>
+  <div v-for="ing in compareList" :key="ing" class="cmp-chip">
+    <span v-text="ingredientsData[ing].emoji"></span>
+    <span v-text="ing.length>18?ing.slice(0,18)+'…':ing" style="font-size:10.5px"></span>
+    <button @click="toggleCompare(ing)">×</button>
+  </div>
+  <button class="btn-gold" style="width:auto;padding:9px 18px;font-size:9.5px;flex-shrink:0" @click="go('compare')">Compare →</button>
+</div>
+
+</div>
+</div>
+`;
+
+function initMblApp(){
+  const mountPoint=document.getElementById('mbl-quiz-root-wrapper');
+  if(!mountPoint) return;
+  mountPoint.innerHTML='<div id="mbl-quiz-root"></div>';
+
+  Vue.createApp({
+    template:htmlTemplate,
+    data(){
+      return{
+        mode:'home',previousMode:'home',
+        quizStep:0,answers:{},results:[],
+        searchIngredient:'',activeCategory:'All',
+        selectedIngredient:null,
+        emailCapture:'',emailSubmitted:false,
+        compareList:[],compareSearch:'',
+        routineTab:'AM',
+        glossSearch:'',
+        ingredientsData:INGREDIENTS,
+        allProducts:PRODUCTS,
+        questions:QUESTIONS,
+        allCategories:ALL_CATEGORIES,
+        glossary:GLOSSARY,
+        layeringRules:LAYERING_RULES,
+        isWide:window.innerWidth>=1024
+      }
+    },
+    computed:{
+      currentQuestion(){return this.questions[this.quizStep];},
+      filteredIngredients(){
+        return Object.keys(this.ingredientsData).filter(i=>{
+          const matchSearch=i.toLowerCase().includes(this.searchIngredient.toLowerCase())||this.ingredientsData[i].ben.toLowerCase().includes(this.searchIngredient.toLowerCase());
+          const matchCat=this.activeCategory==='All'||this.ingredientsData[i].cat===this.activeCategory;
+          return matchSearch&&matchCat;
+        });
+      },
+      compareFiltered(){
+        const q=this.compareSearch.toLowerCase();
+        return Object.keys(this.ingredientsData).filter(i=>i.toLowerCase().includes(q)||this.ingredientsData[i].ben.toLowerCase().includes(q));
+      },
+      routineSteps(){
+        if(this.routineTab==='AM') return ROUTINE.AM;
+        if(this.routineTab==='PM') return ROUTINE.PM;
+        return[];
+      },
+      filteredGlossary(){
+        const q=this.glossSearch.toLowerCase();
+        return this.glossary.filter(g=>g.term.toLowerCase().includes(q)||g.def.toLowerCase().includes(q));
+      },
+      recommendedProducts(){
+        const scored={};
+        const{skinType,concern1,concern2}=this.answers;
+        Object.entries(this.allProducts).forEach(([name,p])=>{
+          let score=0;
+          if(p.bestFor.includes(skinType)) score+=2;
+          if(p.concerns.includes(concern1)) score+=3;
+          if(concern2&&p.concerns.includes(concern2)) score+=1;
+          scored[name]={...p,matchScore:Math.min(5,score)};
+        });
+        const sorted=Object.entries(scored).sort((a,b)=>b[1].matchScore-a[1].matchScore);
+        const top=sorted.slice(0,4);
+        return Object.fromEntries(top);
+      }
+    },
+    methods:{
+      go(m){
+        this.mode=m;
+        const mp=document.getElementById('mbl-quiz-root-wrapper');
+        if(mp){
+          const stickyOffset=(document.querySelector('.shopify-section--header')||document.querySelector('sticky-header')||document.querySelector('[data-sticky-header]')||{offsetHeight:0}).offsetHeight||0;
+          window.scrollTo({top:mp.getBoundingClientRect().top+window.pageYOffset-(stickyOffset+60),behavior:'smooth'});
+        }
+      },
+      handleAnswer(qId,ans){
+        this.answers[qId]=ans;
+        if(this.quizStep<this.questions.length-1){this.quizStep++;}
+        else{this.generateRecommendations();this.go('email');}
+      },
+      backQuiz(){
+        if(this.quizStep===0) this.go('home');
+        else this.quizStep--;
+      },
+      submitEmail(){
+        this.emailSubmitted=true;
+        setTimeout(()=>this.go('results'),1300);
+      },
+      generateRecommendations(){
+        const recs=["Hyaluronic Acid","Ceramides"];
+        const{skinType,concern1,concern2,experience}=this.answers;
+        if(concern1==="Acne & breakouts"||skinType==="Oily"){recs.push("BHA – Salicylic Acid","Niacinamide");}
+        if(concern1==="Fine lines & aging"){recs.push("Peptides");if(experience!=="Complete beginner") recs.push("Vitamin A – Retinol");else recs.push("Bakuchiol");}
+        if(concern1==="Dark spots & dullness"){recs.push("Vitamin C(L-Ascorbic Acid)","Alpha-Arbutin");}
+        if(concern1==="Large pores"){recs.push("Niacinamide","BHA – Salicylic Acid");}
+        if(concern1==="Redness & sensitivity"||skinType==="Sensitive"){recs.push("Azelaic Acid","Centella Asiatica(Cica)");}
+        if(concern2==="Uneven texture") recs.push("AHA – Glycolic Acid");
+        if(concern2==="Dehydration") recs.push("Sodium Hyaluronate");
+        if(concern2==="Excess oiliness") recs.push("Zinc PCA");
+        if(skinType==="Dry") recs.push("Panthenol(Vitamin B5)");
+        this.results=[...new Set(recs)].slice(0,6);
+      },
+      getProductIndex(name){
+        const idx=Object.keys(this.allProducts).indexOf(name)+1;
+        return idx<10?'0'+idx:idx;
+      },
+      viewDetail(ingredient,origin){
+        this.selectedIngredient=ingredient;
+        this.previousMode=origin;
+        this.go('detail');
+      },
+      toggleCompare(ing){
+        const idx=this.compareList.indexOf(ing);
+        if(idx>-1){this.compareList.splice(idx,1);}
+        else if(this.compareList.length<4){this.compareList.push(ing);}
+      },
+      productsWithIngredient(ing){
+        return Object.entries(this.allProducts)
+          .filter(([n,p])=>p.keyIngredients.some(i=>i.toLowerCase().includes(ing.toLowerCase().split('(')[0].trim())))
+          .map(([n])=>n);
+      },
+      getInsight(ing){
+        const d=this.ingredientsData[ing];
+        const avoidNote=d.aw.length>0?` Avoid pairing with ${d.aw[0]} in the same routine.`:'';
+        const timeNote=d.rt==='AM'?'morning ritual':(d.rt==='PM'?'evening ritual':'both AM and PM rituals');
+        return `${ing} is best introduced into your ${timeNote}.${avoidNote} As with all active formulas, introduce gradually and observe for 2–4 weeks before layering with additional actives. Our estheticians at MBL Artistry are always available to guide your personal belinic skin journey.`;
+      },
+      resetApp(){
+        this.mode='home';this.quizStep=0;this.answers={};this.results=[];
+        this.emailCapture='';this.emailSubmitted=false;this.selectedIngredient=null;
+      }
+    }
+  }).mount('#mbl-quiz-root');
+}
+
+if(document.readyState==='complete'||document.readyState==='interactive'){
+  setTimeout(initMblApp,50);
+}else{
+  document.addEventListener('DOMContentLoaded',initMblApp);
+}
+})();
+</script>
