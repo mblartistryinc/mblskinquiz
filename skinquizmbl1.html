@@ -1,0 +1,978 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+#belinic-root-wrapper *{box-sizing:border-box;margin:0;padding:0}
+#belinic-root-wrapper{
+  --gold:#B8965A;--gold-light:#D4AF70;--gold-pale:#F5ECD7;--gold-deep:#9A7A3A;
+  --noir:#0E0C0A;--noir-soft:#1C1916;--noir-mid:#161310;
+  --cream:#FAF7F2;--cream-dim:#E8E0D0;
+  --text-muted:#8A7A65;--text-light:#C8B99A;
+  --green:#84C584;--red:#DC6666;--blue:#6AAFE0;
+  --card-bg:rgba(22,19,16,.9);--border:rgba(184,150,90,.18)
+}
+.bel-wrap{
+  width:100%;max-width:1200px;margin:20px auto;
+  padding:clamp(32px,5vw,64px) clamp(16px,3vw,44px);
+  background:linear-gradient(160deg,#0E0C0A 0%,#1C1610 45%,#141009 100%);
+  border-radius:8px;position:relative;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.7);border:1px solid rgba(184,150,90,.14)
+}
+.bel-wrap::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 25% 15%,rgba(184,150,90,.06) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 85%,rgba(184,150,90,.04) 0%,transparent 55%);
+  pointer-events:none;z-index:0
+}
+.bel-wrap::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(184,150,90,.4),transparent);z-index:1
+}
+.bel-inner{position:relative;z-index:1;display:flex;flex-direction:column;width:100%}
+
+/* BRAND HEADER */
+.brand-hd{text-align:center;padding-bottom:clamp(24px,4vw,44px)}
+.brand-rule{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:14px}
+.brand-rule-line{width:clamp(30px,8vw,90px);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.brand-rule-line.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.brand-eyebrow{font-size:clamp(9px,1.2vw,10.5px);font-weight:500;letter-spacing:5px;color:var(--gold);text-transform:uppercase}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:clamp(12px,2vw,15px);font-weight:300;letter-spacing:6px;color:var(--gold-light);text-transform:uppercase;margin-bottom:10px}
+.brand-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5.5vw,58px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.15;text-align:center}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr;gap:20px}
+.g3{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:640px){.g2{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.g3{grid-template-columns:1fr 1fr 1fr}}
+
+/* CARDS */
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:clamp(24px,4vw,44px) clamp(18px,3vw,36px);margin-bottom:20px;box-shadow:0 12px 32px rgba(0,0,0,.35)}
+.card.center-card{max-width:740px;margin-left:auto;margin-right:auto}
+.card.flush{padding:0;overflow:hidden}
+.card-icon{font-size:26px;margin-bottom:14px;display:block;color:var(--gold);text-align:center}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,30px);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:14px;text-align:center}
+.card-text{font-size:clamp(12px,1.5vw,13.5px);font-weight:300;line-height:1.8;color:var(--text-light);margin-bottom:28px;letter-spacing:.3px;text-align:center}
+.card.no-mb{margin-bottom:0}
+
+/* BUTTONS */
+.btn-gold{display:block;width:100%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-deep) 100%);color:var(--noir);border:none;padding:clamp(15px,2vw,18px) 24px;font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.2vw,11px);font-weight:600;letter-spacing:3.5px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-align:center;text-decoration:none}
+.btn-gold:hover{box-shadow:0 8px 24px rgba(184,150,90,.35);transform:translateY(-1px);opacity:.95}
+.btn-outline{display:block;width:100%;background:transparent;color:var(--gold);border:1px solid rgba(184,150,90,.38);padding:clamp(14px,2vw,17px) 24px;font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.2vw,11px);font-weight:500;letter-spacing:3.5px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-align:center;text-decoration:none}
+.btn-outline:hover{border-color:var(--gold-light);background:rgba(184,150,90,.07)}
+.btn-ghost{background:none;border:none;color:var(--text-muted);font-family:'Montserrat',sans-serif;font-size:10.5px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;padding:12px 0;transition:color .2s}
+.btn-ghost:hover{color:var(--gold)}
+.btn-shop{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:var(--noir);border:none;padding:11px 22px;font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-shop:hover{box-shadow:0 6px 18px rgba(184,150,90,.3);transform:translateY(-1px)}
+.btn-shop-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--gold);border:1px solid rgba(184,150,90,.4);padding:10px 20px;font-family:'Montserrat',sans-serif;font-size:9.5px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-shop-outline:hover{border-color:var(--gold);background:rgba(184,150,90,.07)}
+
+/* QUIZ */
+.progress-bar{display:flex;gap:6px;justify-content:center;margin-bottom:32px;max-width:380px;margin-left:auto;margin-right:auto}
+.prog-dot{height:2px;background:rgba(184,150,90,.14);transition:all .4s;flex:1}
+.prog-dot.active{background:var(--gold)}
+.prog-dot.done{background:rgba(184,150,90,.45)}
+.q-label{font-size:9.5px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;text-align:center}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,36px);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:28px;line-height:1.3;text-align:center}
+.opt-btn{display:block;width:100%;background:rgba(14,12,10,.45);border:1px solid rgba(184,150,90,.14);color:var(--text-light);padding:clamp(14px,2vw,19px) clamp(18px,2.5vw,28px);font-family:'Montserrat',sans-serif;font-size:clamp(11.5px,1.5vw,13px);font-weight:300;letter-spacing:1.5px;text-align:left;cursor:pointer;margin-bottom:10px;transition:all .2s}
+.opt-btn:hover{border-color:var(--gold);color:var(--cream);background:rgba(184,150,90,.07);padding-left:clamp(26px,4vw,38px)}
+
+/* PRODUCTS */
+.prod-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px}
+@media(min-width:560px){.prod-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.prod-grid{grid-template-columns:1fr 1fr 1fr}}
+.prod-card{background:rgba(14,12,10,.5);border:1px solid rgba(184,150,90,.14);padding:24px 20px;display:flex;flex-direction:column;gap:10px;transition:all .22s;position:relative;overflow:hidden}
+.prod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(184,150,90,.3),transparent);opacity:0;transition:opacity .25s}
+.prod-card:hover{border-color:rgba(184,150,90,.38);background:rgba(184,150,90,.05);transform:translateY(-2px)}
+.prod-card:hover::before{opacity:1}
+.prod-badge{font-size:8.5px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,150,90,.25);padding:3px 10px;display:inline-block;margin-bottom:4px;width:fit-content}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,21px);font-style:italic;color:var(--cream);line-height:1.25}
+.prod-tagline{font-size:11px;letter-spacing:.5px;color:var(--text-muted);line-height:1.6}
+.prod-ing-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.prod-ing-tag{font-size:8.5px;letter-spacing:1.2px;color:var(--text-muted);border:1px solid rgba(184,150,90,.12);padding:2px 8px;text-transform:uppercase}
+.prod-actions{display:flex;gap:8px;margin-top:auto;padding-top:14px}
+.prod-num{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,42px);font-weight:300;color:rgba(184,150,90,.12);position:absolute;top:12px;right:16px;line-height:1}
+.match-score{display:flex;align-items:center;gap:6px;margin-top:4px}
+.match-dots{display:flex;gap:3px}
+.match-dot{width:6px;height:6px;border-radius:50%;background:rgba(184,150,90,.15)}
+.match-dot.filled{background:var(--gold)}
+.match-label{font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase}
+
+/* INGREDIENT LIBRARY */
+.search-inp{width:100%;max-width:500px;margin:0 auto 22px;background:transparent;border:none;border-bottom:1px solid rgba(184,150,90,.28);color:var(--cream);padding:11px 0;font-family:'Cormorant Garamond',serif;font-size:clamp(19px,2.8vw,24px);font-style:italic;outline:none;display:block;text-align:center;border-radius:0}
+.search-inp:focus{border-bottom-color:var(--gold)}
+.email-inp{width:100%;max-width:420px;margin:0 auto 22px;background:transparent;border:none;border-bottom:1px solid rgba(184,150,90,.28);color:var(--cream);padding:11px 0;font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-style:italic;outline:none;display:block;text-align:center;border-radius:0}
+.email-inp:focus{border-bottom-color:var(--gold)}
+.filter-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.fp{background:transparent;border:1px solid rgba(184,150,90,.18);color:var(--text-muted);padding:6px 14px;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.fp:hover{border-color:var(--gold);color:var(--gold-light)}
+.fp.active{background:rgba(184,150,90,.1);border-color:var(--gold);color:var(--gold-light)}
+.ing-row{display:flex;align-items:center;gap:18px;padding:16px 26px;border-bottom:1px solid rgba(184,150,90,.08);cursor:pointer;transition:all .2s}
+.ing-row:hover{padding-left:34px;background:rgba(184,150,90,.02)}
+.ing-emoji{font-size:22px;width:30px;text-align:center}
+.ing-name{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.2vw,20px);font-weight:300;font-style:italic;color:var(--cream);flex:1}
+.ing-ben{font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:3px}
+
+/* TAGS */
+.tag{display:inline-block;border:1px solid rgba(184,150,90,.28);color:var(--gold-light);padding:4px 12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 5px 7px 0}
+.tag-red{display:inline-block;border:1px solid rgba(200,80,80,.32);color:#DC6666;padding:4px 12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 5px 7px 0}
+.tag-green{display:inline-block;border:1px solid rgba(100,170,100,.32);color:#84C584;padding:4px 12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin:0 5px 7px 0}
+
+/* MISC */
+.sec-label{font-size:9px;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;margin:28px 0 12px;font-weight:500}
+.divider{display:flex;align-items:center;gap:14px;margin:32px 0}
+.divider-line{flex:1;height:1px;background:rgba(184,150,90,.1)}
+.divider-diamond{color:var(--gold);font-size:10px}
+.footer-note{text-align:center;font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:52px;opacity:.55}
+.shimmer{display:inline-block;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2.8s infinite}
+@keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+.h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,40px);font-style:italic;color:var(--cream)}
+.h3{font-family:'Cormorant Garamond',serif;font-size:clamp(25px,4vw,36px);font-style:italic;color:var(--cream)}
+.sub{font-size:10px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;margin-top:7px}
+
+/* FEATURE RIBBON */
+.feat-ribbon{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0 32px}
+.feat-pill{font-size:8.5px;letter-spacing:2px;color:var(--text-muted);border:1px solid rgba(184,150,90,.12);padding:4px 12px;text-transform:uppercase}
+
+/* FADE */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .45s ease both}
+
+/* PRODUCT HIGHLIGHT */
+.prod-highlight{background:linear-gradient(135deg,rgba(184,150,90,.08) 0%,rgba(14,12,10,.6) 100%);border:1px solid rgba(184,150,90,.22);padding:28px 26px;margin-bottom:14px;position:relative;overflow:hidden}
+.prod-highlight::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(184,150,90,.25),transparent)}
+
+/* QUIZ SKIN ICONS */
+.skin-icon-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;justify-content:center}
+.skin-icon{flex:1;min-width:100px;max-width:140px;background:rgba(14,12,10,.45);border:1px solid rgba(184,150,90,.13);padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s}
+.skin-icon:hover,.skin-icon.selected{border-color:var(--gold);background:rgba(184,150,90,.08)}
+.skin-icon-emoji{font-size:22px;margin-bottom:8px}
+.skin-icon-label{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light)}
+
+/* SKIN PROFILE BADGE */
+.skin-profile{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
+.sp-badge{border:1px solid rgba(184,150,90,.28);padding:6px 16px;font-size:9.5px;letter-spacing:2px;color:var(--gold-light);text-transform:uppercase}
+
+/* SHOP BANNER */
+.shop-banner{background:linear-gradient(135deg,rgba(184,150,90,.12),rgba(154,122,58,.06));border:1px solid rgba(184,150,90,.25);padding:24px 28px;margin:28px 0;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.shop-banner-text{flex:1;min-width:200px}
+.shop-banner-label{font-size:9px;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.shop-banner-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-style:italic;color:var(--cream)}
+
+/* REC CARD */
+.rec-card{display:flex;align-items:center;gap:18px;padding:clamp(16px,2.5vw,22px);border:1px solid rgba(184,150,90,.1);margin-bottom:12px;cursor:pointer;transition:all .2s;background:rgba(14,12,10,.22)}
+.rec-card:hover{border-color:rgba(184,150,90,.38);background:rgba(184,150,90,.04);transform:translateX(3px)}
+.rec-num{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,27px);font-weight:300;color:rgba(184,150,90,.28);width:30px}
+.rec-name{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.4vw,21px);font-style:italic;color:var(--cream)}
+.rec-ben{font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:3px}
+
+/* ROUTINE */
+.rt-step{display:flex;align-items:flex-start;gap:18px;padding:17px 0;border-bottom:1px solid rgba(184,150,90,.07)}
+.rt-num{width:30px;height:30px;border:1px solid rgba(184,150,90,.28);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--gold);flex-shrink:0;margin-top:2px}
+.rt-name{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2.2vw,19px);font-style:italic;color:var(--cream)}
+.rt-note{font-size:11px;letter-spacing:.4px;color:var(--text-muted);margin-top:4px;line-height:1.6}
+.rt-badge{font-size:8.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,150,90,.18);padding:2px 9px;margin-left:10px}
+
+/* TABS */
+.tab-bar{display:flex;border-bottom:1px solid rgba(184,150,90,.14);margin-bottom:26px;overflow-x:auto;gap:0}
+.tab{padding:12px 22px;font-family:'Montserrat',sans-serif;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;background:none;border-left:none;border-right:none;border-top:none}
+.tab.active{color:var(--gold);border-bottom:2px solid var(--gold)}
+.tab:hover{color:var(--gold-light)}
+
+/* COMPARE */
+.compare-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:560px){.compare-grid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}}
+.cmp-cell{background:var(--card-bg);border:1px solid var(--border);padding:22px 18px;cursor:pointer;transition:border-color .2s}
+.cmp-cell:hover{border-color:rgba(184,150,90,.4)}
+.cmp-title{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,21px);font-style:italic;color:var(--cream);margin-bottom:5px}
+.cmp-ben{font-size:8.5px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.cmp-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(184,150,90,.06);font-size:11px;letter-spacing:.4px;color:var(--text-light)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-row strong{color:var(--cream);font-weight:400}
+.compare-tray{position:sticky;bottom:0;background:rgba(12,10,8,.97);border-top:1px solid rgba(184,150,90,.22);padding:13px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;z-index:100}
+.cmp-chip{display:flex;align-items:center;gap:7px;border:1px solid rgba(184,150,90,.28);padding:5px 11px;font-size:10.5px;color:var(--gold-light);letter-spacing:1px}
+.cmp-chip button{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:13px;line-height:1;padding:0 0 0 3px}
+.cmp-chip button:hover{color:#DC6666}
+</style>
+
+<div id="belinic-root-wrapper"></div>
+
+<p class="footer-note" style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;color:rgba(138,122,101,.55);text-transform:uppercase;text-align:center;margin-top:20px">
+  MBL Artistry Studio & Spa · Belinic Skin Intelligence · <a href="https://www.mblartistry.com" target="_blank" style="color:var(--gold);text-decoration:none">mblartistry.com</a>
+</p>
+
+<!-- Compare Tray (global, outside Vue for now, will be inside template) -->
+
+<script src="https://unpkg.com/vue@3.4.21/dist/vue.global.prod.js"></script>
+<script>
+(function(){
+if(window.__belinicAppV1) return;
+window.__belinicAppV1=true;
+
+/* ── BELINIC PRODUCTS ── */
+const PRODUCTS={
+  "Biome Milk Cleanser":{
+    url:"https://www.mblartistry.com/products/biome-milk-cleanser",
+    tagline:"Microbiome-intelligent milk cleanser with 500K probiotic exosomes",
+    badge:"Foundation · Step 01",
+    keyIngredients:["Phytotherasome Grape (Probiotics)","10 Probiotic Strains","8 Types Hyaluronic Acid"],
+    bestFor:["Dry","Sensitive","Normal","Combination","Oily"],
+    concerns:["Dehydration","Redness & sensitivity","Dullness & uneven tone","Acne & breakouts"],
+    step:"Step 1 — Cleanser",
+    emoji:"🫧",
+    benefits:"Gently purifies while feeding the skin's microbiome — 10 probiotic strains strengthen skin immunity, 8 hyaluronic acid types deliver multi-layer moisture from the first cleanse.",
+    matchScore:0
+  },
+  "LumiExo Ampoule":{
+    url:"https://www.mblartistry.com/products/lumiexo-ampoule",
+    tagline:"Concentrated brightening ampoule with 750K exosomes and Gluconolactone",
+    badge:"Step 02 · Brightening Booster",
+    keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Gluconolactone (100K ppm)"],
+    bestFor:["Normal","Combination","Dry"],
+    concerns:["Dullness & uneven tone","Fine lines & aging","Uneven texture","Dehydration"],
+    step:"Step 2 — Ampoule / Serum",
+    emoji:"⚗️",
+    benefits:"750,000 exosomes supercharge regeneration and repair. Glutathione targets pigmentation at its source. Gluconolactone (100,000ppm) gently resurfaces and brightens.",
+    matchScore:0
+  },
+  "LumiExo Gel Boost":{
+    url:"https://www.mblartistry.com/products/lumiexo-gel-boost",
+    tagline:"Lightweight brightening gel ideal for daily glow and post-treatment synergy",
+    badge:"Step 03 · Daily Treatment",
+    keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Niacinamide"],
+    bestFor:["Oily","Combination","Sensitive"],
+    concerns:["Dullness & uneven tone","Large pores","Acne & breakouts","Redness & sensitivity"],
+    step:"Step 3 — Gel Boost / Treatment",
+    emoji:"💫",
+    benefits:"Delivers 750K exosomes in a weightless gel. Niacinamide refines pores and regulates oil. Glutathione brightens and evens skin tone without heaviness.",
+    matchScore:0
+  },
+  "Lumi Exonic Mask":{
+    url:"https://www.mblartistry.com/products/lumi-exonic-mask",
+    tagline:"Bio-cellulose sheet mask with Alaska Glacier Water — 8 hours sleep in one mask",
+    badge:"Step 04 · Weekly Treatment",
+    keyIngredients:["Phytotherasome Grape (500K Exosomes)","Alaskan Glacial Water","Thymus Serpyllum Extract","Bio-Detox Complex"],
+    bestFor:["Normal","Combination","Oily","Dry","Sensitive"],
+    concerns:["Redness & sensitivity","Dullness & uneven tone","Dehydration","Post-treatment care"],
+    step:"Treatment — 2–3× per week",
+    emoji:"🌿",
+    benefits:"Premium bio-cellulose infused with Alaska Glacier Water cools and calms. 500K exosomes accelerate repair. Thymus Serpyllum activates a new brightening pathway. Bio-Detox shields against pollution.",
+    matchScore:0
+  },
+  "LumiExo Cream":{
+    url:"https://www.mblartistry.com/products/lumiexo-cream",
+    tagline:"Rich concentrated brightening moisturiser with 750K exosomes and Allantoin",
+    badge:"Step 05 · Finishing Moisturiser",
+    keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Allantoin"],
+    bestFor:["Dry","Normal","Sensitive"],
+    concerns:["Fine lines & aging","Dullness & uneven tone","Dehydration","Uneven texture"],
+    step:"Step 5 — Moisturiser",
+    emoji:"✨",
+    benefits:"Rich, concentrated formula best suited to dry, normal and sensitive skin. 750K exosomes improve elasticity and firmness overnight. Allantoin soothes, heals and fortifies the barrier. Not recommended for oily or acne-prone skin — the Gel Boost is your ideal finishing step.",
+    matchScore:0,
+    notFor:["Oily","Acne & breakouts"]
+  }
+};
+
+/* ── BELINIC INGREDIENT DECODER ── */
+const INGREDIENTS={
+  // ── BELINIC CORE ──
+  "Phytotherasome Grape Exosomes":{cat:"Exosome Technology",ben:"Regeneration, Repair & Radiance",aw:[],rating:5,dsc:"Extracellular vesicles derived from premium grape plant cells, loaded with biological signals that communicate directly with skin cells. At 500,000–750,000 exosomes per dose, these boost skin regeneration, accelerate repair, reduce inflammation, enhance hydration and glow, support collagen production, and strengthen the skin barrier. The cornerstone of every Belinic formula.",emoji:"🍇",rt:"AM/PM",pairings:["Glutathione","Niacinamide","Hyaluronic Acid","Allantoin"],belinic:true},
+  "Glutathione":{cat:"Brightener",ben:"Pigmentation Correction & Antioxidant",aw:[],rating:5,dsc:"Often called the master antioxidant, glutathione inhibits tyrosinase — the enzyme responsible for melanin synthesis — targeting visible pigmentation, dark spots, and uneven skin tone at its source. It also neutralizes free radicals from UV and pollution. A key Belinic active found across the LumiExo range.",emoji:"✦",rt:"AM/PM",pairings:["Vitamin C","Niacinamide","Phytotherasome Grape Exosomes"],belinic:true},
+  "Allantoin":{cat:"Skin Conditioner",ben:"Soothing, Barrier Repair & Healing",aw:[],rating:5,dsc:"A gentle skin-conditioning compound that calms irritation, accelerates barrier repair, softens rough texture, and promotes healing. Keeps skin hydrated and comfortable — especially valuable after professional treatments or exfoliation. Featured in LumiExo Cream.",emoji:"🌼",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Hyaluronic Acid","Ceramides"],belinic:true},
+  "Niacinamide":{cat:"Vitamin",ben:"Brightening, Pore Refinement & Barrier",aw:[],rating:5,dsc:"A multitasking form of Vitamin B3 that brightens uneven skin tone, supports the skin barrier via ceramide synthesis, regulates excess sebum, refines pores, and improves overall clarity. One of the most universally tolerated cosmetic actives. Featured in LumiExo Gel Boost.",emoji:"✨",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Hyaluronic Acid","Zinc"],belinic:true},
+  "Gluconolactone (PHA)":{cat:"Exfoliant",ben:"Gentle Resurfacing & Brightening",aw:[],rating:5,dsc:"A Polyhydroxy Acid (PHA) at 100,000 ppm in LumiExo Ampoule. PHAs exfoliate with exceptional gentleness — smoothing texture, improving clarity, supporting barrier health, and promoting brighter skin. Safe for sensitive skin and ideal for daily use.",emoji:"🧪",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Hyaluronic Acid","Niacinamide"],belinic:true},
+  "Thymus Serpyllum Extract":{cat:"Brightener",ben:"Advanced Brightening Mechanism",aw:[],rating:4,dsc:"A botanical extract from wild thyme operating through a next-generation brightening pathway distinct from traditional tyrosinase inhibitors. Featured in the Lumi Exonic Mask for visible clarity and skin vitality enhancement.",emoji:"🌿",rt:"PM",pairings:["Phytotherasome Grape Exosomes","Alaskan Glacial Water"],belinic:true},
+  "Alaskan Glacial Water":{cat:"Soothing & Hydration",ben:"Mineral Cooling & Calming",aw:[],rating:5,dsc:"Ultra-pure glacial water naturally rich in minerals and trace elements. Used in the Lumi Exonic Mask bio-cellulose sheet to deliver immediate cooling, gentle calming for irritated skin, and deep mineral hydration without irritation.",emoji:"🧊",rt:"AM/PM",pairings:["Thymus Serpyllum Extract","Phytotherasome Grape Exosomes"],belinic:true},
+  "Bio-Detox Complex":{cat:"Antioxidant",ben:"Environmental Protection & Detox",aw:[],rating:4,dsc:"A blend of Citrus, Broccoli, and Aloe in the Lumi Exonic Mask that shields skin from pollution and urban stressors. Citrus provides vitamin C antioxidants, Broccoli neutralizes oxidative stress, Aloe soothes and accelerates barrier recovery.",emoji:"🌱",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Alaskan Glacial Water"],belinic:true},
+  "Hyaluronic Acid (8 Types)":{cat:"Humectant",ben:"Multi-Layer Moisture Delivery",aw:[],rating:5,dsc:"Eight distinct molecular weights of Hyaluronic Acid in the Biome Milk Cleanser create a comprehensive moisture delivery system — high-molecular-weight HA films the surface, low-molecular-weight HA penetrates deeper, nano-HA reaches the deepest accessible skin cells. Hydration from the very first step.",emoji:"💧",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Niacinamide","Allantoin"],belinic:true},
+  "Probiotic Complex (10 Strains)":{cat:"Microbiome",ben:"Skin Immunity & Microbiome Balance",aw:[],rating:5,dsc:"Ten probiotic strains alongside 500,000 Phytotherasome Grape Probiotics in the Biome Milk Cleanser strengthen the skin's microbiome — improving resilience, reducing sensitivity, supporting barrier function, and laying the foundation for every step that follows.",emoji:"🦠",rt:"AM/PM",pairings:["Hyaluronic Acid (8 Types)","Phytotherasome Grape Exosomes"],belinic:true},
+  // ── POPULAR UNIVERSAL INGREDIENTS ──
+  "Vitamin C":{cat:"Brightener",ben:"Antioxidant Brightening & Collagen Support",aw:["AHA/BHA (use separately)"],rating:5,dsc:"One of the most well-researched skincare actives. Vitamin C (ascorbic acid) neutralizes free radicals from UV and pollution, inhibits melanin production for a brighter complexion, and stimulates collagen synthesis for firmer-looking skin. Best used in the morning under SPF 50 for maximum antioxidant protection.",emoji:"🍊",rt:"AM",pairings:["Hyaluronic Acid (8 Types)","Niacinamide","SPF 50"],belinic:false},
+  "Retinol":{cat:"Anti-Aging",ben:"Cell Turnover, Collagen & Fine Lines",aw:["Vitamin C (use on alternate nights)","AHA/BHA (use separately)"],rating:5,dsc:"A gold-standard anti-aging ingredient derived from Vitamin A. Retinol accelerates skin cell turnover, stimulates collagen production, reduces the appearance of fine lines and wrinkles, and improves skin texture and tone over time. Introduce slowly — start 1–2 nights per week and build up. Always use SPF 50 the next morning.",emoji:"⚗️",rt:"PM",pairings:["Hyaluronic Acid (8 Types)","Allantoin","Ceramides"],belinic:false},
+  "AHA (Alpha Hydroxy Acid)":{cat:"Exfoliant",ben:"Surface Resurfacing & Radiance",aw:["Retinol (use separately)","Vitamin C (use separately)"],rating:4,dsc:"AHAs such as glycolic and lactic acid chemically exfoliate the skin's surface by dissolving the bonds between dead skin cells. They improve texture, brightness, and tone — and can help fade post-acne marks and pigmentation over time. Use 2–3 times per week and always follow with SPF 50.",emoji:"🔬",rt:"PM",pairings:["Hyaluronic Acid (8 Types)","Niacinamide"],belinic:false},
+  "Salicylic Acid (BHA)":{cat:"Exfoliant",ben:"Pore Clearing & Acne Control",aw:["Retinol (use on separate nights)"],rating:5,dsc:"A Beta Hydroxy Acid that is oil-soluble — meaning it can penetrate into pores to dissolve excess sebum, dead skin cells, and debris that cause blackheads and breakouts. It also has anti-inflammatory properties that reduce redness around blemishes. Ideal for oily, acne-prone, and congested skin.",emoji:"🧴",rt:"AM/PM",pairings:["Niacinamide","Zinc","Hyaluronic Acid (8 Types)"],belinic:false},
+  "Ceramides":{cat:"Barrier Support",ben:"Barrier Repair & Long-Term Hydration",aw:[],rating:5,dsc:"Ceramides are lipids naturally found in the skin's barrier that hold skin cells together and prevent moisture loss. When the barrier is compromised — from harsh products, over-exfoliation, or environmental stress — ceramide-rich formulas help restore it. Essential for dry, sensitive, and eczema-prone skin.",emoji:"🛡️",rt:"AM/PM",pairings:["Hyaluronic Acid (8 Types)","Allantoin","Niacinamide"],belinic:false},
+  "Peptides":{cat:"Anti-Aging",ben:"Collagen Stimulation & Firmness",aw:[],rating:4,dsc:"Short chains of amino acids that signal the skin to produce more collagen and elastin. Peptides improve skin firmness, smooth fine lines, and support overall skin structure. They work gently enough for daily use on all skin types and complement exosome-based formulas well.",emoji:"🧬",rt:"AM/PM",pairings:["Hyaluronic Acid (8 Types)","Ceramides","Phytotherasome Grape Exosomes"],belinic:false},
+  "Zinc":{cat:"Mineral",ben:"Oil Control & Acne Prevention",aw:[],rating:4,dsc:"Zinc regulates sebum production, has natural anti-inflammatory and antimicrobial properties, and supports skin healing. Commonly found in formulas targeting oily, acne-prone, and congested skin. It works synergistically with Niacinamide for pore refinement and oil control.",emoji:"⚪",rt:"AM/PM",pairings:["Niacinamide","Salicylic Acid (BHA)"],belinic:false},
+  "Azelaic Acid":{cat:"Brightener",ben:"Pigmentation, Redness & Acne",aw:[],rating:4,dsc:"A naturally occurring acid with brightening, anti-inflammatory, and antimicrobial properties. Azelaic acid targets pigmentation and post-acne marks, reduces redness associated with rosacea, and helps prevent new breakouts. It's gentle enough for sensitive and pregnant skin and can be used AM or PM.",emoji:"🌾",rt:"AM/PM",pairings:["Niacinamide","Ceramides","Hyaluronic Acid (8 Types)"],belinic:false},
+  "Squalane":{cat:"Moisturiser",ben:"Lightweight Hydration & Barrier Support",aw:[],rating:5,dsc:"A stable, lightweight oil derived from olives or sugarcane that closely mimics the skin's natural sebum. Squalane hydrates without clogging pores, softens skin texture, and supports barrier function — making it ideal for all skin types including oily and sensitive. An excellent finishing oil.",emoji:"💫",rt:"AM/PM",pairings:["Ceramides","Hyaluronic Acid (8 Types)","Phytotherasome Grape Exosomes"],belinic:false},
+  "SPF 50":{cat:"Protection",ben:"UV Protection & Pigmentation Prevention",aw:[],rating:5,dsc:"The most important step in any skincare ritual. SPF 50 broad-spectrum sunscreen prevents UV-induced pigmentation, collagen breakdown, and premature aging. All brightening, anti-aging, and exfoliating actives are significantly less effective without daily sun protection. Reapply every 2 hours when outdoors.",emoji:"☀️",rt:"AM",pairings:["Vitamin C","Niacinamide"],belinic:false}
+};
+
+/* ── BELINIC PRODUCTS ── */
+const PRODUCTS={
+  "Biome Milk Cleanser":{
+    url:"https://www.mblartistry.com/products/biome-milk-cleanser",
+    tagline:"Microbiome-intelligent milk cleanser with 500K probiotic exosomes",
+    badge:"Foundation · Step 01",
+    keyIngredients:["Phytotherasome Grape (Probiotics)","10 Probiotic Strains","8 Types Hyaluronic Acid"],
+    bestFor:["Dry","Sensitive","Normal","Combination","Oily"],
+    concerns:["Dehydration","Redness & sensitivity","Dullness & uneven tone","Acne & breakouts"],
+    step:"Step 1 — Cleanser",
+    emoji:"🫧",
+    benefits:"Gently purifies while feeding the skin's microbiome — 10 probiotic strains strengthen skin immunity, 8 hyaluronic acid types deliver multi-layer moisture from the first cleanse.",
+    matchScore:0
+  },
+  "LumiExo Ampoule":{
+    url:"https://www.mblartistry.com/products/lumiexo-ampoule",
+    tagline:"Concentrated brightening ampoule with 750K exosomes and Gluconolactone",
+    badge:"Step 02 · Brightening Booster",
+    keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Gluconolactone (100K ppm)"],
+    bestFor:["Normal","Combination","Dry"],
+    concerns:["Dullness & uneven tone","Fine lines & aging","Uneven texture","Dehydration"],
+    step:"Step 2 — Ampoule / Serum",
+    emoji:"⚗️",
+    benefits:"750,000 exosomes supercharge regeneration and repair. Glutathione targets pigmentation at its source. Gluconolactone (100,000ppm) gently resurfaces and brightens.",
+    matchScore:0
+  },
+  "LumiExo Gel Boost":{
+    url:"https://www.mblartistry.com/products/lumiexo-gel-boost",
+    tagline:"Lightweight brightening gel ideal for daily glow and post-treatment synergy",
+    badge:"Step 03 · Daily Treatment",
+    keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Niacinamide"],
+    bestFor:["Oily","Combination","Sensitive"],
+    concerns:["Dullness & uneven tone","Large pores","Acne & breakouts","Redness & sensitivity"],
+    step:"Step 3 — Gel Boost / Treatment",
+    emoji:"💫",
+    benefits:"Delivers 750K exosomes in a weightless gel. Niacinamide refines pores and regulates oil. Glutathione brightens and evens skin tone without heaviness.",
+    matchScore:0
+  },
+  "Lumi Exonic Mask":{
+    url:"https://www.mblartistry.com/products/lumi-exonic-mask",
+    tagline:"Bio-cellulose sheet mask with Alaska Glacier Water — 8 hours sleep in one mask",
+    badge:"Step 04 · Weekly Treatment",
+    keyIngredients:["Phytotherasome Grape (500K Exosomes)","Alaskan Glacial Water","Thymus Serpyllum Extract","Bio-Detox Complex"],
+    bestFor:["Normal","Combination","Oily","Dry","Sensitive"],
+    concerns:["Redness & sensitivity","Dullness & uneven tone","Dehydration","Post-treatment care"],
+    step:"Treatment — 2–3× per week",
+    emoji:"🌿",
+    benefits:"Premium bio-cellulose infused with Alaska Glacier Water cools and calms. 500K exosomes accelerate repair. Thymus Serpyllum activates a new brightening pathway. Bio-Detox shields against pollution.",
+    matchScore:0
+  },
+  "LumiExo Cream":{
+    url:"https://www.mblartistry.com/products/lumiexo-cream",
+    tagline:"Rich concentrated brightening moisturiser with 750K exosomes and Allantoin",
+    badge:"Step 05 · Finishing Moisturiser",
+    keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Allantoin"],
+    bestFor:["Dry","Normal","Sensitive"],
+    concerns:["Fine lines & aging","Dullness & uneven tone","Dehydration","Uneven texture"],
+    step:"Step 5 — Moisturiser",
+    emoji:"✨",
+    benefits:"Rich, concentrated formula best suited to dry, normal and sensitive skin. 750K exosomes improve elasticity and firmness overnight. Allantoin soothes, heals and fortifies the barrier. Not recommended for oily or acne-prone skin — the Gel Boost is your ideal finishing step.",
+    matchScore:0,
+    notFor:["Oily","Acne & breakouts"]
+  }
+};
+
+/* ── BELINIC INGREDIENT DECODER ── */
+const INGREDIENTS={
+  "Phytotherasome Grape Exosomes":{cat:"Exosome Technology",ben:"Regeneration, Repair & Radiance",aw:[],rating:5,dsc:"Extracellular vesicles derived from premium grape plant cells, loaded with biological signals that communicate directly with skin cells. At 500,000–750,000 exosomes per dose, these are among the most concentrated topical exosome formulas available. They boost skin regeneration, accelerate repair, reduce inflammation and redness, enhance hydration and glow, support collagen production, and strengthen the skin barrier. The cornerstone of every Belinic formula.",emoji:"🍇",rt:"AM/PM",pairings:["Glutathione","Niacinamide","Hyaluronic Acid","Allantoin"]},
+  "Glutathione":{cat:"Brightener",ben:"Pigmentation Correction & Antioxidant",aw:[],rating:5,dsc:"Often called the 'master antioxidant', glutathione is a tripeptide produced naturally by the body that declines with age and UV exposure. Topically, it inhibits tyrosinase — the enzyme responsible for melanin synthesis — targeting visible pigmentation, dark spots, and uneven skin tone at its source. It also neutralizes free radicals from UV and pollution. Found in both LumiExo Cream, Ampoule, and Gel Boost for sustained brightening throughout the Belinic ritual.",emoji:"✦",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Niacinamide","Allantoin"]},
+  "Allantoin":{cat:"Skin Conditioner",ben:"Soothing, Barrier Repair & Healing",aw:[],rating:5,dsc:"A soothing skin-conditioning compound found naturally in many plants. Allantoin has a well-established record of calming irritation, accelerating barrier repair, softening rough or uneven texture, and promoting wound healing. It keeps skin hydrated and comfortable, making it an ideal finishing ingredient in the rich LumiExo Cream. Particularly valuable after exfoliation, professional treatments, or any situation where the skin barrier needs support.",emoji:"🌼",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Glutathione","Hyaluronic Acid"]},
+  "Niacinamide":{cat:"Vitamin",ben:"Brightening, Pore Refinement & Barrier",aw:[],rating:5,dsc:"A multitasking form of Vitamin B3 featured in LumiExo Gel Boost. Niacinamide inhibits the transfer of melanin to skin cells, visibly brightening uneven skin tone. It supports the skin's barrier by stimulating ceramide synthesis, regulates excess sebum production, refines the appearance of enlarged pores, and improves overall skin clarity and resilience. One of the most comprehensively studied and universally tolerated cosmetic actives.",emoji:"✨",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Glutathione","Hyaluronic Acid","Allantoin"]},
+  "Gluconolactone (PHA)":{cat:"Exfoliant",ben:"Gentle Resurfacing & Brightening",aw:[],rating:5,dsc:"A Polyhydroxy Acid (PHA) featured at an impressive 100,000 ppm concentration in LumiExo Ampoule. PHAs have a larger molecular size than AHAs, meaning they exfoliate with exceptional gentleness — removing dead skin cell bonds without penetrating as deeply. Gluconolactone smooths texture, improves skin clarity, supports barrier health, and promotes brighter-looking skin. Safe for sensitive skin, suitable for daily use, and excellent when paired with exosomes for enhanced absorption.",emoji:"🧪",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Hyaluronic Acid","Niacinamide"]},
+  "Thymus Serpyllum Extract":{cat:"Brightener",ben:"Advanced Brightening Mechanism",aw:[],rating:4,dsc:"A botanical extract derived from wild thyme, Thymus Serpyllum is a next-generation brightening ingredient featured in the Lumi Exonic Mask. It operates through a novel brightening mechanism distinct from traditional tyrosinase inhibitors — offering a fresh approach to improving dull skin tone and restoring skin vitality. Its inclusion alongside Alaskan Glacial Water and Phytotherasome Grape Exosomes makes the mask uniquely powerful for visible clarity enhancement.",emoji:"🌿",rt:"PM",pairings:["Phytotherasome Grape Exosomes","Alaskan Glacial Water"]},
+  "Alaskan Glacial Water":{cat:"Soothing & Hydration",ben:"Mineral Cooling & Calming",aw:[],rating:5,dsc:"Ultra-pure glacial water from Alaska, naturally rich in minerals and trace elements. Used as the primary hydrating medium in the Lumi Exonic Mask bio-cellulose sheet. Alaskan Glacial Water provides immediate cooling of skin temperature, gentle calming for irritated or reactive skin, and deep mineral hydration without irritation. Its purity and mineral profile make it ideal for post-treatment and sensitive skin care.",emoji:"🧊",rt:"AM/PM",pairings:["Thymus Serpyllum Extract","Phytotherasome Grape Exosomes","Eucalyptus Leaf Extract"]},
+  "Bio-Detox Complex":{cat:"Antioxidant",ben:"Environmental Protection & Detox",aw:[],rating:4,dsc:"A proprietary blend of Citrus, Broccoli, and Aloe featured in the Lumi Exonic Mask. This trio works synergistically to protect skin from external pollutants and urban environmental stressors. Citrus provides antioxidant vitamin C. Broccoli extract (rich in sulforaphane) neutralizes oxidative stress. Aloe soothes and accelerates barrier recovery. Together they form a protective detox shield that supports the skin's natural defenses.",emoji:"🌱",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Alaskan Glacial Water"]},
+  "Eucalyptus Leaf Extract":{cat:"Botanical",ben:"Cooling, Refreshing & Purifying",aw:[],rating:4,dsc:"Featured in the Lumi Exonic Mask, Eucalyptus Leaf Extract delivers a refreshing, cooling sensation on contact. It has natural antimicrobial and purifying properties that help manage oily, troubled, or congested skin. The characteristic cooling effect complements the temperature-reduction benefits of Alaskan Glacial Water, making the mask particularly effective for calming post-treatment heat and soothing reactive skin.",emoji:"🌲",rt:"AM/PM",pairings:["Alaskan Glacial Water","Bio-Detox Complex"]},
+  "Hyaluronic Acid (8 Types)":{cat:"Humectant",ben:"Multi-Layer Moisture Delivery",aw:[],rating:5,dsc:"The Biome Milk Cleanser features 8 distinct molecular weights of Hyaluronic Acid — a remarkable multi-layer moisture delivery system. Different molecular sizes target different depths: high-molecular-weight HA films and plumps the surface; low-molecular-weight HA penetrates deeper layers; nano-HA reaches the deepest accessible skin cells. Together they provide comprehensive hydration throughout all layers of the epidermis, starting from the very first step of your ritual.",emoji:"💧",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Niacinamide","Allantoin"]},
+  "Probiotic Complex (10 Strains)":{cat:"Microbiome",ben:"Skin Immunity & Microbiome Balance",aw:[],rating:5,dsc:"The Biome Milk Cleanser features 10 distinct probiotic strains alongside 500,000 Phytotherasome Grape Probiotics. A diverse probiotic blend strengthens the skin's microbiome — the community of beneficial microorganisms that act as the first line of immune defense. A balanced microbiome is associated with reduced sensitivity, fewer breakouts, improved barrier function, and more resilient skin overall. Beginning your ritual with a probiotic cleanser establishes the ideal foundation for all subsequent Belinic products.",emoji:"🦠",rt:"AM/PM",pairings:["Hyaluronic Acid (8 Types)","Phytotherasome Grape Exosomes"]}
+};
+
+/* ── QUIZ QUESTIONS ── */
+const QUESTIONS=[
+{id:"skinType",question:"How does your skin feel by midday?",sub:"Helps us identify your skin type",
+options:[
+{val:"Dry",label:"Tight & parched",desc:"Needs moisture constantly",emoji:"🌵"},
+{val:"Oily",label:"Shiny all over",desc:"Shine on T-zone and cheeks",emoji:"💦"},
+{val:"Combination",label:"Oily T-zone, dry cheeks",desc:"Mixed zones with different needs",emoji:"🌗"},
+{val:"Sensitive",label:"Reactive & easily flushed",desc:"Redness or stinging is common",emoji:"🌸"},
+{val:"Normal",label:"Balanced & comfortable",desc:"Minimal concerns, good baseline",emoji:"✨"}
+]},
+{id:"concern1",question:"What is your primary skin concern?",sub:"The #1 thing you want to transform",
+options:[
+{val:"Dullness & uneven tone",label:"Dullness & uneven tone",desc:"Lack of glow, pigmentation, dark spots",emoji:"🌑"},
+{val:"Fine lines & aging",label:"Fine lines & aging",desc:"Loss of firmness, visible lines",emoji:"🕰️"},
+{val:"Acne & breakouts",label:"Acne & breakouts",desc:"Blemishes, blackheads, congestion",emoji:"😤"},
+{val:"Redness & sensitivity",label:"Redness & sensitivity",desc:"Irritation, reactive, easily inflamed",emoji:"🌡️"},
+{val:"Large pores",label:"Large pores",desc:"Visible, enlarged pore size",emoji:"🔍"}
+]},
+{id:"concern2",question:"And your secondary concern?",sub:"Every skin has layers of needs",
+options:[
+{val:"Dehydration",label:"Dehydration",desc:"Skin drinks moisture fast",emoji:"🫙"},
+{val:"Uneven texture",label:"Uneven texture",desc:"Rough, bumpy or dull surface",emoji:"🪨"},
+{val:"Post-treatment care",label:"Post-treatment care",desc:"Supporting skin after professional treatments",emoji:"🩺"},
+{val:"Acne & breakouts",label:"Blemishes",desc:"Congestion and breakouts",emoji:"💧"},
+{val:"None",label:"Just luminous skin",desc:"Maintain and elevate the glow",emoji:"🌟"}
+]},
+{id:"experience",question:"How seasoned is your skincare ritual?",sub:"Shapes the complexity of your recommendation",
+options:[
+{val:"beginner",label:"Just starting out",desc:"Clean slate, open to guidance",emoji:"🌱"},
+{val:"basics",label:"Cleanser & moisturiser",desc:"Consistent with the basics",emoji:"🌿"},
+{val:"intermediate",label:"Serums & treatments",desc:"Comfortable with layering",emoji:"🌲"},
+{val:"advanced",label:"Full protocol",desc:"Know your exosomes from your PHAs",emoji:"🌳"}
+]}
+];
+
+/* ── AM/PM ROUTINE ── */
+const ROUTINE={
+AM:[
+{step:1,name:"Cleanse",note:"Begin with Biome Milk Cleanser to activate the skin's microbiome and deliver 8-type hyaluronic acid hydration from the first touch.",time:"AM",product:"Biome Milk Cleanser"},
+{step:2,name:"Ampoule",note:"Apply LumiExo Ampoule — 750,000 exosomes and Gluconolactone (100,000 ppm) prime the skin for the day ahead.",time:"AM",product:"LumiExo Ampoule"},
+{step:3,name:"Gel Boost",note:"Layer LumiExo Gel Boost for lightweight brightening, pore refinement, and all-day luminosity — ideal for oily/combination skin.",time:"AM",product:"LumiExo Gel Boost"},
+{step:4,name:"Moisturise",note:"Seal in the ritual with LumiExo Cream — Allantoin soothes, Glutathione sustains brightness, exosomes enhance all-day firmness.",time:"AM",product:"LumiExo Cream"},
+{step:5,name:"SPF 50",note:"Non-negotiable. Reapply every 2 hours outdoors. SPF is the single most important anti-pigmentation and anti-aging step.",time:"AM",product:null}
+],
+PM:[
+{step:1,name:"Cleanse",note:"Biome Milk Cleanser is gentle enough for double-cleansing — begin by removing SPF, makeup, and the day's buildup.",time:"PM",product:"Biome Milk Cleanser"},
+{step:2,name:"Mask (2–3×/week)",note:"Apply Lumi Exonic Mask on treatment nights — cool, calm, and resurface with Alaska Glacier Water and 500K exosomes.",time:"PM",product:"Lumi Exonic Mask"},
+{step:3,name:"Ampoule",note:"On non-mask nights, apply LumiExo Ampoule for overnight brightening and barrier-building as skin repairs itself during sleep.",time:"PM",product:"LumiExo Ampoule"},
+{step:4,name:"Gel Boost",note:"Optional gel boost layer for targeted brightening and pore refinement on combination or oily skin types.",time:"PM",product:"LumiExo Gel Boost"},
+{step:5,name:"Moisturise",note:"Finish with LumiExo Cream. Allantoin works with the skin's overnight repair cycle to restore texture and luminosity by morning.",time:"PM",product:"LumiExo Cream"}
+]
+};
+
+const ALL_CATEGORIES=["All","Exosome Technology","Brightener","Anti-Aging","Humectant","Exfoliant","Microbiome","Barrier Support","Skin Conditioner","Soothing & Hydration","Antioxidant","Moisturiser","Mineral","Vitamin","Protection"];
+
+/* ── VUE TEMPLATE ── */
+const htmlTemplate=`
+<div class="bel-wrap">
+<div class="bel-inner">
+
+<!-- BRAND HEADER -->
+<div class="brand-hd">
+  <div class="brand-name">MBL Artistry Studio & Spa</div>
+  <div class="brand-rule"><div class="brand-rule-line"></div><div class="brand-eyebrow">Belinic Skin Intelligence</div><div class="brand-rule-line r"></div></div>
+</div>
+
+<!-- ─── HOME ─── -->
+<div v-if="mode==='home'" class="fade-up">
+  <div class="brand-title" style="margin-bottom:12px">Your Skin,&nbsp;<span class="shimmer">Decoded.</span></div>
+  <p style="text-align:center;font-size:11px;letter-spacing:4px;color:var(--text-muted);text-transform:uppercase;margin-bottom:16px">Complimentary Belinic Skin Consultation</p>
+  <div class="feat-ribbon">
+    <span class="feat-pill">✦ Skin Analysis Quiz</span>
+    <span class="feat-pill">◈ Ingredient Decoder</span>
+    <span class="feat-pill">⚗ Product Collection</span>
+    <span class="feat-pill">📋 Ritual Builder</span>
+  </div>
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card no-mb">
+      <span class="card-icon">✦</span>
+      <div class="card-title">Skin Analysis Quiz</div>
+      <p class="card-text">Four questions. A personalised Belinic ritual built exclusively for your skin profile — with curated product picks and ingredient guidance.</p>
+      <button class="btn-gold" @click="go('quiz')">Begin My Analysis →</button>
+    </div>
+    <div class="card no-mb">
+      <span class="card-icon">◈</span>
+      <div class="card-title">Ingredient Decoder</div>
+      <p class="card-text">Every Belinic active ingredient decoded — the science behind each formula, how they work, and which products they power.</p>
+      <button class="btn-outline" @click="go('decoder')">Explore Ingredients</button>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card no-mb">
+      <span class="card-icon">⚗</span>
+      <div class="card-title">The Collection</div>
+      <p class="card-text">View all five Belinic formulas — from probiotic cleanser to bio-cellulose mask — and find the right ritual for your skin.</p>
+      <button class="btn-outline" @click="go('shop')">View All Products</button>
+    </div>
+    <div class="card no-mb">
+      <span class="card-icon">📋</span>
+      <div class="card-title">Ritual Builder</div>
+      <p class="card-text">AM & PM step-by-step layering guides built around the complete Belinic collection — with esthetician-curated protocols.</p>
+      <button class="btn-outline" @click="go('routine')">Build My Ritual</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── QUIZ ─── -->
+<div v-if="mode==='quiz'">
+  <div style="max-width:760px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="backQuiz">← Return</button>
+    <div class="progress-bar" style="margin-top:14px">
+      <div v-for="(q,idx) in questions" :key="idx" class="prog-dot" :class="{active:idx===quizStep,done:idx<quizStep}"></div>
+    </div>
+    <div class="card center-card fade-up">
+      <div class="q-label" v-text="'Question '+(quizStep+1)+' of '+questions.length"></div>
+      <div class="q-text" v-text="currentQuestion.question"></div>
+      <p style="text-align:center;font-size:10px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;margin-bottom:28px" v-text="currentQuestion.sub"></p>
+      <div class="skin-icon-row" v-if="quizStep===0">
+        <div class="skin-icon" v-for="opt in currentQuestion.options" :key="opt.val"
+          :class="{selected:answers[currentQuestion.id]===opt.val}"
+          @click="handleAnswer(currentQuestion.id,opt.val)">
+          <div class="skin-icon-emoji">{{opt.emoji}}</div>
+          <div class="skin-icon-label">{{opt.label}}</div>
+          <div style="font-size:9px;color:var(--text-muted);letter-spacing:.3px;margin-top:4px">{{opt.desc}}</div>
+        </div>
+      </div>
+      <div v-else>
+        <button v-for="opt in currentQuestion.options" :key="opt.val" class="opt-btn"
+          @click="handleAnswer(currentQuestion.id,opt.val)">
+          <span style="margin-right:10px">{{opt.emoji}}</span>
+          <strong style="font-weight:500">{{opt.label}}</strong>
+          <span style="margin-left:8px;color:var(--text-muted);font-size:11px">— {{opt.desc}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── EMAIL CAPTURE ─── -->
+<div v-if="mode==='email'">
+  <div class="card center-card fade-up" style="text-align:center">
+    <div v-if="!emailSubmitted">
+      <div style="font-size:36px;margin-bottom:16px">✦</div>
+      <div class="card-title" style="font-size:clamp(24px,3.5vw,32px)">Your Ritual Is Ready</div>
+      <p class="card-text" style="margin-bottom:24px">Enter your email to receive your personalised Belinic skin protocol, product picks, and exclusive esthetician guidance.</p>
+      <input class="email-inp" type="email" placeholder="Your email address…" v-model="emailCapture" @keyup.enter="submitEmail"/>
+      <button class="btn-gold" style="max-width:360px;margin:0 auto" @click="submitEmail">Reveal My Ritual →</button>
+      <button class="btn-ghost" style="width:100%;text-align:center;margin-top:14px" @click="skipToResults()">Skip for now</button>
+    </div>
+    <div v-else style="padding:32px 0">
+      <div style="color:var(--gold);font-size:40px;margin-bottom:14px">✦</div>
+      <div class="card-title" style="font-size:22px">Thank you</div>
+      <p class="card-text">Formulating your unique Belinic consultation profile…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── RESULTS ─── -->
+<div v-if="mode==='results'">
+  <div style="max-width:900px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="resetApp">← Start Over</button>
+    <div style="text-align:center;margin:16px 0 28px">
+      <div class="h2">Your Belinic Ritual</div>
+      <div class="skin-profile" style="margin-top:14px">
+        <span class="sp-badge" v-text="answers.skinType+' Skin'"></span>
+        <span class="sp-badge" v-text="answers.concern1"></span>
+        <span class="sp-badge" v-if="answers.concern2 && answers.concern2!=='None'" v-text="answers.concern2"></span>
+      </div>
+    </div>
+
+    <!-- KEY INGREDIENTS -->
+    <div class="card">
+      <div class="sec-label" style="margin-top:0">Your Recommended Ingredients</div>
+      <p style="font-size:12px;letter-spacing:.3px;color:var(--text-light);margin-bottom:20px;line-height:1.7">Based on your skin profile, these are the most effective ingredients for your concerns. Tap any to learn the science behind it and which products contain it.</p>
+      <div v-for="(ing,i) in results" :key="ing" class="rec-card" @click="viewDetail(ing,'results')">
+        <div class="rec-num" v-text="'0'+(i+1)"></div>
+        <div style="flex:1">
+          <div class="rec-name" v-text="ing"></div>
+          <div class="rec-ben" v-text="ingredientsData[ing]?.ben"></div>
+        </div>
+        <span style="font-size:22px;margin-right:10px" v-text="ingredientsData[ing]?.emoji"></span>
+        <span style="color:var(--gold);font-size:16px">→</span>
+      </div>
+    </div>
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond">◆</div><div class="divider-line"></div></div>
+
+    <!-- PRODUCT RECOMMENDATIONS -->
+    <div style="text-align:center;margin-bottom:24px">
+      <div class="h3">Your Product Picks</div>
+      <p class="sub">Curated from the Belinic collection for your exact skin profile</p>
+    </div>
+    <div class="prod-grid">
+      <div v-for="(p,name) in recommendedProducts" :key="name" class="prod-card fade-up">
+        <div class="prod-num">{{getProductIndex(name)}}</div>
+        <span class="prod-badge" v-text="p.badge"></span>
+        <div style="font-size:28px;margin-bottom:6px">{{p.emoji}}</div>
+        <div class="prod-name" v-text="name"></div>
+        <div class="prod-tagline" v-text="p.tagline"></div>
+        <div class="match-score">
+          <div class="match-dots">
+            <div v-for="n in 5" :key="n" class="match-dot" :class="{filled:n<=p.matchScore}"></div>
+          </div>
+          <span class="match-label">Match for your skin</span>
+        </div>
+        <div class="prod-ing-list">
+          <span v-for="ing in p.keyIngredients.slice(0,3)" :key="ing" class="prod-ing-tag" v-text="ing.length>22?ing.slice(0,20)+'…':ing"></span>
+        </div>
+        <p style="font-size:11.5px;line-height:1.65;color:var(--text-muted);margin-top:8px;flex:1" v-text="p.benefits"></p>
+        <div class="prod-actions">
+          <a :href="p.url" target="_blank" class="btn-shop" style="flex:1;justify-content:center">Shop Now →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-banner">
+      <div class="shop-banner-text">
+        <div class="shop-banner-label">Complete the Ritual</div>
+        <div class="shop-banner-title">Explore the full Belinic collection</div>
+        <p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;line-height:1.6">Five formulas designed to work synergistically — building a ritual that compounds results over time.</p>
+      </div>
+      <button class="btn-gold" style="width:auto;padding:14px 28px;white-space:nowrap" @click="go('shop')">View All Products →</button>
+    </div>
+
+
+    <!-- DR ESTHE AC LINE CALLOUT for oily/acne skin -->
+    <div v-if="isAcneOilySkin" style="background:linear-gradient(135deg,rgba(220,102,102,.1),rgba(14,12,10,.7));border:1px solid rgba(220,102,102,.28);padding:24px 28px;margin:0 0 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <div style="font-size:28px">🩺</div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:9px;letter-spacing:3.5px;color:#DC6666;text-transform:uppercase;margin-bottom:6px">For Oily & Acne-Prone Skin</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.5vw,21px);font-style:italic;color:var(--cream);margin-bottom:6px">Dr Esthe AC Line</div>
+        <p style="font-size:11.5px;color:var(--text-muted);line-height:1.7">Your skin needs targeted acne care. We recommend exploring the Dr Esthe AC Line — specifically formulated for oily, breakout-prone and congested skin. Find it in our shop.</p>
+      </div>
+      <a href="https://www.mblartistry.com/collections/skincare" target="_blank" class="btn-shop" style="background:linear-gradient(135deg,#DC6666,#b84444);white-space:nowrap">Shop AC Line →</a>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn-outline" style="flex:1;min-width:150px" @click="go('decoder')">Ingredient Decoder →</button>
+      <button class="btn-outline" style="flex:1;min-width:150px" @click="go('routine')">Build My Routine →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SHOP ALL ─── -->
+<div v-if="mode==='shop'">
+  <div style="max-width:1000px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="text-align:center;margin:16px 0 32px">
+      <div class="h2">The Belinic Collection</div>
+      <p class="sub">By MBL Artistry Studio & Spa</p>
+    </div>
+    <div class="prod-grid">
+      <div v-for="(p,name) in allProducts" :key="name" class="prod-card fade-up">
+        <div class="prod-num">{{getProductIndex(name)}}</div>
+        <span class="prod-badge" v-text="p.badge"></span>
+        <div style="font-size:32px;margin-bottom:6px">{{p.emoji}}</div>
+        <div class="prod-name" v-text="name"></div>
+        <div class="prod-tagline" v-text="p.tagline"></div>
+        <div style="margin:10px 0">
+          <div style="font-size:8.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Key Actives</div>
+          <div class="prod-ing-list">
+            <span v-for="ing in p.keyIngredients" :key="ing" class="prod-ing-tag" v-text="ing.length>24?ing.slice(0,22)+'…':ing"></span>
+          </div>
+        </div>
+        <div style="margin:8px 0">
+          <div style="font-size:8.5px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-bottom:5px">Best For</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <span v-for="st in p.bestFor" :key="st" class="tag" style="margin:0 3px 4px 0;font-size:8px;padding:3px 8px" v-text="st"></span>
+          </div>
+        </div>
+        <p style="font-size:11.5px;line-height:1.65;color:var(--text-muted);margin:8px 0;flex:1" v-text="p.benefits"></p>
+        <div style="font-size:9px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin:10px 0;border-top:1px solid rgba(184,150,90,.1);padding-top:10px" v-text="p.step"></div>
+        <div class="prod-actions">
+          <a :href="p.url" target="_blank" class="btn-shop" style="flex:1;justify-content:center">Shop Now →</a>
+          <button class="btn-shop-outline" @click="go('quiz')" style="white-space:nowrap">Take Quiz</button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <p style="font-size:11px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-bottom:16px">Not sure where to start?</p>
+      <button class="btn-gold" style="max-width:360px;margin:0 auto" @click="go('quiz')">Take the Skin Analysis Quiz →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── INGREDIENT DECODER ─── -->
+<div v-if="mode==='decoder'">
+  <div style="max-width:940px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="margin:14px 0 26px;text-align:center">
+      <div class="h2">Belinic Ingredient Decoder</div>
+      <p class="sub">{{Object.keys(ingredientsData).length}} Active Ingredients — Decoded by Our Estheticians</p>
+    </div>
+    <input class="search-inp" placeholder="Search an ingredient…" v-model="searchIngredient" style="max-width:100%"/>
+    <div class="filter-pills">
+      <button v-for="cat in allCategories" :key="cat" class="fp" :class="{active:activeCategory===cat}" @click="activeCategory=cat" v-text="cat"></button>
+    </div>
+    <div class="card flush">
+      <div v-if="filteredIngredients.length===0" style="padding:32px;text-align:center;color:var(--text-muted);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:19px">No ingredients found…</div>
+      <div v-for="ing in filteredIngredients" :key="ing" class="ing-row" @click="viewDetail(ing,'decoder')">
+        <span class="ing-emoji" v-text="ingredientsData[ing].emoji"></span>
+        <div style="flex:1">
+          <div class="ing-name" v-text="ing"></div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:3px;flex-wrap:wrap">
+            <div class="ing-ben" v-text="ingredientsData[ing].ben"></div>
+            <span class="tag" style="margin:0;padding:2px 7px;font-size:8px" v-text="ingredientsData[ing].cat"></span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div style="color:var(--gold);font-size:9.5px" v-text="'★'.repeat(ingredientsData[ing].rating)+'☆'.repeat(5-ingredientsData[ing].rating)"></div>
+          <div style="color:var(--gold);font-size:14px">→</div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:9.5px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-top:8px">Showing {{filteredIngredients.length}} of {{Object.keys(ingredientsData).length}} ingredients</p>
+  </div>
+</div>
+
+<!-- ─── INGREDIENT DETAIL ─── -->
+<div v-if="mode==='detail' && selectedIngredient">
+  <div style="max-width:760px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go(previousMode)" style="padding:12px 0">← Back to {{previousMode==='results'?'My Ritual':previousMode==='shop'?'Shop':'Decoder'}}</button>
+    <div style="text-align:center;margin:22px 0">
+      <div style="font-size:46px;margin-bottom:10px" v-text="ingredientsData[selectedIngredient].emoji"></div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,42px);font-weight:300;font-style:italic;color:var(--cream)" v-text="selectedIngredient"></h1>
+      <div style="color:var(--gold);font-size:12px;letter-spacing:3px;margin-top:7px" v-text="'★'.repeat(ingredientsData[selectedIngredient].rating)+'☆'.repeat(5-ingredientsData[selectedIngredient].rating)"></div>
+      <span class="tag" style="margin-top:11px" v-text="ingredientsData[selectedIngredient].cat"></span>
+    </div>
+    <div class="card">
+      <div class="sec-label" style="margin-top:0;text-align:left">The Science</div>
+      <p style="font-size:clamp(12.5px,1.6vw,14px);line-height:1.85;color:rgba(250,247,242,.85);margin-bottom:22px;letter-spacing:.3px" v-text="ingredientsData[selectedIngredient].dsc"></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px">
+        <div style="background:rgba(14,12,10,.4);padding:14px 18px;border:1px solid rgba(184,150,90,.08)">
+          <div style="font-size:8.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:7px">Ideal Routine</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream)" v-text="ingredientsData[selectedIngredient].rt"></div>
+        </div>
+        <div style="background:rgba(14,12,10,.4);padding:14px 18px;border:1px solid rgba(184,150,90,.08)">
+          <div style="font-size:8.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:7px">Category</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream)" v-text="ingredientsData[selectedIngredient].cat"></div>
+        </div>
+      </div>
+      <div v-if="ingredientsData[selectedIngredient].pairings && ingredientsData[selectedIngredient].pairings.length">
+        <div class="sec-label">Pairs Beautifully With</div>
+        <div style="margin-bottom:14px"><span v-for="item in ingredientsData[selectedIngredient].pairings" :key="item" class="tag-green" v-text="item"></span></div>
+      </div>
+      <div v-if="ingredientsData[selectedIngredient].aw && ingredientsData[selectedIngredient].aw.length">
+        <div class="sec-label">Avoid Combining With</div>
+        <div style="margin-bottom:14px"><span v-for="item in ingredientsData[selectedIngredient].aw" :key="item" class="tag-red" v-text="item"></span></div>
+      </div>
+      <div style="border-top:1px solid rgba(184,150,90,.16);margin-top:28px;padding-top:22px">
+        <div style="font-size:9px;letter-spacing:3.5px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;font-weight:500">Esthetician Studio Guidance</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,18px);font-weight:300;font-style:italic;color:rgba(250,247,242,.82);line-height:1.8" v-text="getInsight(selectedIngredient)"></p>
+      </div>
+    </div>
+
+    <!-- Products containing this ingredient -->
+    <div v-if="productsWithIngredient(selectedIngredient).length">
+      <div style="text-align:center;margin:28px 0 18px">
+        <div class="h3" style="font-size:clamp(20px,3vw,28px)">Found in the Belinic Collection</div>
+      </div>
+      <div v-for="name in productsWithIngredient(selectedIngredient)" :key="name" class="prod-highlight">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <div style="font-size:28px">{{allProducts[name].emoji}}</div>
+          <div style="flex:1;min-width:180px">
+            <span class="prod-badge" v-text="allProducts[name].badge"></span>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-style:italic;color:var(--cream);margin-top:4px" v-text="name"></div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:4px" v-text="allProducts[name].tagline"></div>
+          </div>
+          <a :href="allProducts[name].url" target="_blank" class="btn-shop">Shop Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ROUTINE BUILDER ─── -->
+<div v-if="mode==='routine'">
+  <div style="max-width:840px;margin:0 auto;width:100%">
+    <button class="btn-ghost" @click="go('home')">← Return Home</button>
+    <div style="text-align:center;margin:14px 0 28px">
+      <div class="h3">Belinic Ritual Builder</div>
+      <p class="sub">Esthetician-Curated AM & PM Protocols</p>
+    </div>
+    <div class="tab-bar">
+      <button class="tab" :class="{active:routineTab==='AM'}" @click="routineTab='AM'">☀ Morning Ritual</button>
+      <button class="tab" :class="{active:routineTab==='PM'}" @click="routineTab='PM'">🌙 Evening Ritual</button>
+    </div>
+    <div class="card">
+      <div class="rt-step" v-for="step in routineSteps" :key="step.step">
+        <div class="rt-num" v-text="step.step"></div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+            <div class="rt-name" v-text="step.name"></div>
+            <span class="rt-badge" v-text="step.time"></span>
+          </div>
+          <div class="rt-note" v-text="step.note"></div>
+          <div v-if="step.product" style="margin-top:8px">
+            <a :href="allProducts[step.product]?.url" target="_blank" class="btn-shop-outline" style="font-size:8.5px;padding:6px 14px">
+              {{step.product}} →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="btn-gold" style="max-width:360px;margin:0 auto" @click="go('shop')">Shop the Belinic Collection →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<p class="footer-note">MBL Artistry Studio & Spa · Belinic Skin Intelligence · <a href="https://www.mblartistry.com" target="_blank" style="color:var(--gold);text-decoration:none">mblartistry.com</a></p>
+</div>
+</div>
+`;
+
+function initBelinicApp(){
+  const mountPoint=document.getElementById('belinic-root-wrapper');
+  if(!mountPoint) return;
+  mountPoint.innerHTML='<div id="belinic-root"></div>';
+
+  Vue.createApp({
+    template:htmlTemplate,
+    data(){
+      return{
+        mode:'home',previousMode:'home',
+        quizStep:0,answers:{},results:[],
+        searchIngredient:'',activeCategory:'All',
+        selectedIngredient:null,
+        emailCapture:'',emailSubmitted:false,
+        routineTab:'AM',
+        ingredientsData:INGREDIENTS,
+        allProducts:PRODUCTS,
+        questions:QUESTIONS,
+        allCategories:ALL_CATEGORIES
+      }
+    },
+    computed:{
+      currentQuestion(){return this.questions[this.quizStep]},
+      filteredIngredients(){
+        return Object.keys(this.ingredientsData).filter(i=>{
+          const matchSearch=i.toLowerCase().includes(this.searchIngredient.toLowerCase())||
+            this.ingredientsData[i].ben.toLowerCase().includes(this.searchIngredient.toLowerCase());
+          const matchCat=this.activeCategory==='All'||this.ingredientsData[i].cat===this.activeCategory;
+          return matchSearch&&matchCat;
+        });
+      },
+      routineSteps(){
+        return this.routineTab==='AM'?ROUTINE.AM:ROUTINE.PM;
+      },
+      recommendedProducts(){
+        const scored={};
+        const{skinType,concern1,concern2}=this.answers;
+        const isAcneOily=skinType==='Oily'||concern1==='Acne & breakouts'||concern2==='Acne & breakouts';
+        Object.entries(this.allProducts).forEach(([name,p])=>{
+          if(name==='LumiExo Cream'&&isAcneOily) return;
+          let score=0;
+          if(p.bestFor.includes(skinType)) score+=2;
+          if(p.concerns.includes(concern1)) score+=3;
+          if(concern2&&concern2!=='None'&&p.concerns.includes(concern2)) score+=1;
+          scored[name]={...p,matchScore:Math.min(5,score)};
+        });
+        const sorted=Object.entries(scored).sort((a,b)=>b[1].matchScore-a[1].matchScore);
+        return Object.fromEntries(sorted.slice(0,4));
+      },
+      isAcneOilySkin(){
+        const{skinType,concern1,concern2}=this.answers;
+        return skinType==='Oily'||concern1==='Acne & breakouts'||concern2==='Acne & breakouts';
+      }
+    },
+    methods:{
+      go(m){
+        this.mode=m;
+        const mp=document.getElementById('belinic-root-wrapper');
+        if(mp){
+          const stickyOffset=(document.querySelector('.shopify-section--header')||document.querySelector('sticky-header')||{offsetHeight:0}).offsetHeight||0;
+          window.scrollTo({top:mp.getBoundingClientRect().top+window.pageYOffset-(stickyOffset+60),behavior:'smooth'});
+        }
+      },
+      handleAnswer(qId,ans){
+        this.answers[qId]=ans;
+        if(this.quizStep<this.questions.length-1){this.quizStep++;}
+        else{this.generateRecommendations();this.go('email');}
+      },
+      skipToResults(){
+        if(!this.results||this.results.length===0) this.generateRecommendations();
+        this.go('results');
+      },
+      backQuiz(){
+        if(this.quizStep===0) this.go('home');
+        else this.quizStep--;
+      },
+      submitEmail(){
+        this.emailSubmitted=true;
+        if(!this.results||this.results.length===0) this.generateRecommendations();
+        setTimeout(()=>this.go('results'),1400);
+      },
+      generateRecommendations(){
+        const{skinType,concern1,concern2}=this.answers;
+        const recs=[];
+
+        // ── SKIN TYPE BASE ──
+        if(skinType==="Dry"||skinType==="Normal"){
+          recs.push("Hyaluronic Acid (8 Types)","Ceramides","Squalane");
+        }
+        if(skinType==="Oily"){
+          recs.push("Niacinamide","Zinc","Salicylic Acid (BHA)");
+        }
+        if(skinType==="Combination"){
+          recs.push("Niacinamide","Hyaluronic Acid (8 Types)","Zinc");
+        }
+        if(skinType==="Sensitive"){
+          recs.push("Allantoin","Ceramides","Hyaluronic Acid (8 Types)");
+        }
+
+        // ── PRIMARY CONCERN ──
+        if(concern1==="Dullness & uneven tone"){
+          // Belinic territory — glutathione, exosomes, thymus lead
+          recs.unshift("Glutathione","Phytotherasome Grape Exosomes","Vitamin C","Thymus Serpyllum Extract","Niacinamide");
+        }
+        if(concern1==="Fine lines & aging"){
+          // Belinic exosomes + retinol + peptides
+          recs.unshift("Phytotherasome Grape Exosomes","Retinol","Peptides","Glutathione","Hyaluronic Acid (8 Types)");
+        }
+        if(concern1==="Acne & breakouts"){
+          recs.unshift("Salicylic Acid (BHA)","Niacinamide","Zinc","Azelaic Acid","Probiotic Complex (10 Strains)");
+        }
+        if(concern1==="Redness & sensitivity"){
+          recs.unshift("Allantoin","Ceramides","Azelaic Acid","Alaskan Glacial Water","Squalane");
+        }
+        if(concern1==="Large pores"){
+          recs.unshift("Niacinamide","Salicylic Acid (BHA)","Zinc","AHA (Alpha Hydroxy Acid)");
+        }
+
+        // ── SECONDARY CONCERN ──
+        if(concern2==="Dehydration"){
+          recs.push("Hyaluronic Acid (8 Types)","Squalane","Ceramides");
+        }
+        if(concern2==="Uneven texture"){
+          recs.push("AHA (Alpha Hydroxy Acid)","Gluconolactone (PHA)","Retinol");
+        }
+        if(concern2==="Post-treatment care"){
+          recs.push("Allantoin","Alaskan Glacial Water","Bio-Detox Complex","Phytotherasome Grape Exosomes");
+        }
+        if(concern2==="Acne & breakouts"){
+          recs.push("Salicylic Acid (BHA)","Niacinamide","Zinc");
+        }
+
+        // ── MATURE / DRY SKIN — subtly push Belinic ──
+        if(skinType==="Dry"||(concern1==="Fine lines & aging")||(concern1==="Dullness & uneven tone")){
+          recs.push("Phytotherasome Grape Exosomes","Glutathione","Probiotic Complex (10 Strains)");
+        }
+
+        // ── ALWAYS ADD SPF ──
+        recs.push("SPF 50");
+
+        const filtered=[...new Set(recs)].filter(r=>this.ingredientsData[r]);
+        this.results=filtered.length>0?filtered.slice(0,7):["Phytotherasome Grape Exosomes","Glutathione","Niacinamide","Hyaluronic Acid (8 Types)","SPF 50"];
+      },
+      getProductIndex(name){
+        const idx=Object.keys(this.allProducts).indexOf(name)+1;
+        return idx<10?'0'+idx:String(idx);
+      },
+      viewDetail(ingredient,origin){
+        this.selectedIngredient=ingredient;
+        this.previousMode=origin;
+        this.go('detail');
+      },
+      productsWithIngredient(ing){
+        const ingLower=ing.toLowerCase().split('(')[0].trim().split(' ').filter(w=>w.length>3);
+        return Object.entries(this.allProducts)
+          .filter(([n,p])=>p.keyIngredients.some(ki=>{
+            const kiLower=ki.toLowerCase();
+            return ingLower.some(word=>kiLower.includes(word));
+          }))
+          .map(([n])=>n);
+      },
+      getInsight(ing){
+        const d=this.ingredientsData[ing];
+        const timeNote=d.rt==='AM'?'morning ritual':(d.rt==='PM'?'evening ritual':'both AM and PM rituals');
+        const pairNote=d.pairings&&d.pairings.length>0?` It works beautifully alongside ${d.pairings[0]} for enhanced results.`:'';
+        return `${ing} is best introduced into your ${timeNote}.${pairNote} As with all advanced formulas, allow 6–8 weeks of consistent use before evaluating results. Our estheticians at MBL Artistry are always available to guide your personal Belinic skin journey — book a consultation at mblartistry.com.`;
+      },
+      resetApp(){
+        this.mode='home';this.quizStep=0;this.answers={};this.results=[];
+        this.emailCapture='';this.emailSubmitted=false;this.selectedIngredient=null;
+      }
+    }
+  }).mount('#belinic-root');
+}
+
+if(document.readyState==='complete'||document.readyState==='interactive'){
+  setTimeout(initBelinicApp,50);
+}else{
+  document.addEventListener('DOMContentLoaded',initBelinicApp);
+}
+})();
+</script>
