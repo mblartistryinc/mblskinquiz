@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBL Artistry · Skin Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#B8965A;--gold-light:#D4AF70;--gold-pale:#F5ECD7;--gold-deep:#9A7A3A;
+  --noir:#0E0C0A;--cream:#FAF7F2;--text-muted:#8A7A65;--text-light:#C8B99A;
+  --card:rgba(22,19,16,.9);--border:rgba(184,150,90,.18)
+}
+body{font-family:'Montserrat',sans-serif;font-weight:300;background:linear-gradient(160deg,#0E0C0A 0%,#1C1610 45%,#141009 100%);color:var(--cream);min-height:100vh;padding:0;margin:0}
+.wrap{width:100%;max-width:1100px;margin:0 auto;padding:clamp(24px,4vw,52px) clamp(16px,3vw,40px)}
+
+/* HEADER */
+.hdr{text-align:center;padding-bottom:28px;border-bottom:1px solid rgba(184,150,90,.1);margin-bottom:32px}
+.hdr-brand{font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.hdr-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.1}
+.hdr-rule{display:flex;align-items:center;gap:14px;justify-content:center;margin:10px 0}
+.hdr-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.hdr-line.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.hdr-diamond{color:var(--gold);font-size:8px}
+
+/* NAV TABS */
+.nav{display:flex;gap:0;border-bottom:1px solid rgba(184,150,90,.14);margin-bottom:28px;overflow-x:auto}
+.nav-tab{padding:11px 20px;font-size:9px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;font-family:'Montserrat',sans-serif;white-space:nowrap;transition:all .2s}
+.nav-tab.active{color:var(--gold);border-bottom:2px solid var(--gold)}
+.nav-tab:hover{color:var(--gold-light)}
+
+/* SECTION */
+.section{display:none}.section.active{display:block}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);padding:clamp(22px,3.5vw,40px) clamp(16px,2.5vw,32px);margin-bottom:18px}
+.card-sm{background:rgba(14,12,10,.45);border:1px solid rgba(184,150,90,.13);padding:20px 18px;margin-bottom:14px;transition:all .2s;cursor:pointer}
+.card-sm:hover{border-color:rgba(184,150,90,.38);background:rgba(184,150,90,.05);transform:translateY(-2px)}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:580px){.g2{grid-template-columns:1fr 1fr}}
+@media(min-width:780px){.g3{grid-template-columns:1fr 1fr 1fr}}
+
+/* BUTTONS */
+.btn{display:block;width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:var(--noir);border:none;padding:14px 22px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-align:center;text-decoration:none}
+.btn:hover{box-shadow:0 8px 24px rgba(184,150,90,.35);transform:translateY(-1px)}
+.btn-out{display:block;width:100%;background:transparent;color:var(--gold);border:1px solid rgba(184,150,90,.38);padding:13px 22px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-align:center;text-decoration:none}
+.btn-out:hover{border-color:var(--gold-light);background:rgba(184,150,90,.07)}
+.btn-ghost{background:none;border:none;color:var(--text-muted);font-family:'Montserrat',sans-serif;font-size:9.5px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;padding:10px 0;transition:color .2s}
+.btn-ghost:hover{color:var(--gold)}
+.btn-inline{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:var(--noir);border:none;padding:10px 20px;font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-inline:hover{box-shadow:0 6px 18px rgba(184,150,90,.3);transform:translateY(-1px)}
+.btn-inline-out{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--gold);border:1px solid rgba(184,150,90,.35);padding:9px 18px;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-inline-out:hover{border-color:var(--gold);background:rgba(184,150,90,.07)}
+
+/* TYPOGRAPHY */
+.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,44px);font-style:italic;color:var(--cream);line-height:1.2;margin-bottom:10px}
+.h2{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,34px);font-style:italic;color:var(--cream);line-height:1.2;margin-bottom:8px}
+.h3{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,24px);font-style:italic;color:var(--cream);margin-bottom:6px}
+.eyebrow{font-size:8.5px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.sub{font-size:11.5px;letter-spacing:.3px;color:var(--text-muted);line-height:1.75}
+.divider{display:flex;align-items:center;gap:14px;margin:24px 0}
+.div-line{flex:1;height:1px;background:rgba(184,150,90,.1)}
+.div-dia{color:var(--gold);font-size:9px}
+
+/* QUIZ */
+.prog{display:flex;gap:5px;margin-bottom:28px}
+.prog-dot{flex:1;height:2px;background:rgba(184,150,90,.14);transition:all .3s}
+.prog-dot.done{background:rgba(184,150,90,.45)}
+.prog-dot.active{background:var(--gold)}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,32px);font-style:italic;color:var(--cream);margin-bottom:8px;text-align:center}
+.q-sub{font-size:9.5px;letter-spacing:3px;color:var(--text-muted);text-transform:uppercase;text-align:center;margin-bottom:26px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;background:rgba(14,12,10,.45);border:1px solid rgba(184,150,90,.13);color:var(--text-light);padding:15px 20px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;letter-spacing:.8px;text-align:left;cursor:pointer;margin-bottom:9px;transition:all .2s}
+.opt:hover{border-color:var(--gold);color:var(--cream);background:rgba(184,150,90,.07);padding-left:28px}
+.opt-emoji{font-size:18px;width:24px;text-align:center}
+.opt-label{font-weight:500;color:var(--cream)}
+.opt-desc{font-size:10px;color:var(--text-muted);margin-top:2px}
+.skin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:10px}
+.skin-opt{background:rgba(14,12,10,.45);border:1px solid rgba(184,150,90,.13);padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s}
+.skin-opt:hover,.skin-opt.sel{border-color:var(--gold);background:rgba(184,150,90,.08)}
+.skin-opt-em{font-size:22px;margin-bottom:8px}
+.skin-opt-lb{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light)}
+
+/* RESULTS */
+.ing-card{display:flex;align-items:center;gap:16px;padding:14px 18px;border-bottom:1px solid rgba(184,150,90,.07);cursor:pointer;transition:all .2s}
+.ing-card:hover{padding-left:26px;background:rgba(184,150,90,.03)}
+.ing-em{font-size:20px;width:28px;text-align:center}
+.ing-name{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.2vw,20px);font-style:italic;color:var(--cream)}
+.ing-ben{font-size:9px;letter-spacing:1.8px;color:var(--text-muted);text-transform:uppercase;margin-top:2px}
+.bel-badge{font-size:7.5px;letter-spacing:1.5px;color:var(--gold);border:1px solid rgba(184,150,90,.35);padding:2px 7px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
+.tag{display:inline-block;border:1px solid rgba(184,150,90,.25);color:var(--gold-light);padding:3px 10px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;margin:0 4px 5px 0}
+.tag-grn{display:inline-block;border:1px solid rgba(100,170,100,.32);color:#84C584;padding:3px 10px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;margin:0 4px 5px 0}
+.tag-red{display:inline-block;border:1px solid rgba(200,80,80,.32);color:#DC6666;padding:3px 10px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;margin:0 4px 5px 0}
+.stars{color:var(--gold);font-size:11px;letter-spacing:2px}
+
+/* PROD CARD */
+.prod-card{background:rgba(14,12,10,.5);border:1px solid rgba(184,150,90,.13);padding:22px 18px;display:flex;flex-direction:column;gap:8px;transition:all .2s;position:relative}
+.prod-card:hover{border-color:rgba(184,150,90,.35);transform:translateY(-2px)}
+.prod-num{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:rgba(184,150,90,.1);position:absolute;top:10px;right:14px;line-height:1}
+.prod-badge{font-size:8px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,150,90,.22);padding:2px 9px;display:inline-block;width:fit-content}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,21px);font-style:italic;color:var(--cream)}
+.prod-tag{font-size:9px;letter-spacing:.4px;color:var(--text-muted);line-height:1.6}
+.match{display:flex;align-items:center;gap:6px;margin-top:2px}
+.match-dots{display:flex;gap:3px}
+.match-dot{width:6px;height:6px;border-radius:50%;background:rgba(184,150,90,.15)}
+.match-dot.on{background:var(--gold)}
+.match-lbl{font-size:8.5px;letter-spacing:1.5px;color:var(--text-muted);text-transform:uppercase}
+.prod-ings{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.prod-ing{font-size:8px;letter-spacing:1px;color:var(--text-muted);border:1px solid rgba(184,150,90,.1);padding:2px 7px;text-transform:uppercase}
+.prod-benefits{font-size:11.5px;color:var(--text-muted);line-height:1.65;flex:1}
+
+/* DECODER */
+.search{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(184,150,90,.28);color:var(--cream);padding:10px 0;font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,24px);font-style:italic;outline:none;margin-bottom:18px}
+.search:focus{border-bottom-color:var(--gold)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.fp{background:transparent;border:1px solid rgba(184,150,90,.16);color:var(--text-muted);padding:5px 13px;font-family:'Montserrat',sans-serif;font-size:8.5px;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.fp:hover,.fp.on{border-color:var(--gold);color:var(--gold-light);background:rgba(184,150,90,.07)}
+
+/* ROUTINE */
+.rt-step{display:flex;align-items:flex-start;gap:16px;padding:15px 0;border-bottom:1px solid rgba(184,150,90,.07)}
+.rt-num{width:28px;height:28px;border:1px solid rgba(184,150,90,.28);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);flex-shrink:0;margin-top:2px}
+.rt-name{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,18px);font-style:italic;color:var(--cream)}
+.rt-note{font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.65}
+.rt-badge{font-size:8px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,150,90,.18);padding:2px 8px;margin-left:8px}
+
+/* DETAIL */
+.detail-block{background:rgba(14,12,10,.4);border:1px solid rgba(184,150,90,.1);padding:14px 18px;margin-bottom:14px}
+.detail-lbl{font-size:8.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+
+/* AC BANNER */
+.ac-banner{background:linear-gradient(135deg,rgba(220,102,102,.1),rgba(14,12,10,.7));border:1px solid rgba(220,102,102,.28);padding:22px 24px;margin:18px 0;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.ac-lbl{font-size:8.5px;letter-spacing:3px;color:#DC6666;text-transform:uppercase;margin-bottom:5px}
+.ac-title{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.5vw,20px);font-style:italic;color:var(--cream);margin-bottom:4px}
+.btn-red{display:inline-flex;align-items:center;background:linear-gradient(135deg,#DC6666,#b84444);color:#fff;border:none;padding:10px 18px;font-family:'Montserrat',sans-serif;font-size:8.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;white-space:nowrap;transition:all .2s}
+
+/* SHIMMER */
+.shimmer{display:inline-block;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2.8s infinite}
+@keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fadeUp .4s ease both}
+
+/* EMAIL */
+.email-inp{width:100%;max-width:400px;display:block;margin:0 auto 20px;background:transparent;border:none;border-bottom:1px solid rgba(184,150,90,.28);color:var(--cream);padding:10px 0;font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,22px);font-style:italic;outline:none;text-align:center}
+.email-inp:focus{border-bottom-color:var(--gold)}
+
+/* SKIN PROFILE BADGES */
+.profile-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 24px}
+.p-badge{border:1px solid rgba(184,150,90,.28);padding:5px 14px;font-size:9px;letter-spacing:2px;color:var(--gold-light);text-transform:uppercase}
+
+/* FOOTER */
+.footer{text-align:center;font-size:8.5px;letter-spacing:2px;color:rgba(138,122,101,.5);text-transform:uppercase;margin-top:44px;padding-top:28px;border-top:1px solid rgba(184,150,90,.07)}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-brand">MBL Artistry Studio & Spa · Belinic</div>
+  <div class="hdr-rule"><div class="hdr-line"></div><div class="hdr-diamond">◆</div><div class="hdr-line r"></div></div>
+  <div class="hdr-title">Your Skin, <span class="shimmer">Decoded.</span></div>
+  <p style="font-size:10px;letter-spacing:3.5px;color:var(--text-muted);text-transform:uppercase;margin-top:8px">Complimentary Skin Consultation · MBL Artistry</p>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-tab active" data-tab="quiz" onclick="switchTab('quiz')">✦ Skin Quiz</button>
+  <button class="nav-tab" data-tab="results" onclick="switchTab('results')" id="results-tab" style="display:none">◈ My Results</button>
+  <button class="nav-tab" data-tab="decoder" onclick="switchTab('decoder')">◈ Ingredient Decoder</button>
+  <button class="nav-tab" data-tab="shop" onclick="switchTab('shop')">⚗ The Collection</button>
+  <button class="nav-tab" data-tab="routine" onclick="switchTab('routine')">📋 Ritual Guide</button>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div class="section active" id="tab-quiz">
+  <div style="max-width:720px;margin:0 auto">
+    <div class="prog" id="prog">
+      <div class="prog-dot active" id="pd0"></div>
+      <div class="prog-dot" id="pd1"></div>
+      <div class="prog-dot" id="pd2"></div>
+      <div class="prog-dot" id="pd3"></div>
+    </div>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
+<!-- ══ RESULTS ══ -->
+<div class="section" id="tab-results">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:8px">
+      <div class="eyebrow">Your Personalised Ritual</div>
+      <div class="h1">Recommended Ingredients</div>
+    </div>
+    <div class="profile-badges" id="profile-badges"></div>
+
+    <div class="card" style="margin-bottom:24px">
+      <div class="eyebrow" style="margin-bottom:14px">Your Skin's Key Actives</div>
+      <p class="sub" style="margin-bottom:18px">Based on your answers, these are the most effective ingredients for your skin profile. Tap any to learn the science and which products contain it.</p>
+      <div id="results-ings"></div>
+    </div>
+
+    <div id="ac-callout" style="display:none">
+      <div class="ac-banner">
+        <div style="font-size:26px">🩺</div>
+        <div style="flex:1;min-width:180px">
+          <div class="ac-lbl">For Oily & Acne-Prone Skin</div>
+          <div class="ac-title">Dr Esthe AC Line</div>
+          <p class="sub">Your skin calls for targeted acne care. Explore the Dr Esthe AC Line — specifically formulated for oily, breakout-prone and congested skin.</p>
+        </div>
+        <a href="https://www.mblartistry.com/collections/skincare" target="_blank" class="btn-red">Shop AC Line →</a>
+      </div>
+    </div>
+
+    <div class="divider"><div class="div-line"></div><div class="div-dia">◆</div><div class="div-line"></div></div>
+
+    <div style="text-align:center;margin-bottom:20px">
+      <div class="eyebrow">Curated For You</div>
+      <div class="h2">Your Product Picks</div>
+    </div>
+    <div class="g3" id="results-prods" style="margin-bottom:24px"></div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn-out" style="flex:1;min-width:140px" onclick="switchTab('decoder')">Ingredient Decoder →</button>
+      <button class="btn-out" style="flex:1;min-width:140px" onclick="switchTab('routine')">Build My Routine →</button>
+      <button class="btn-out" style="flex:1;min-width:140px" onclick="resetQuiz()">Retake Quiz →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INGREDIENT DECODER ══ -->
+<div class="section" id="tab-decoder">
+  <div id="decoder-list-view">
+    <div style="text-align:center;margin-bottom:22px">
+      <div class="eyebrow">MBL Artistry · Belinic</div>
+      <div class="h1">Ingredient Decoder</div>
+      <p class="sub" style="max-width:520px;margin:8px auto 0">Every active ingredient decoded — the science, the benefits, and which Belinic products contain them.</p>
+    </div>
+    <input class="search" id="ing-search" placeholder="Search an ingredient…" oninput="filterIngredients()"/>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div id="ing-list"></div>
+      <p style="text-align:center;padding:10px;font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase" id="ing-count"></p>
+    </div>
+  </div>
+  <div id="decoder-detail-view" style="display:none">
+    <div style="max-width:720px;margin:0 auto">
+      <button class="btn-ghost" onclick="showDecoderList()">← Back to Ingredients</button>
+      <div id="detail-content" style="margin-top:16px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SHOP ══ -->
+<div class="section" id="tab-shop">
+  <div style="text-align:center;margin-bottom:26px">
+    <div class="eyebrow">By MBL Artistry Studio & Spa</div>
+    <div class="h1">The Belinic Collection</div>
+    <p class="sub" style="max-width:520px;margin:8px auto 0">Five formulas designed to work as a complete brightening and regenerating ritual.</p>
+  </div>
+  <div class="g3" id="shop-grid"></div>
+  <div style="text-align:center;margin-top:26px">
+    <p class="sub" style="margin-bottom:14px">Not sure where to start?</p>
+    <button class="btn" style="max-width:340px;margin:0 auto" onclick="switchTab('quiz');resetQuiz()">Take the Skin Analysis Quiz →</button>
+  </div>
+</div>
+
+<!-- ══ ROUTINE ══ -->
+<div class="section" id="tab-routine">
+  <div style="max-width:780px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:22px">
+      <div class="eyebrow">Esthetician-Curated</div>
+      <div class="h1">Belinic Ritual Guide</div>
+    </div>
+    <div class="nav" style="max-width:340px;margin:0 auto 24px">
+      <button class="nav-tab active" id="am-tab" onclick="switchRoutine('AM')">☀ Morning</button>
+      <button class="nav-tab" id="pm-tab" onclick="switchRoutine('PM')">🌙 Evening</button>
+    </div>
+    <div class="card" id="routine-steps"></div>
+    <div style="text-align:center;margin-top:22px">
+      <a href="https://www.mblartistry.com" target="_blank" class="btn" style="max-width:340px;margin:0 auto;display:block">Shop the Belinic Collection →</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">MBL Artistry Studio & Spa · Belinic Skin Intelligence · <a href="https://www.mblartistry.com" target="_blank">mblartistry.com</a></div>
+</div>
+
+<script>
+// ══ DATA ══
+const PRODUCTS={
+  "Biome Milk Cleanser":{url:"https://www.mblartistry.com/products/biome-milk-cleanser",tagline:"Microbiome-intelligent milk cleanser with 500K probiotic exosomes",badge:"Foundation · Step 01",keyIngredients:["Phytotherasome Grape (Probiotics)","10 Probiotic Strains","8 Types Hyaluronic Acid"],bestFor:["Dry","Sensitive","Normal","Combination","Oily"],concerns:["Dehydration","Redness & sensitivity","Dullness & uneven tone","Acne & breakouts"],step:"Step 1 — Cleanser",emoji:"🫧",benefits:"Gently purifies while feeding the skin's microbiome — 10 probiotic strains strengthen skin immunity, 8 hyaluronic acid types deliver multi-layer moisture from the first cleanse.",matchScore:0},
+  "LumiExo Ampoule":{url:"https://www.mblartistry.com/products/lumiexo-ampoule",tagline:"Concentrated brightening ampoule with 750K exosomes and Gluconolactone",badge:"Step 02 · Brightening Booster",keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Gluconolactone (100K ppm)"],bestFor:["Normal","Combination","Dry"],concerns:["Dullness & uneven tone","Fine lines & aging","Uneven texture","Dehydration"],step:"Step 2 — Ampoule / Serum",emoji:"⚗️",benefits:"750,000 exosomes supercharge regeneration and repair. Glutathione targets pigmentation at its source. Gluconolactone (100,000ppm) gently resurfaces and brightens.",matchScore:0},
+  "LumiExo Gel Boost":{url:"https://www.mblartistry.com/products/lumiexo-gel-boost",tagline:"Lightweight brightening gel ideal for daily glow and post-treatment synergy",badge:"Step 03 · Daily Treatment",keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Niacinamide"],bestFor:["Oily","Combination","Sensitive"],concerns:["Dullness & uneven tone","Large pores","Acne & breakouts","Redness & sensitivity"],step:"Step 3 — Gel Boost / Treatment",emoji:"💫",benefits:"Delivers 750K exosomes in a weightless gel. Niacinamide refines pores and regulates oil. Glutathione brightens and evens skin tone without heaviness.",matchScore:0},
+  "Lumi Exonic Mask":{url:"https://www.mblartistry.com/products/lumi-exonic-mask",tagline:"Bio-cellulose sheet mask with Alaska Glacier Water — 8 hours sleep in one mask",badge:"Step 04 · Weekly Treatment",keyIngredients:["Phytotherasome Grape (500K Exosomes)","Alaskan Glacial Water","Thymus Serpyllum Extract","Bio-Detox Complex"],bestFor:["Normal","Combination","Oily","Dry","Sensitive"],concerns:["Redness & sensitivity","Dullness & uneven tone","Dehydration","Post-treatment care"],step:"Treatment — 2–3× per week",emoji:"🌿",benefits:"Premium bio-cellulose infused with Alaska Glacier Water cools and calms. 500K exosomes accelerate repair. Thymus Serpyllum activates a new brightening pathway. Bio-Detox shields against pollution.",matchScore:0},
+  "LumiExo Cream":{url:"https://www.mblartistry.com/products/lumiexo-cream",tagline:"Rich concentrated brightening moisturiser with 750K exosomes and Allantoin",badge:"Step 05 · Finishing Moisturiser",keyIngredients:["Phytotherasome Grape (750K Exosomes)","Glutathione","Allantoin"],bestFor:["Dry","Normal","Sensitive"],concerns:["Fine lines & aging","Dullness & uneven tone","Dehydration","Uneven texture"],step:"Step 5 — Moisturiser",emoji:"✨",benefits:"Rich, concentrated formula best suited to dry, normal and sensitive skin. 750K exosomes improve elasticity and firmness. Allantoin soothes, heals and fortifies the barrier. Not recommended for oily or acne-prone skin.",matchScore:0,notForOily:true}
+};
+
+const INGREDIENTS={
+  "Phytotherasome Grape Exosomes":{cat:"Exosome Technology",ben:"Regeneration, Repair & Radiance",rating:5,dsc:"Extracellular vesicles derived from premium grape plant cells loaded with biological signals that communicate directly with skin cells. At 500,000–750,000 exosomes per dose, they boost skin regeneration, accelerate repair, reduce inflammation, enhance hydration and glow, support collagen production, and strengthen the skin barrier. The cornerstone of every Belinic formula.",emoji:"🍇",rt:"AM/PM",pairings:["Glutathione","Niacinamide","Hyaluronic Acid","Allantoin"],avoid:[],belinic:true},
+  "Glutathione":{cat:"Brightener",ben:"Pigmentation Correction & Antioxidant",rating:5,dsc:"Often called the master antioxidant, glutathione inhibits tyrosinase — the enzyme responsible for melanin synthesis — targeting visible pigmentation, dark spots, and uneven skin tone at its source. It also neutralizes free radicals from UV and pollution.",emoji:"✦",rt:"AM/PM",pairings:["Vitamin C","Niacinamide","Phytotherasome Grape Exosomes"],avoid:[],belinic:true},
+  "Allantoin":{cat:"Skin Conditioner",ben:"Soothing, Barrier Repair & Healing",rating:5,dsc:"A gentle skin-conditioning compound that calms irritation, accelerates barrier repair, softens rough texture, and promotes healing. Keeps skin hydrated and comfortable — especially valuable after professional treatments or exfoliation. Featured in LumiExo Cream.",emoji:"🌼",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Hyaluronic Acid (8 Types)","Ceramides"],avoid:[],belinic:true},
+  "Niacinamide":{cat:"Vitamin",ben:"Brightening, Pore Refinement & Barrier",rating:5,dsc:"A multitasking form of Vitamin B3 that brightens uneven skin tone, supports the skin barrier via ceramide synthesis, regulates excess sebum, refines pores, and improves overall clarity. One of the most universally tolerated cosmetic actives. Featured in LumiExo Gel Boost.",emoji:"✨",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Hyaluronic Acid (8 Types)","Zinc"],avoid:[],belinic:true},
+  "Gluconolactone (PHA)":{cat:"Exfoliant",ben:"Gentle Resurfacing & Brightening",rating:5,dsc:"A Polyhydroxy Acid (PHA) at 100,000 ppm in LumiExo Ampoule. PHAs exfoliate with exceptional gentleness — smoothing texture, improving clarity, supporting barrier health, and promoting brighter skin. Safe for sensitive skin and ideal for daily use.",emoji:"🧪",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Hyaluronic Acid (8 Types)","Niacinamide"],avoid:[],belinic:true},
+  "Thymus Serpyllum Extract":{cat:"Brightener",ben:"Advanced Brightening Mechanism",rating:4,dsc:"A botanical extract from wild thyme operating through a next-generation brightening pathway distinct from traditional tyrosinase inhibitors. Featured in the Lumi Exonic Mask for visible clarity and skin vitality.",emoji:"🌿",rt:"PM",pairings:["Phytotherasome Grape Exosomes","Alaskan Glacial Water"],avoid:[],belinic:true},
+  "Alaskan Glacial Water":{cat:"Soothing & Hydration",ben:"Mineral Cooling & Calming",rating:5,dsc:"Ultra-pure glacial water naturally rich in minerals and trace elements. Used in the Lumi Exonic Mask bio-cellulose sheet to deliver immediate cooling, gentle calming for irritated skin, and deep mineral hydration without irritation.",emoji:"🧊",rt:"AM/PM",pairings:["Thymus Serpyllum Extract","Phytotherasome Grape Exosomes"],avoid:[],belinic:true},
+  "Bio-Detox Complex":{cat:"Antioxidant",ben:"Environmental Protection & Detox",rating:4,dsc:"A blend of Citrus, Broccoli, and Aloe in the Lumi Exonic Mask that shields skin from pollution. Citrus provides vitamin C antioxidants, Broccoli neutralizes oxidative stress, Aloe soothes and accelerates barrier recovery.",emoji:"🌱",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Alaskan Glacial Water"],avoid:[],belinic:true},
+  "Hyaluronic Acid (8 Types)":{cat:"Humectant",ben:"Multi-Layer Moisture Delivery",rating:5,dsc:"Eight distinct molecular weights of Hyaluronic Acid in the Biome Milk Cleanser create a comprehensive moisture delivery system from surface to deep layers — hydration from the very first step of your ritual.",emoji:"💧",rt:"AM/PM",pairings:["Phytotherasome Grape Exosomes","Niacinamide","Allantoin"],avoid:[],belinic:true},
+  "Probiotic Complex (10 Strains)":{cat:"Microbiome",ben:"Skin Immunity & Microbiome Balance",rating:5,dsc:"Ten probiotic strains alongside 500,000 Phytotherasome Grape Probiotics in the Biome Milk Cleanser strengthen the skin's microbiome — improving resilience, reducing sensitivity, and supporting barrier function.",emoji:"🦠",rt:"AM/PM",pairings:["Hyaluronic Acid (8 Types)","Phytotherasome Grape Exosomes"],avoid:[],belinic:true},
+  "Vitamin C":{cat:"Brightener",ben:"Antioxidant Brightening & Collagen Support",rating:5,dsc:"One of the most well-researched skincare actives. Vitamin C neutralizes free radicals from UV and pollution, inhibits melanin production for a brighter complexion, and stimulates collagen synthesis for firmer-looking skin. Best used in the morning under SPF 50.",emoji:"🍊",rt:"AM",pairings:["Hyaluronic Acid (8 Types)","Niacinamide","SPF 50"],avoid:["AHA/BHA (use separately)"],belinic:false},
+  "Retinol":{cat:"Anti-Aging",ben:"Cell Turnover, Collagen & Fine Lines",rating:5,dsc:"A gold-standard anti-aging ingredient derived from Vitamin A. Retinol accelerates cell turnover, stimulates collagen production, reduces fine lines, and improves skin texture. Introduce slowly — 1–2 nights per week to start. Always follow with SPF 50.",emoji:"⚗️",rt:"PM",pairings:["Hyaluronic Acid (8 Types)","Allantoin","Ceramides"],avoid:["Vitamin C (use alternate nights)","AHA/BHA (use separately)"],belinic:false},
+  "AHA (Alpha Hydroxy Acid)":{cat:"Exfoliant",ben:"Surface Resurfacing & Radiance",rating:4,dsc:"AHAs such as glycolic and lactic acid chemically exfoliate the skin's surface — improving texture, brightness, and tone and helping to fade post-acne marks. Use 2–3 times per week and always follow with SPF 50.",emoji:"🔬",rt:"PM",pairings:["Hyaluronic Acid (8 Types)","Niacinamide"],avoid:["Retinol (use separately)","Vitamin C (use separately)"],belinic:false},
+  "Salicylic Acid (BHA)":{cat:"Exfoliant",ben:"Pore Clearing & Acne Control",rating:5,dsc:"An oil-soluble Beta Hydroxy Acid that penetrates into pores to dissolve excess sebum, dead cells, and debris that cause blackheads and breakouts. Also has anti-inflammatory properties. Ideal for oily, acne-prone, and congested skin.",emoji:"🧴",rt:"AM/PM",pairings:["Niacinamide","Zinc","Hyaluronic Acid (8 Types)"],avoid:["Retinol (use on separate nights)"],belinic:false},
+  "Ceramides":{cat:"Barrier Support",ben:"Barrier Repair & Long-Term Hydration",rating:5,dsc:"Lipids naturally found in the skin's barrier that hold skin cells together and prevent moisture loss. When the barrier is compromised from harsh products or over-exfoliation, ceramide-rich formulas help restore it. Essential for dry and sensitive skin.",emoji:"🛡️",rt:"AM/PM",pairings:["Hyaluronic Acid (8 Types)","Allantoin","Niacinamide"],avoid:[],belinic:false},
+  "Peptides":{cat:"Anti-Aging",ben:"Collagen Stimulation & Firmness",rating:4,dsc:"Short chains of amino acids that signal the skin to produce more collagen and elastin. Peptides improve firmness, smooth fine lines, and support skin structure. They work gently enough for daily use on all skin types.",emoji:"🧬",rt:"AM/PM",pairings:["Hyaluronic Acid (8 Types)","Ceramides","Phytotherasome Grape Exosomes"],avoid:[],belinic:false},
+  "Zinc":{cat:"Mineral",ben:"Oil Control & Acne Prevention",rating:4,dsc:"Zinc regulates sebum production, has natural anti-inflammatory and antimicrobial properties, and supports skin healing. Works synergistically with Niacinamide for pore refinement and oil control.",emoji:"⚪",rt:"AM/PM",pairings:["Niacinamide","Salicylic Acid (BHA)"],avoid:[],belinic:false},
+  "Azelaic Acid":{cat:"Brightener",ben:"Pigmentation, Redness & Acne",rating:4,dsc:"A naturally occurring acid with brightening, anti-inflammatory, and antimicrobial properties. Targets pigmentation and post-acne marks, reduces redness, and helps prevent new breakouts. Gentle enough for sensitive skin.",emoji:"🌾",rt:"AM/PM",pairings:["Niacinamide","Ceramides","Hyaluronic Acid (8 Types)"],avoid:[],belinic:false},
+  "Squalane":{cat:"Moisturiser",ben:"Lightweight Hydration & Barrier Support",rating:5,dsc:"A stable, lightweight oil derived from olives or sugarcane that closely mimics the skin's natural sebum. Squalane hydrates without clogging pores, softens texture, and supports barrier function — ideal for all skin types including oily.",emoji:"💫",rt:"AM/PM",pairings:["Ceramides","Hyaluronic Acid (8 Types)","Phytotherasome Grape Exosomes"],avoid:[],belinic:false},
+  "SPF 50":{cat:"Protection",ben:"UV Protection & Pigmentation Prevention",rating:5,dsc:"The most important step in any skincare ritual. SPF 50 broad-spectrum sunscreen prevents UV-induced pigmentation, collagen breakdown, and premature aging. All brightening, anti-aging, and exfoliating actives are significantly less effective without daily sun protection. Reapply every 2 hours outdoors.",emoji:"☀️",rt:"AM",pairings:["Vitamin C","Niacinamide"],avoid:[],belinic:false}
+};
+
+const QUESTIONS=[
+  {id:"skinType",question:"How does your skin feel by midday?",sub:"Helps us identify your skin type",grid:true,options:[
+    {val:"Dry",label:"Tight & parched",desc:"Needs moisture constantly",emoji:"🌵"},
+    {val:"Oily",label:"Shiny all over",desc:"Shine on T-zone and cheeks",emoji:"💦"},
+    {val:"Combination",label:"Oily T-zone, dry cheeks",desc:"Mixed zones",emoji:"🌗"},
+    {val:"Sensitive",label:"Reactive & easily flushed",desc:"Redness or stinging",emoji:"🌸"},
+    {val:"Normal",label:"Balanced & comfortable",desc:"Minimal concerns",emoji:"✨"}
+  ]},
+  {id:"concern1",question:"What is your primary skin concern?",sub:"The #1 thing you want to transform",grid:false,options:[
+    {val:"Dullness & uneven tone",label:"Dullness & pigmentation",desc:"Lack of glow, dark spots, uneven tone",emoji:"🌑"},
+    {val:"Fine lines & aging",label:"Fine lines & aging",desc:"Loss of firmness, visible lines",emoji:"🕰️"},
+    {val:"Acne & breakouts",label:"Acne & breakouts",desc:"Blemishes, blackheads, congestion",emoji:"😤"},
+    {val:"Redness & sensitivity",label:"Redness & sensitivity",desc:"Irritation, reactive, easily inflamed",emoji:"🌡️"},
+    {val:"Large pores",label:"Large pores",desc:"Visible, enlarged pore size",emoji:"🔍"}
+  ]},
+  {id:"concern2",question:"And your secondary concern?",sub:"Every skin has layers of needs",grid:false,options:[
+    {val:"Dehydration",label:"Dehydration",desc:"Skin drinks moisture fast",emoji:"🫙"},
+    {val:"Uneven texture",label:"Uneven texture",desc:"Rough or bumpy surface",emoji:"🪨"},
+    {val:"Post-treatment care",label:"Post-treatment care",desc:"Supporting skin after professional treatments",emoji:"🩺"},
+    {val:"Acne & breakouts",label:"Blemishes",desc:"Congestion and breakouts",emoji:"💧"},
+    {val:"None",label:"Just luminous skin",desc:"Maintain and elevate the glow",emoji:"🌟"}
+  ]},
+  {id:"experience",question:"How seasoned is your skincare ritual?",sub:"Helps shape your recommendation",grid:false,options:[
+    {val:"beginner",label:"Just starting out",desc:"Clean slate, open to guidance",emoji:"🌱"},
+    {val:"basics",label:"Cleanser & moisturiser",desc:"Consistent with the basics",emoji:"🌿"},
+    {val:"intermediate",label:"Serums & treatments",desc:"Comfortable with layering",emoji:"🌲"},
+    {val:"advanced",label:"Full protocol",desc:"Know your exosomes from your PHAs",emoji:"🌳"}
+  ]}
+];
+
+const ROUTINE={
+  AM:[
+    {step:1,name:"Cleanse",note:"Begin with Biome Milk Cleanser to activate the skin's microbiome and deliver 8-type hyaluronic acid hydration from the first touch.",product:"Biome Milk Cleanser"},
+    {step:2,name:"Ampoule",note:"Apply LumiExo Ampoule — 750,000 exosomes and Gluconolactone (100,000 ppm) prime the skin for the day ahead.",product:"LumiExo Ampoule"},
+    {step:3,name:"Gel Boost",note:"Layer LumiExo Gel Boost for lightweight brightening, pore refinement, and all-day luminosity — ideal for oily/combination skin.",product:"LumiExo Gel Boost"},
+    {step:4,name:"Moisturise",note:"Seal in the ritual with LumiExo Cream — for dry, normal and sensitive skin. Oily/acne-prone skin: finish with Gel Boost only.",product:"LumiExo Cream"},
+    {step:5,name:"SPF 50",note:"Non-negotiable. Reapply every 2 hours outdoors. SPF 50 is the single most important anti-pigmentation and anti-aging step.",product:null}
+  ],
+  PM:[
+    {step:1,name:"Cleanse",note:"Biome Milk Cleanser is gentle enough for double-cleansing — begin by removing SPF, makeup, and the day's buildup.",product:"Biome Milk Cleanser"},
+    {step:2,name:"Mask (2–3×/week)",note:"Apply Lumi Exonic Mask on treatment nights — cool, calm, and resurface with Alaska Glacier Water and 500K exosomes.",product:"Lumi Exonic Mask"},
+    {step:3,name:"Ampoule",note:"On non-mask nights, apply LumiExo Ampoule for overnight brightening and barrier-building as skin repairs during sleep.",product:"LumiExo Ampoule"},
+    {step:4,name:"Gel Boost",note:"Optional layer for targeted brightening and pore refinement — especially for combination or oily skin types.",product:"LumiExo Gel Boost"},
+    {step:5,name:"Moisturise",note:"Finish with LumiExo Cream for dry, normal and sensitive skin. Allantoin works with the skin's overnight repair cycle.",product:"LumiExo Cream"}
+  ]
+};
+
+// ══ STATE ══
+let quizStep=0;
+let answers={};
+let activeCategory='All';
+let currentRoutine='AM';
+
+// ══ QUIZ ══
+function renderQuiz(){
+  const q=QUESTIONS[quizStep];
+  // update progress
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('pd'+i);
+    d.className='prog-dot'+(i<quizStep?' done':i===quizStep?' active':'');
+  }
+  let html='<div class="fade">';
+  html+='<div class="eyebrow" style="text-align:center">Question '+(quizStep+1)+' of '+QUESTIONS.length+'</div>';
+  html+='<div class="q-text">'+q.question+'</div>';
+  html+='<div class="q-sub">'+q.sub+'</div>';
+  if(q.grid){
+    html+='<div class="skin-grid">';
+    q.options.forEach(o=>{
+      html+='<div class="skin-opt" onclick="chooseAnswer(\''+q.id+'\',\''+o.val+'\')">';
+      html+='<div class="skin-opt-em">'+o.emoji+'</div>';
+      html+='<div class="skin-opt-lb">'+o.label+'</div>';
+      html+='<div style="font-size:9px;color:var(--text-muted);margin-top:3px">'+o.desc+'</div>';
+      html+='</div>';
+    });
+    html+='</div>';
+  } else {
+    q.options.forEach(o=>{
+      html+='<button class="opt" onclick="chooseAnswer(\''+q.id+'\',\''+o.val+'\')">';
+      html+='<span class="opt-emoji">'+o.emoji+'</span>';
+      html+='<span><div class="opt-label">'+o.label+'</div><div class="opt-desc">'+o.desc+'</div></span>';
+      html+='</button>';
+    });
+  }
+  if(quizStep>0) html+='<button class="btn-ghost" onclick="quizBack()" style="margin-top:12px">← Back</button>';
+  html+='</div>';
+  document.getElementById('quiz-body').innerHTML=html;
+}
+
+function chooseAnswer(qid,val){
+  answers[qid]=val;
+  if(quizStep<QUESTIONS.length-1){
+    quizStep++;
+    renderQuiz();
+  } else {
+    showResults();
+  }
+}
+
+function quizBack(){
+  if(quizStep>0){quizStep--;renderQuiz();}
+}
+
+function resetQuiz(){
+  quizStep=0;answers={};
+  document.getElementById('results-tab').style.display='none';
+  renderQuiz();
+}
+
+// ══ RESULTS ══
+function showResults(){
+  const recs=buildRecs();
+  const isAcneOily=answers.skinType==='Oily'||answers.concern1==='Acne & breakouts'||answers.concern2==='Acne & breakouts';
+
+  // profile badges
+  const badges=document.getElementById('profile-badges');
+  badges.innerHTML='';
+  [answers.skinType+' Skin',answers.concern1,answers.concern2&&answers.concern2!=='None'?answers.concern2:null].filter(Boolean).forEach(b=>{
+    badges.innerHTML+='<span class="p-badge">'+b+'</span>';
+  });
+
+  // ingredient list
+  const ingEl=document.getElementById('results-ings');
+  ingEl.innerHTML='';
+  recs.forEach((ing,i)=>{
+    const d=INGREDIENTS[ing];
+    if(!d) return;
+    const belBadge=d.belinic?'<span class="bel-badge">Belinic</span>':'';
+    ingEl.innerHTML+=`<div class="ing-card" onclick="showDetail('${ing.replace(/'/g,"\\'")}')">
+      <span class="ing-em">${d.emoji}</span>
+      <div style="flex:1">
+        <div class="ing-name">${ing}${belBadge}</div>
+        <div class="ing-ben">${d.ben}</div>
+      </div>
+      <span style="color:var(--gold);font-size:14px">→</span>
+    </div>`;
+  });
+
+  // AC callout
+  document.getElementById('ac-callout').style.display=isAcneOily?'block':'none';
+
+  // products
+  const prodEl=document.getElementById('results-prods');
+  prodEl.innerHTML='';
+  const scored=[];
+  Object.entries(PRODUCTS).forEach(([name,p])=>{
+    if(isAcneOily&&p.notForOily) return;
+    let score=0;
+    if(p.bestFor.includes(answers.skinType)) score+=2;
+    if(p.concerns.includes(answers.concern1)) score+=3;
+    if(answers.concern2&&answers.concern2!=='None'&&p.concerns.includes(answers.concern2)) score+=1;
+    scored.push({name,p,score});
+  });
+  scored.sort((a,b)=>b.score-a.score).slice(0,4).forEach(({name,p,score},i)=>{
+    const ms=Math.min(5,score);
+    const dots=[1,2,3,4,5].map(n=>'<div class="match-dot'+(n<=ms?' on':'')+'"></div>').join('');
+    const pIdx=Object.keys(PRODUCTS).indexOf(name)+1;
+    prodEl.innerHTML+=`<div class="prod-card">
+      <div class="prod-num">0${pIdx}</div>
+      <span class="prod-badge">${p.badge}</span>
+      <div style="font-size:26px;margin:6px 0">${p.emoji}</div>
+      <div class="prod-name">${name}</div>
+      <div class="prod-tag">${p.tagline}</div>
+      <div class="match"><div class="match-dots">${dots}</div><span class="match-lbl">Skin match</span></div>
+      <div class="prod-ings">${p.keyIngredients.map(i=>'<span class="prod-ing">'+i+'</span>').join('')}</div>
+      <p class="prod-benefits">${p.benefits}</p>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <a href="${p.url}" target="_blank" class="btn-inline" style="flex:1;justify-content:center">Shop Now →</a>
+      </div>
+    </div>`;
+  });
+
+  // show results tab
+  document.getElementById('results-tab').style.display='';
+  switchTab('results');
+}
+
+function buildRecs(){
+  const{skinType,concern1,concern2}=answers;
+  const recs=[];
+  // skin type base
+  if(skinType==='Dry'||skinType==='Normal'){recs.push('Hyaluronic Acid (8 Types)','Ceramides','Squalane');}
+  if(skinType==='Oily'){recs.push('Niacinamide','Zinc','Salicylic Acid (BHA)');}
+  if(skinType==='Combination'){recs.push('Niacinamide','Hyaluronic Acid (8 Types)','Zinc');}
+  if(skinType==='Sensitive'){recs.push('Allantoin','Ceramides','Hyaluronic Acid (8 Types)');}
+  // primary concern
+  if(concern1==='Dullness & uneven tone'){recs.unshift('Glutathione','Phytotherasome Grape Exosomes','Vitamin C','Thymus Serpyllum Extract','Niacinamide');}
+  if(concern1==='Fine lines & aging'){recs.unshift('Phytotherasome Grape Exosomes','Retinol','Peptides','Glutathione','Hyaluronic Acid (8 Types)');}
+  if(concern1==='Acne & breakouts'){recs.unshift('Salicylic Acid (BHA)','Niacinamide','Zinc','Azelaic Acid','Probiotic Complex (10 Strains)');}
+  if(concern1==='Redness & sensitivity'){recs.unshift('Allantoin','Ceramides','Azelaic Acid','Alaskan Glacial Water','Squalane');}
+  if(concern1==='Large pores'){recs.unshift('Niacinamide','Salicylic Acid (BHA)','Zinc','AHA (Alpha Hydroxy Acid)');}
+  // secondary
+  if(concern2==='Dehydration'){recs.push('Hyaluronic Acid (8 Types)','Squalane','Ceramides');}
+  if(concern2==='Uneven texture'){recs.push('AHA (Alpha Hydroxy Acid)','Gluconolactone (PHA)','Retinol');}
+  if(concern2==='Post-treatment care'){recs.push('Allantoin','Alaskan Glacial Water','Bio-Detox Complex','Phytotherasome Grape Exosomes');}
+  if(concern2==='Acne & breakouts'){recs.push('Salicylic Acid (BHA)','Niacinamide','Zinc');}
+  // mature/dry/pigmentation — subtly push Belinic
+  if(skinType==='Dry'||concern1==='Fine lines & aging'||concern1==='Dullness & uneven tone'){
+    recs.push('Phytotherasome Grape Exosomes','Glutathione','Probiotic Complex (10 Strains)');
+  }
+  recs.push('SPF 50');
+  return [...new Set(recs)].filter(r=>INGREDIENTS[r]).slice(0,7);
+}
+
+// ══ DECODER ══
+function renderDecoder(){
+  // filter bar
+  const cats=['All',...new Set(Object.values(INGREDIENTS).map(i=>i.cat))];
+  const fb=document.getElementById('filter-bar');
+  fb.innerHTML=cats.map(c=>`<button class="fp${c===activeCategory?' on':''}" onclick="setCat('${c}')">${c}</button>`).join('');
+  filterIngredients();
+}
+
+function setCat(cat){
+  activeCategory=cat;
+  renderDecoder();
+}
+
+function filterIngredients(){
+  const q=(document.getElementById('ing-search').value||'').toLowerCase();
+  const list=Object.entries(INGREDIENTS).filter(([name,d])=>{
+    const matchQ=!q||name.toLowerCase().includes(q)||d.ben.toLowerCase().includes(q)||d.cat.toLowerCase().includes(q);
+    const matchC=activeCategory==='All'||d.cat===activeCategory;
+    return matchQ&&matchC;
+  });
+  const el=document.getElementById('ing-list');
+  if(!list.length){el.innerHTML='<p style="padding:28px;text-align:center;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-style:italic;color:var(--text-muted)">No ingredients found…</p>';return;}
+  el.innerHTML=list.map(([name,d])=>`
+    <div class="ing-card" onclick="showDetail('${name.replace(/'/g,"\\'")}')">
+      <span class="ing-em">${d.emoji}</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span class="ing-name">${name}</span>
+          ${d.belinic?'<span class="bel-badge">Belinic</span>':''}
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:3px;flex-wrap:wrap">
+          <span class="ing-ben">${d.ben}</span>
+          <span class="tag" style="margin:0;padding:2px 7px;font-size:7.5px">${d.cat}</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <span class="stars">${'★'.repeat(d.rating)}${'☆'.repeat(5-d.rating)}</span>
+        <span style="color:var(--gold);font-size:13px">→</span>
+      </div>
+    </div>`).join('');
+  document.getElementById('ing-count').textContent='Showing '+list.length+' of '+Object.keys(INGREDIENTS).length+' ingredients';
+}
+
+function showDetail(name){
+  const d=INGREDIENTS[name];
+  if(!d) return;
+  // find products containing this ingredient
+  const nameWords=name.toLowerCase().replace(/[()]/g,' ').split(' ').filter(w=>w.length>3);
+  const inProds=Object.entries(PRODUCTS).filter(([pn,p])=>
+    p.keyIngredients.some(ki=>nameWords.some(w=>ki.toLowerCase().includes(w)))
+  );
+  let html=`<div class="fade">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:44px;margin-bottom:10px">${d.emoji}</div>
+      <div class="h1" style="margin-bottom:6px">${name}${d.belinic?'<span class="bel-badge" style="vertical-align:middle;margin-left:10px">Belinic</span>':''}</div>
+      <div class="stars">${'★'.repeat(d.rating)}${'☆'.repeat(5-d.rating)}</div>
+      <div style="margin-top:8px"><span class="tag">${d.cat}</span></div>
+    </div>
+    <div class="card">
+      <div class="eyebrow" style="margin-bottom:10px">The Science</div>
+      <p style="font-size:13.5px;line-height:1.85;color:rgba(250,247,242,.85);margin-bottom:20px">${d.dsc}</p>
+      <div class="g2" style="margin-bottom:18px">
+        <div class="detail-block"><div class="detail-lbl">Ideal Routine</div><div class="h3" style="font-size:17px">${d.rt}</div></div>
+        <div class="detail-block"><div class="detail-lbl">Category</div><div class="h3" style="font-size:17px">${d.cat}</div></div>
+      </div>`;
+  if(d.pairings&&d.pairings.length){
+    html+=`<div class="eyebrow" style="margin-bottom:8px">Pairs Beautifully With</div><div style="margin-bottom:16px">${d.pairings.map(p=>'<span class="tag-grn">'+p+'</span>').join('')}</div>`;
+  }
+  if(d.avoid&&d.avoid.length){
+    html+=`<div class="eyebrow" style="margin-bottom:8px">Avoid Combining With</div><div style="margin-bottom:16px">${d.avoid.map(a=>'<span class="tag-red">'+a+'</span>').join('')}</div>`;
+  }
+  html+=`<div style="border-top:1px solid rgba(184,150,90,.15);padding-top:18px;margin-top:10px">
+      <div class="detail-lbl">Esthetician Guidance</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:rgba(250,247,242,.8);line-height:1.8">
+        ${name} is best incorporated into your ${d.rt==='AM'?'morning ritual':d.rt==='PM'?'evening ritual':'AM and PM rituals'}.${d.pairings.length?' It works beautifully alongside '+d.pairings[0]+' for enhanced results.':''} Allow 6–8 weeks of consistent use before evaluating results. Our estheticians at MBL Artistry are always available to guide your personal skin journey.
+      </p>
+    </div></div>`;
+  if(inProds.length){
+    html+=`<div style="margin-top:22px"><div class="eyebrow" style="text-align:center;margin-bottom:14px">Found in the Belinic Collection</div>`;
+    inProds.forEach(([pn,p])=>{
+      html+=`<div style="background:linear-gradient(135deg,rgba(184,150,90,.08),rgba(14,12,10,.6));border:1px solid rgba(184,150,90,.2);padding:20px 22px;margin-bottom:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div style="font-size:26px">${p.emoji}</div>
+        <div style="flex:1;min-width:160px">
+          <span class="prod-badge">${p.badge}</span>
+          <div class="h3" style="margin-top:4px">${pn}</div>
+          <div class="prod-tag">${p.tagline}</div>
+        </div>
+        <a href="${p.url}" target="_blank" class="btn-inline">Shop Now →</a>
+      </div>`;
+    });
+    html+='</div>';
+  }
+  html+='</div>';
+  document.getElementById('detail-content').innerHTML=html;
+  document.getElementById('decoder-list-view').style.display='none';
+  document.getElementById('decoder-detail-view').style.display='block';
+}
+
+function showDecoderList(){
+  document.getElementById('decoder-detail-view').style.display='none';
+  document.getElementById('decoder-list-view').style.display='block';
+}
+
+// ══ SHOP ══
+function renderShop(){
+  const el=document.getElementById('shop-grid');
+  el.innerHTML='';
+  Object.entries(PRODUCTS).forEach(([name,p],i)=>{
+    el.innerHTML+=`<div class="prod-card">
+      <div class="prod-num">0${i+1}</div>
+      <span class="prod-badge">${p.badge}</span>
+      <div style="font-size:30px;margin:8px 0">${p.emoji}</div>
+      <div class="prod-name">${name}</div>
+      <div class="prod-tag">${p.tagline}</div>
+      <div style="margin:10px 0">
+        <div class="eyebrow" style="font-size:8px;margin-bottom:6px">Key Actives</div>
+        <div class="prod-ings">${p.keyIngredients.map(i=>'<span class="prod-ing">'+i+'</span>').join('')}</div>
+      </div>
+      <div style="margin:8px 0">
+        <div class="eyebrow" style="font-size:8px;margin-bottom:5px">Best For</div>
+        <div>${p.bestFor.map(s=>'<span class="tag" style="font-size:8px;padding:2px 8px;margin:0 3px 4px 0">'+s+'</span>').join('')}</div>
+      </div>
+      <p class="prod-benefits">${p.benefits}</p>
+      <div style="font-size:8.5px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin:10px 0;border-top:1px solid rgba(184,150,90,.1);padding-top:10px">${p.step}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a href="${p.url}" target="_blank" class="btn-inline" style="flex:1;justify-content:center">Shop Now →</a>
+        <button class="btn-inline-out" onclick="resetQuiz();switchTab('quiz')">Take Quiz</button>
+      </div>
+    </div>`;
+  });
+}
+
+// ══ ROUTINE ══
+function renderRoutine(){
+  const steps=ROUTINE[currentRoutine];
+  let html='';
+  steps.forEach(s=>{
+    const prod=s.product&&PRODUCTS[s.product];
+    html+=`<div class="rt-step">
+      <div class="rt-num">${s.step}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+          <span class="rt-name">${s.name}</span>
+          <span class="rt-badge">${currentRoutine}</span>
+        </div>
+        <div class="rt-note">${s.note}</div>
+        ${prod?`<div style="margin-top:8px"><a href="${prod.url}" target="_blank" class="btn-inline-out" style="font-size:8px;padding:5px 12px">${s.product} →</a></div>`:''}
+      </div>
+    </div>`;
+  });
+  document.getElementById('routine-steps').innerHTML=html;
+}
+
+function switchRoutine(tab){
+  currentRoutine=tab;
+  document.getElementById('am-tab').className='nav-tab'+(tab==='AM'?' active':'');
+  document.getElementById('pm-tab').className='nav-tab'+(tab==='PM'?' active':'');
+  renderRoutine();
+}
+
+// ══ TAB SWITCHING ══
+function switchTab(tab){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab[data-tab]').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  const navBtn=document.querySelector('.nav-tab[data-tab="'+tab+'"]');
+  if(navBtn) navBtn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ INIT ══
+renderQuiz();
+renderDecoder();
+renderShop();
+renderRoutine();
+</script>
+</body>
+</html>
